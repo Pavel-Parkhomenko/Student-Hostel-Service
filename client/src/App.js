@@ -1,11 +1,12 @@
 import './App.css'
+import { Test } from './componets/Test'
 
 function App() {
   return (
     <div className="App">
-      Hi
+      <Test />
     </div>
-  );
+  )
 }
 
 export default App;
