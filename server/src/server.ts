@@ -9,11 +9,11 @@ const bp = require('body-parser')
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
-// app.use('/auth', require('./routers/auth-rout'))
+app.use('/auth', require('./routers/auth.route'))
 
 async function start() {
     try {
-        await mongoose.connect(`mongodb://localhost:27017/${NAME_DB}`);
+        await mongoose.connect(`mongodb://127.0.0.1:27017/diplom_db`);
         app.listen(PORT, () => console.log(`Server has been started on port ${PORT}!`));
     }
     catch (e) {

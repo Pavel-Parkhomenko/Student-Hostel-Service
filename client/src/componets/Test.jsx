@@ -1,18 +1,23 @@
-import React from 'react'
+import React, {useState} from 'react'
 import img from './test.jpg'
-import { useFetch } from '../hooks'
+import { useHttp } from '../hooks'
 
 const url = `http://jsonplaceholder.typicode.com/posts`
 
 export function Test() {
-    const mes = useFetch(url)
-    console.log(mes)
+    const mes = useHttp(url)
+    const [count, setCount] = useState(0)
     // if (!data) return <p>Loading...</p>
     // if (error) return <p>There is an error. <span>{error}</span></p>
     // if (data) return <p>{JSON.stringify(data[0])}</p>
     return(
         <div>
-            <button type="button" className="btn btn-primary">sfsd sdfsd sdfsd</button>
+            <button type="button" className="btn btn-primary"
+                    onClick={()=>setCount(count + 1)}
+            >
+                sfsd sdfsd sdfsd
+            </button>
+            <h1>{count}</h1>
             <i className="bi bi-2-circle" style={{color: "green", fontSize: "50px"}}></i>
             <div class="container">
                 <label htmlFor="formFile" className="form-label">Default file input</label>
