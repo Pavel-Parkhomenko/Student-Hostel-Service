@@ -6,10 +6,10 @@ const schema = new Schema<IStudent>({
     firstName: { type: String, required: true },
     middleName: { type: String, required: true },
     secondName: { type: String, required: true },
-    balls: { type: Number, required: true },
+    balls: { type: Number, required: false },
     dateEntry: { type: String, required: false },
     formEducation: { type: String, required: true },
-    numberTest: { type: Number, required: true },
+    numberTest: { type: Number, required: true, default: 0 },
     account: {
         type: {
             _id: { type: Schema.Types.ObjectId, required: false },
@@ -23,7 +23,8 @@ const schema = new Schema<IStudent>({
             number: { type: String, required: true },
             type: { type: String, required: true },
         }],
-        required: false
+        required: false,
+        _id : false,
     },
     remarks: {
         type: [{
@@ -35,18 +36,21 @@ const schema = new Schema<IStudent>({
                     secondName: { type: String, required: true },
                     middleName: { type: String, required: true },
                 },
-                required: false
+                required: false,
+                _id : false,
             }
         }],
-        required: false
+        required: false,
+        _id : false,
     },
     room: {
         type: {
             floor: { type: Number, required: true },
             block: { type: Number, required: true },
-            room: { type: Number, required: true },
+            apartament: { type: Number, required: true },
         },
-        required: true
+        required: true,
+        _id : false,
     }
 
 }, { versionKey: false })

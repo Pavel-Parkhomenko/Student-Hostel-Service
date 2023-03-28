@@ -18,7 +18,9 @@ export default function useHttp() {
             if (!response.ok) {
                 setLoading(false);
                 if(data.errors) {
-                    return {message: (data.message || "Что-то пошло не так"), errors: true};
+                    return { message: (data.message || "Что-то пошло не так"), errors: true };
+                } else {
+                    return { message: (data.message || "Что-то пошло не так") };
                 }
             }
             setLoading(false);

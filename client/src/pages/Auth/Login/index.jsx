@@ -2,13 +2,12 @@ import React, {useState} from 'react'
 import {useHttp} from '../../../hooks'
 import {fieldsLogin} from '../../../mocks'
 import {Form} from '../../../componets/Form'
-import {requestPost} from '../../../helpers'
+import '../styles.css'
 
 export function Login() {
   const [form, setForm] = useState({
     login: '',
     password: '',
-    numberTest: ''
   })
 
   const {loading, request} = useHttp();
@@ -27,11 +26,13 @@ export function Login() {
   }
 
   return (
-    <Form
-      fields={fieldsLogin}
-      onChange={handleInput}
-      onClick={loginHandle}
-      buttonName="Вход"
-    />
+    <div className="container__auth">
+      <Form
+        fields={fieldsLogin}
+        onChange={handleInput}
+        onClick={loginHandle}
+        buttonName="Вход"
+      />
+    </div>
   )
 }

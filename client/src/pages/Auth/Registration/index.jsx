@@ -2,11 +2,12 @@ import React, {useState} from 'react'
 import {useHttp} from '../../../hooks'
 import {fieldsRegistration} from '../../../mocks'
 import {Form} from '../../../componets/Form'
+import '../styles.css'
 
 export function Registration() {
   const [form, setForm] = useState({
-    login: '',
-    password: ''
+    numberTest: '',
+    email: ''
   })
 
   function handleInput(event) {
@@ -14,11 +15,13 @@ export function Registration() {
   }
 
   return (
-    <Form
-      fields={fieldsRegistration}
-      onChange={handleInput}
-      onClick={()=>console.log(form)}
-      buttonName="Регистрация"
-    />
+    <div className="container__auth">
+      <Form
+        fields={fieldsRegistration}
+        onChange={handleInput}
+        onClick={()=>console.log(form)}
+        buttonName="Регистрация"
+      />
+    </div>
   )
 }

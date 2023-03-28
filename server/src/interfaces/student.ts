@@ -5,13 +5,14 @@ export interface IStudent {
     secondName: string,
     middleName: string,
     numberTest: number,
+    email?: string,
     formEducation: "платное" | "бесплатное",
     dateEntry: string,
-    balls: number,
-    privateTechs: Array<IPrivateTech>
+    balls?: number,
+    privateTechs?: Array<IPrivateTech>
     room: IRoom,
-    remarks: Array<IRemark>,
-    account: IAccount
+    remarks?: Array<IRemark>,
+    account?: IAccount
 }
 
 interface IAccount {
@@ -40,5 +41,5 @@ interface IPrivateTech {
 interface IRoom {
     floor: number,
     block: number,
-    room: number
+    apartament: number
 }

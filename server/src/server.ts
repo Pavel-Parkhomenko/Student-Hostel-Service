@@ -10,6 +10,7 @@ app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
 app.use('/auth', require('./routers/auth.route'))
+app.use('/student', require('./routers/student.route'))
 
 async function start() {
     try {
