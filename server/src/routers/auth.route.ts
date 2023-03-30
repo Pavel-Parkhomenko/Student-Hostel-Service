@@ -33,7 +33,7 @@ router.post('/login',
       if (password !== acc.password)
         return res.status(400).json({message: 'Пользователя с таким паролем не существует'})
 
-      return res.status(200).json({login: login, password: password, message: 'Вход выполнен успешно'})
+      return res.status(200).json({login: login, message: 'Вход выполнен успешно'})
 
     } catch (err) {
       return res.status(500).json({message: 'Что-то пошло не так'})

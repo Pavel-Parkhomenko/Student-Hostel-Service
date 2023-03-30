@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 
 function actionErrors(errors) {
-    if(!errors) return new Map()
     const arr = new Map();
+    if(!errors) return arr
     for(let i = 0; i < errors.length; i++) {
         arr.set(errors[i].param, errors[i].msg);
     }
@@ -26,14 +26,10 @@ export default function useHttp() {
 
             if (!response.ok) {
                 setLoading(false);
-                if(data.errors) {
-                    return { message: (data.message || "Сервер не доступен :("), errors: actionErrors(data.errors) };
-                } else {
-                    return { message: (data.message || "Сервер не доступен :(") };
-                }
+                return { message: (data.message || "Сервер не доступен :("), errors: actionErrors(data.errors) };
             }
             setLoading(false);
-            return data;
+            return { message: (data.message || "Успех"), errors: null };
 
         } catch (error) {
             setLoading(false);

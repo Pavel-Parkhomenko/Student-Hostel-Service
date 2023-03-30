@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Link } from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import {useHttp} from '../../../hooks'
 import {fieldsRegistration} from '../../../mocks'
 import {Form} from '../../../componets/Form'
@@ -12,6 +12,7 @@ export function Registration() {
   })
   const [errors, setErrors] = useState(new Map())
   const [message, setMessage] = useState('')
+  const navigate = useNavigate();
 
   const {loading, request} = useHttp();
 
@@ -22,19 +23,12 @@ export function Registration() {
   async function loginHandle() {
     try {
       const {message, errors} = await request('auth/registr', 'POST', {...form})
-      if (errors) setErrors(errors)
-      else setErrors(errors)
+      if(!errors) navigate("/st-room")
+      setErrors(errors)
       setMessage(message)
     } catch (error) {
       console.log(error)
     }
-    // let response = await fetch('http://127.0.0.1:5000/auth/registr', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=utf-8'
-    //   },
-    //   body: JSON.stringify(form)
-    // });
   }
 
   return (

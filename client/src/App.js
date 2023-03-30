@@ -5,6 +5,8 @@ import {Login} from './pages/Auth/Login'
 import {Registration} from './pages/Auth/Registration'
 import {Home} from './pages/Home'
 import { StudentRoom } from './pages/StudentRoom'
+import {NewsPanel} from './componets/NewsPanel'
+import {EventsPanel} from "./componets/EventsPanel";
 
 function App() {
   return (
@@ -13,7 +15,10 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/reg' element={<Registration/>}/>
-        <Route path='/st-room' element={<StudentRoom/>}/>
+        <Route path='/st-room' element={<StudentRoom/>}>
+          <Route index path="news" element={<NewsPanel />} />
+          <Route path="events" element={<EventsPanel />} />
+        </Route>
         <Route path='/test' element={<Test/>}/>
       </Routes>
     </Router>

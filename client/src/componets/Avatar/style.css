@@ -2,8 +2,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-        /*justify-content: center;*/
-    font-size: 14px;
+    /*font-size: 14px;*/
+}
+
+.avatar__container p {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
 }
 
 .foto {
