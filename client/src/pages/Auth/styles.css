@@ -3,4 +3,12 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    flex-direction: column;
+}
+
+.err__message {
+    font-size: 12px;
+    color: red;
+    height: 14px;
+    position: absolute;
 }

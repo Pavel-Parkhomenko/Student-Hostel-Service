@@ -1,5 +1,14 @@
 import React, { useState, useCallback } from 'react';
 
+function actionErrors(errors) {
+    if(!errors) return new Map()
+    const arr = new Map();
+    for(let i = 0; i < errors.length; i++) {
+        arr.set(errors[i].param, errors[i].msg);
+    }
+    return arr
+}
+
 export default function useHttp() {
 
     const [loading, setLoading] = useState(false)
@@ -18,7 +27,7 @@ export default function useHttp() {
             if (!response.ok) {
                 setLoading(false);
                 if(data.errors) {
-                    return { message: (data.message || "Что-то пошло не так"), errors: true };
+                    return { message: (data.message || "Что-то пошло не так"), errors: actionErrors(data.errors) };
                 } else {
                     return { message: (data.message || "Что-то пошло не так") };
                 }

@@ -1,0 +1,14 @@
+.avatar__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+        /*justify-content: center;*/
+    font-size: 14px;
+}
+
+.foto {
+    width: 150px;
+    height: 150px;
+    background-color: #666666;
+    border-radius: 50%;
+}

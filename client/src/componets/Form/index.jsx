@@ -1,21 +1,22 @@
 import React from 'react'
 import './styles.css'
 
-// nameField, placeholder, icon, name, id
 export function Form({
                        fields,
                        onChange,
                        onClick,
-                       buttonName
+                       buttonName,
+                       errors= new Map(),
+                       messFromServer
                      }) {
   return (
     <div className="container">
       <div className="row main-form">
         <form className="" method="post" action="#">
-          {fields.map(({nameField, placeholder, icon, name, id, type}) =>
+          {fields.map(({nameField, placeholder, icon, name, id, type}, ind) =>
             <div className="form-group" key={id}>
               <label htmlFor={id} className="cols-sm-2 control-label">{nameField}</label>
-              <div className="cols-sm-10">
+              <div className="cols-sm-10" style={{position: "relative"}}>
                 <div className="input-group">
                   <span className="input-group-addon">
                     <i className={icon} aria-hidden="true" style={{color: "white"}}></i>
@@ -23,16 +24,24 @@ export function Form({
                   <input
                     type={type}
                     className="form-control"
-                    name={name} id={id}
+                    name={name}
+                    id={id}
                     placeholder={placeholder}
                     onChange={onChange}
                   />
                 </div>
+                {
+                  errors?.has(name)
+                  ?
+                    <span className="err__message">{errors.get(name)}</span>
+                  :
+                    <span className="err__message"></span>
+                }
               </div>
             </div>
           )}
-
-          <div>
+          {messFromServer ? <span className="err__message">{messFromServer}</span> : null}
+          <div className="mt-5">
             <button
               type="button"
               className="bg-primary text-white border-0 w-100"
