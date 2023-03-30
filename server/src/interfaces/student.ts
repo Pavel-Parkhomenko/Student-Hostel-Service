@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 export interface IStudent {
-    _id: Types.ObjectId,
+    _id?: Types.ObjectId,
     firstName: string,
     secondName: string,
     middleName: string,

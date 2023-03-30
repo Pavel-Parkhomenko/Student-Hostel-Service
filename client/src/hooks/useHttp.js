@@ -27,9 +27,9 @@ export default function useHttp() {
             if (!response.ok) {
                 setLoading(false);
                 if(data.errors) {
-                    return { message: (data.message || "Что-то пошло не так"), errors: actionErrors(data.errors) };
+                    return { message: (data.message || "Сервер не доступен :("), errors: actionErrors(data.errors) };
                 } else {
-                    return { message: (data.message || "Что-то пошло не так") };
+                    return { message: (data.message || "Сервер не доступен :(") };
                 }
             }
             setLoading(false);

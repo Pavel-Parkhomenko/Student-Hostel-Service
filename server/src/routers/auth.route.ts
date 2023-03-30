@@ -2,7 +2,7 @@ const {Router} = require('express');
 const Account = require('../models/account');
 const {check, validationResult} = require('express-validator')
 const Student = require('../models/student')
-import { IStudent } from '../interfaces'
+import {IAccount, IStudent} from '../interfaces'
 const nodemailer = require('nodemailer')
 const {
   v1: uuidv1,
@@ -16,7 +16,6 @@ router.post('/login',
     check('password', 'Неверный пароль').isLength({min: 5, max: 15}),],
   async (req, res) => {
     try {
-      console.log(req.body)
       let errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -26,12 +25,12 @@ router.post('/login',
       }
 
       const {login, password} = req.body;
-      const user = await Account.findOne({login: login});
-      if (!user) {
+      const acc: IAccount | null = await Account.findOne({login: login});
+      if (!acc) {
         return res.status(400).json({message: 'Такого логина не существует'})
       }
 
-      if (password !== user.password)
+      if (password !== acc.password)
         return res.status(400).json({message: 'Пользователя с таким паролем не существует'})
 
       return res.status(200).json({login: login, password: password, message: 'Вход выполнен успешно'})
@@ -55,16 +54,16 @@ router.post('/registr',
           message: "Некоректные данные при регистрации"
         })
       }
-
       const {numberTest, email} = req.body;
 
       const candidate: IStudent | null = await Student.findOne({ numberTest })
-      if(candidate.account) {
-        return res.status(400).json({message: 'У вас уже есть аккаунт'})
-      }
 
       if (!candidate) {
         return res.status(400).json({message: 'Неверный номер зачетной книжки'})
+      }
+
+      if(candidate.account) {
+        return res.status(400).json({message: 'У вас уже есть аккаунт'})
       }
 
       const acc = new Account ({
@@ -72,12 +71,11 @@ router.post('/registr',
         password: uuidv4().split('-')[0]
       })
 
-      await acc.save(function (err, result) {
-        if (err) {
-          return res.status(400).json({message: 'Не удалось создать аккаунт'})
-        } else {
-          return res.status(200).json({message: 'Аккаунт создан'})
-        }
+      const newAcc = await acc.save()
+
+      await Student.updateOne({_id: candidate._id}, {
+        "account._id": newAcc._id,
+        "account.login": newAcc.login
       })
 
       try {
@@ -86,12 +84,12 @@ router.post('/registr',
       } catch(err) {
         return res.status(400).json({message: err})
       }
-      const filter = { numberTest: numberTest }
-      const update = {  }
-      await Student.findOneAndUpdate()
+
+
+      return res.status(200).json({message: 'Аккаунт создан'})
 
     } catch (err) {
-      return res.status(500).json({message: 'Что-то пошло не так'})
+      return res.status(500).json({message: err})
     }
   });
 

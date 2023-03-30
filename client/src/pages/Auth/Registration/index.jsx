@@ -21,13 +21,20 @@ export function Registration() {
 
   async function loginHandle() {
     try {
-      const {message, errors} = await request('/auth/registr', 'POST', {...form})
+      const {message, errors} = await request('auth/registr', 'POST', {...form})
       if (errors) setErrors(errors)
       else setErrors(errors)
       setMessage(message)
     } catch (error) {
       console.log(error)
     }
+    // let response = await fetch('http://127.0.0.1:5000/auth/registr', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8'
+    //   },
+    //   body: JSON.stringify(form)
+    // });
   }
 
   return (

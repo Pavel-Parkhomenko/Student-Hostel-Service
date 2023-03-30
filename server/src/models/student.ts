@@ -2,7 +2,6 @@ import { Schema, model } from 'mongoose'
 import { IStudent } from '../interfaces'
 
 const schema = new Schema<IStudent>({
-    _id: { type: Schema.Types.ObjectId, required: false },
     firstName: { type: String, required: true },
     middleName: { type: String, required: true },
     secondName: { type: String, required: true },

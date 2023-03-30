@@ -1,9 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
+import cors from 'cors'
 const app = express();
 import {
     PORT, NAME_DB
 } from './constants'
+
+app.use(cors())
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    next()
+})
 
 const bp = require('body-parser')
 app.use(bp.json())
