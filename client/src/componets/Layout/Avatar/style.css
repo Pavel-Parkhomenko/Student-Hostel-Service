@@ -17,3 +17,11 @@
     background-color: #666666;
     border-radius: 50%;
 }
+
+.w-30 {
+    width: 30%;
+}
+
+.header {
+    height: 60px;
+}

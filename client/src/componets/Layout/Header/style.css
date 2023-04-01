@@ -1,0 +1,13 @@
+.header__container{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.header {
+    height: 60px;
+}
