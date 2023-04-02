@@ -1,8 +1,16 @@
 .container__auth {
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+}
+
+.container__auth-into {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 

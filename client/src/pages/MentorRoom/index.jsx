@@ -1,19 +1,22 @@
 import React from 'react'
-import {Avatar} from "../../componets/Layout/Avatar";
-import {Header} from "../../componets/Layout/Header";
-import {Menu} from "../StudentRoom/Menu";
-import {Outlet} from "react-router-dom";
-import {Footer} from "../../componets/Layout/Footer";
+import { Avatar } from "../../componets/Layout/Avatar"
+import { Header } from "../../componets/Layout/Header"
+import { Menu } from "../../componets/Menu"
+import { Outlet } from "react-router-dom"
+import { Footer } from "../../componets/Layout/Footer"
+import { BreadCrumbs } from "../../componets/BreadCrumbs"
+import { MENU_MENTOR, ROUTES_MENTOR } from '../../mocks'
 
 export function MentorRoom() {
-  return(
+  return (
     <div>
       <div className="container pt-3 st-room__container">
         <Avatar />
         <div className="w-100">
           <Header>
-            <Menu />
+            <Menu menu={MENU_MENTOR} />
           </Header>
+          <BreadCrumbs routes={ROUTES_MENTOR} />
           <div className="rounded w-100">
             <Outlet />
           </div>

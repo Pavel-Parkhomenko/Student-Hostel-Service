@@ -1,16 +1,17 @@
 import React from 'react'
 import './styles.css'
 
-export function Form({
-                       fields,
-                       onChange,
-                       onClick,
-                       buttonName,
-                       errors= new Map(),
-                       messFromServer
-                     }) {
+export function Form(
+  {
+    fields,
+    onChange,
+    onClick,
+    buttonName,
+    errors = new Map(),
+    messFromServer
+  }) {
   return (
-    <div className="container">
+    <div>
       <div className="row main-form">
         <form className="" method="post" action="#">
           {fields.map(({nameField, placeholder, icon, name, id, type}, ind) =>
@@ -19,7 +20,7 @@ export function Form({
               <div className="cols-sm-10" style={{position: "relative"}}>
                 <div className="input-group">
                   <span className="input-group-addon">
-                    <i className={icon} aria-hidden="true" style={{color: "white"}}></i>
+                    <i className={icon} aria-hidden="true" style={{color: "white"}} />
                   </span>
                   <input
                     type={type}
@@ -32,9 +33,9 @@ export function Form({
                 </div>
                 {
                   errors?.has(name)
-                  ?
+                    ?
                     <span className="err__message">{errors.get(name)}</span>
-                  :
+                    :
                     <span className="err__message"></span>
                 }
               </div>
@@ -50,7 +51,6 @@ export function Form({
               {buttonName}
             </button>
           </div>
-
         </form>
       </div>
     </div>

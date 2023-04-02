@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
-import {Link, useNavigate} from "react-router-dom"
-import {useHttp} from '../../../hooks'
-import {fieldsRegistration} from '../../../mocks'
-import {Form} from '../../../componets/Form'
+import React, { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom"
+import { useHttp } from '../../../hooks'
+import { fieldsRegistration } from '../../../mocks'
+import { Form } from '../../../componets/Form'
 import '../styles.css'
 
 export function Registration() {
@@ -23,7 +23,7 @@ export function Registration() {
   async function loginHandle() {
     try {
       const {message, errors} = await request('auth/registr', 'POST', {...form})
-      if(!errors) navigate("/st-room")
+      if (!errors) navigate("/st-room")
       setErrors(errors)
       setMessage(message)
     } catch (error) {
@@ -33,18 +33,20 @@ export function Registration() {
 
   return (
     <div className="container__auth">
-      <h1>Регистрация</h1>
-      <Form
-        fields={fieldsRegistration}
-        onChange={handleInput}
-        onClick={loginHandle}
-        buttonName="Регистрация"
-        errors={errors}
-        messFromServer={message}
-      />
-      <div>
-        <span>У вас уже есть аккаунт?</span>&nbsp;&nbsp;
-        <Link to='/login'>Вход</Link>
+      <div className="container__auth-into">
+        <h1>Регистрация</h1>
+        <Form
+          fields={fieldsRegistration}
+          onChange={handleInput}
+          onClick={loginHandle}
+          buttonName="Регистрация"
+          errors={errors}
+          messFromServer={message}
+        />
+        <div>
+          <span>У вас уже есть аккаунт?</span>&nbsp;&nbsp;
+          <Link to='/login'>Вход</Link>
+        </div>
       </div>
     </div>
   )

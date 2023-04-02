@@ -1,6 +1,6 @@
 export const MENU_STUDENT = [
   {
-    name: 'Домашняя',
+    name: 'Кабинет',
     to: "/st-room",
     icon: "bi bi-house-fill"
   },
@@ -23,7 +23,7 @@ export const MENU_STUDENT = [
 
 export const MENU_MENTOR = [
   {
-    name: 'Домашняя',
+    name: 'Кабинет',
     to: "/mentor",
     icon: "bi bi-house-fill"
   },

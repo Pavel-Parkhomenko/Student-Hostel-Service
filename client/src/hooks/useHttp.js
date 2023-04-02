@@ -37,4 +37,4 @@ export default function useHttp() {
     }, [])
 
     return { loading, request }
-};
+}

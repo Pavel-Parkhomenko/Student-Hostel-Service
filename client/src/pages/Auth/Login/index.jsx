@@ -34,18 +34,20 @@ export function Login() {
 
   return (
     <div className="container__auth">
-      <h1>Вход</h1>
-      <Form
-        fields={fieldsLogin}
-        onChange={handleInput}
-        onClick={loginHandle}
-        buttonName="Вход"
-        errors={errors}
-        messFromServer={mess}
-      />
-      <div>
-        <span>У вас еще нет аккаунта?</span>&nbsp;&nbsp;
-        <Link to='/reg'>Регистрация</Link>
+      <div className="container__auth-into">
+        <h1>Вход</h1>
+        <Form
+          fields={fieldsLogin}
+          onChange={handleInput}
+          onClick={loginHandle}
+          buttonName="Вход"
+          errors={errors}
+          messFromServer={mess}
+        />
+        <div>
+          <span>У вас еще нет аккаунта?</span>&nbsp;&nbsp;
+          <Link to='/reg'>Регистрация</Link>
+        </div>
       </div>
     </div>
   )
