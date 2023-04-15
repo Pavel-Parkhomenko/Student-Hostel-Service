@@ -10,6 +10,8 @@ import { EventsPanel } from "./componets/EventsPanel";
 import { MentorRoom } from './pages/MentorRoom'
 import { Context } from './context'
 import { NewNews } from "./componets/NewsAction/NewNews"
+import { StudentList } from './componets/StudentList'
+import { MainStudent, Tech, Claim } from './componets/ForStudent'
 
 function App() {
   return (
@@ -20,13 +22,15 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/reg' element={<Registration />} />
           <Route path='/student' element={<StudentRoom />}>
-            <Route index element={<h1>Кабинет студента</h1>} />
+            <Route index element={<MainStudent />} />
+            <Route path="tech" element={<Tech />} />
+            <Route path="claim" element={<Claim />} />
             <Route path="news" element={<NewsPanel />} />
             <Route path="events" element={<EventsPanel />} />
             <Route path="chat" element={<h2>Чат</h2>} />
           </Route>
           <Route path='/mentor' element={<MentorRoom />}>
-            <Route index element={<h1>Кабинет воспитателя</h1>} />
+            <Route index element={<StudentList />} />
             <Route path="news" element={<NewsPanel />} />
             <Route path="news/create" element={<NewNews />} />
           </Route>

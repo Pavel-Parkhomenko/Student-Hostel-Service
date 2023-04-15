@@ -11,4 +11,6 @@ export const ROUTES_STUDENT = [
   {path: "/student/news", breadcrumb: "Новости"},
   {path: "/student/events", breadcrumb: "События"},
   {path: "/student/chat", breadcrumb: "Чат"},
+  {path: "/student/tech", breadcrumb: "Техника"},
+  {path: "/student/claim", breadcrumb: "Замечания"},
 ]

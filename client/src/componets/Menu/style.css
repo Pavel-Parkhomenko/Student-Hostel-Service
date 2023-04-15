@@ -1,0 +1,15 @@
+.dropdown {
+    position: absolute;
+    padding: 10px 20px;
+    top: 100%;
+    left: 0;
+    width: max-content;
+}
+
+.visible {
+    display: inline-block;
+}
+
+.hidde {
+    display: none;
+}

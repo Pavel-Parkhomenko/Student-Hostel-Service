@@ -7,9 +7,9 @@ export interface IStudent {
     numberTest: number,
     email?: string,
     formEducation: "платное" | "бесплатное",
-    dateEntry: string,
+    dateEntry?: string,
     balls?: number,
-    privateTechs?: Array<IPrivateTech>
+    privateTechs?: Array<IPrivateTech>,
     room: IRoom,
     remarks?: Array<IRemark>,
     account?: IAccount
@@ -22,6 +22,8 @@ interface IAccount {
 
 interface IRemark {
     dateAndTime: string,
+    header: string,
+    status: number,
     text: string,
     mentor: IMentor
 }
