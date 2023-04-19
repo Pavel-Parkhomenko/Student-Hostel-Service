@@ -8,6 +8,6 @@ export interface News {
         secondName: string,
         middleName: string,
     },
-    "dateCreate": string,
+    dateCreate: string,
 }
 // "10.10.2023 18:50"
