@@ -14,7 +14,8 @@ const schema = new Schema<IStudent>({
             _id: { type: Schema.Types.ObjectId, required: false },
             login: { type: String, required: true },
         },
-        required: false
+        required: false,
+        _id : false,
     },
     privateTechs: {
         type: [{
@@ -28,7 +29,9 @@ const schema = new Schema<IStudent>({
     remarks: {
         type: [{
             dateAndTime: { type: String, required: true },
+            header: { type: String, required: true },
             text: { type: String, required: true },
+            status: { type: Number, required: true },
             mentor: {
                 type: {
                     firstName: { type: String, required: true },

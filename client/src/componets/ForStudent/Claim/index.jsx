@@ -17,7 +17,7 @@ const remarks = [{
   text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
   mentor: {
     firstName: "Светлана",
-    secondName: "Общажновна",
+    secondName: "Ковалькова",
     middleName: "Евгеневна",
   }
 }, {
@@ -27,12 +27,12 @@ const remarks = [{
   text: "Some quick example text to build on the card title and make up the bulk of the card's content.",
   mentor: {
     firstName: "Светлана",
-    secondName: "Общажновна",
+    secondName: "Ковалькова",
     middleName: "Евгеневна",
   }
 }]
 
-export function Claim() {
+export function Claim({ remarks = [], role }) {
   return (
     <div>
       {remarks.map(item => (
@@ -55,7 +55,7 @@ export function Claim() {
               <span className="px-2">{item.mentor.firstName}</span>
               <span>{item.mentor.middleName}</span>
             </div>
-            <button type="button" className="btn btn-primary">Я прочитал</button>
+            { role === 'mentor' ? null : <button type="button" className="btn btn-primary">Я прочитал</button> }
           </div>
         </div>
       ))}

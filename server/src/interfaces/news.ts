@@ -1,9 +1,12 @@
 import { Types } from 'mongoose'
-export interface News {
+export interface INews {
     _id: Types.ObjectId,
-    header: string,
-    description: string,
-    mentor: {
+    body: [{
+        header: string,
+        description: string,
+        img: string,
+    }],
+    mentor?: {
         firstName: string,
         secondName: string,
         middleName: string,

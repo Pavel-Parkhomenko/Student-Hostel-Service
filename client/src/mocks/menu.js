@@ -68,11 +68,11 @@ export const MENU_MENTOR = [
     to: "events",
     icon: "bi bi-calendar-event",
     dropdown: [{
-      name: 'Создать event',
+      name: 'Создать',
       to: "events/create",
       icon: "bi bi-newspaper",
     }, {
-      name: 'Просмотреть event',
+      name: 'Просмотреть',
       to: "events",
       icon: "bi bi-newspaper",
     }]
@@ -81,6 +81,12 @@ export const MENU_MENTOR = [
     id: '3',
     name: 'Чат',
     to: "chat",
+    icon: "bi bi-chat-left-dots"
+  },
+  {
+    id: '4',
+    name: 'Студенты',
+    to: "students",
     icon: "bi bi-chat-left-dots"
   }
 ]

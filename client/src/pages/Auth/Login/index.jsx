@@ -1,11 +1,12 @@
-import React, {useState} from 'react'
+import React, { useState, useContext } from 'react'
 import {useHttp} from '../../../hooks'
 import {fieldsLogin} from '../../../mocks'
 import {Form} from '../../../componets/Form'
 import '../styles.css'
 import {Link, useNavigate} from "react-router-dom";
+import { URL } from '../../../constants'
 
-export function Login() {
+export function Login({ setContextState }) {
   const [form, setForm] = useState({
     login: '',
     password: '',
@@ -23,8 +24,15 @@ export function Login() {
 
   async function loginHandle() {
     try {
-      const {message, errors} = await request('auth/login', 'POST', {...form})
-      if(!errors) navigate("/st-room")
+      const {data, message, errors} = await request(URL + '/auth/login', 'POST', {...form})
+      if(!errors && data.role === 'mentor'){
+        localStorage.setItem('mentor', JSON.stringify(data._doc));
+        navigate("/mentor")
+      }
+      if(!errors && data.role === 'student') {
+        localStorage.setItem('student', JSON.stringify(data._doc));
+        navigate("/student")
+      }
       setErrors(errors)
       setMessage(message)
     } catch (error) {

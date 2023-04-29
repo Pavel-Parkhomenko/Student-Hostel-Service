@@ -10,6 +10,7 @@ const schema = new Schema<IAccount>({
         type: String,
         required: true
     },
+    role: {type: String, required: false}
 }, { versionKey: false })
 
 module.exports = model<IAccount>('accounts', schema);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Login } from './pages/Auth/Login'
@@ -8,35 +8,46 @@ import { StudentRoom } from './pages/StudentRoom'
 import { NewsPanel } from './componets/NewsAction/NewsPanel'
 import { EventsPanel } from "./componets/EventsPanel";
 import { MentorRoom } from './pages/MentorRoom'
-import { Context } from './context'
+import { MyContext } from './context'
 import { NewNews } from "./componets/NewsAction/NewNews"
 import { StudentList } from './componets/StudentList'
-import { MainStudent, Tech, Claim } from './componets/ForStudent'
+import { MainStudent, Claim } from './componets/ForStudent'
+import { ContainerTech } from './componets/ForStudent/Tech/ContainerTech'
+import { FullNews } from "./componets/NewsAction/FullNews"
+import { MainMentor } from "./componets/ForMentor/MainMentor";
+import { StudentFull } from "./componets/StudentFull";
+import { CreateClaim } from "./componets/ForMentor/CreateClaim";
 
 function App() {
+  const [contextState, setContextState] = useState({})
   return (
-    <Context.Provider value={{role: "mentor"}}>
+    <MyContext.Provider value={contextState}>
       <Router>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/reg' element={<Registration />} />
+          <Route path='/login' element={<Login setContextState={setContextState} />} />
+          <Route path='/reg' element={<Registration setContextState={setContextState}/>} />
           <Route path='/student' element={<StudentRoom />}>
             <Route index element={<MainStudent />} />
-            <Route path="tech" element={<Tech />} />
+            <Route path="tech" element={<ContainerTech />} />
             <Route path="claim" element={<Claim />} />
             <Route path="news" element={<NewsPanel />} />
+            <Route path="news/:id" element={<FullNews />} />
             <Route path="events" element={<EventsPanel />} />
             <Route path="chat" element={<h2>Чат</h2>} />
           </Route>
           <Route path='/mentor' element={<MentorRoom />}>
-            <Route index element={<StudentList />} />
+            <Route index element={<MainMentor />} />
+            <Route path="students" element={<StudentList />} />
+            <Route path="students/:id" element={<StudentFull />} />
+            <Route path="students/:id/create" element={<CreateClaim />} />
             <Route path="news" element={<NewsPanel />} />
+            <Route path="news/:id" element={<FullNews />} />
             <Route path="news/create" element={<NewNews />} />
           </Route>
         </Routes>
       </Router>
-    </Context.Provider>
+    </MyContext.Provider>
   )
 }
 

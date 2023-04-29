@@ -1,83 +1,60 @@
-import React, { useState } from 'react'
-import { STUDENT } from '../../../mocks'
-
-export const STUDENTA = {
-  privateTechs: [{
-    model: "Test",
-    number: "12RT124",
-    type: "Холодильник",
-  }],
-  remarks: [{
-    dateAndTime: "10.10.2023 10:10",
-    text: "ad fsdf sdf fdg fgdf ert gdgdf",
-    mentor: {
-      firstName: "Светлана",
-      secondName: "Общажновна",
-      middleName: "Евгеневно",
-    }
-  }],
-  account: {
-    login: 'login1'
-  }
-}
+import React, { useEffect, useState } from 'react'
 
 export function MainStudent() {
-  const [data] = useState(STUDENT)
+  const [data, setData] = useState({})
+
+  useEffect(() => {
+    setData(JSON.parse(localStorage.getItem("student")))
+  }, [])
+
+  console.log(data)
   return (
     <div className="w-100 px-3 py-3 bg-white rounded">
-      <div className="d-flex flex-column w-50">
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Фамилия</small>
-          <p>{data.secondName}</p>
+      <div className="d-flex flex-column">
+        <div className="row mb-3">
+          <label htmlFor="inputEmail1" className="col-sm-2 col-form-label w-25">Email</label>
+          <div className="col-sm-10 w-50">
+            <input type="email" className="form-control" id="inputEmail1"/>
+          </div>
         </div>
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Имя</small>
-          <p>{data.firstName}</p>
-        </div>
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Отчество</small>
-          <p>{data.middleName}</p>
-        </div>
-      </div>
-      <hr className="hr" />
-      <div className="d-flex flex-column w-50">
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Этаж</small>
-          <p>{data.room.floor}</p>
-        </div>
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Блок</small>
-          <p>{data.room.block}</p>
-        </div>
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Комната</small>
-          <p>{data.room.apartament}</p>
+        <div className="row mb-3">
+          <label htmlFor="inputEmail2" className="col-sm-2 col-form-label w-25">Логин</label>
+          <div className="col-sm-10 w-50">
+            <input type="email" className="form-control" id="inputEmail2"/>
+          </div>
         </div>
       </div>
       <hr className="hr" />
-      <div className="d-flex flex-column w-50">
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Номер зачетки</small>
-          <p>{data.numberTest}</p>
+      <div className="d-flex flex-column">
+        <div className="row mb-3">
+          <label htmlFor="inputEmail3" className="col-sm-2 col-form-label w-25">Введите старый пароль</label>
+          <div className="col-sm-10 w-50">
+            <input type="email" className="form-control" id="inputEmail3"/>
+          </div>
         </div>
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Email</small>
-          <p>{data.email}</p>
+        <div className="row mb-3">
+          <label htmlFor="inputEmail3" className="col-sm-2 col-form-label w-25">Введите новый пароль</label>
+          <div className="col-sm-10 w-50">
+            <input type="email" className="form-control" id="inputEmail3"/>
+          </div>
         </div>
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Форма обучения</small>
-          <p>{data.formEducation}</p>
-        </div>
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Дата заселения</small>
-          <p>{data.dateEntry}</p>
-        </div>
-        <div className="d-flex flex-row justify-content-between">
-          <small className="text-muted">Баллы</small>
-          <p>{data.balls}</p>
+        <div className="row mb-3">
+          <label htmlFor="inputEmail4" className="col-sm-2 col-form-label w-25">Повторите пароль</label>
+          <div className="col-sm-10 w-50">
+            <input type="email" className="form-control" id="inputEmail4"/>
+          </div>
         </div>
       </div>
       <hr className="hr" />
+      <div className="d-flex justify-content-between bd-highlight mt-3">
+        <button
+          type="button"
+          className="bg-primary border-0 text-light rounded"
+          onClick={() => console.log()}
+        >
+          Сохранить изменения
+        </button>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bp = require('body-parser')
+const multer = require('multer');
 import cors from 'cors'
+
 const app = express();
 import {
     PORT, NAME_DB
@@ -12,12 +15,16 @@ app.use((req, res, next) => {
     next()
 })
 
-const bp = require('body-parser')
+
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
+app.use(express.static(__dirname));
 
 app.use('/auth', require('./routers/auth.route'))
 app.use('/student', require('./routers/student.route'))
+app.use('/test', require('./routers/test.route'))
+app.use('/mentor', require('./routers/mentor.route'))
+app.use('/news', require('./routers/news.route'))
 
 async function start() {
     try {

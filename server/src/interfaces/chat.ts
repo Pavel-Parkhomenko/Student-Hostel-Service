@@ -1,13 +1,4 @@
-interface Employee {
-    _id: string,
-    firstName: string,
-    secondName: string,
-    middleName: string,
-    role: "mentor" | "main",
-    chats?: Array<Chat>
-}
-
-export interface Chat {
+export interface IChat {
     messages: [
         {
             who: Who,

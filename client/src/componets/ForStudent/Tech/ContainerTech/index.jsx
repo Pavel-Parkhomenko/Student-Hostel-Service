@@ -1,11 +1,5 @@
 import React from 'react'
 
-// privateTechs: [{
-//   model: "Test",
-//   number: "12RT124",
-//   type: "Холодильник",
-// }],
-
 const privateTechs = [{
   model: "Test",
   number: "12RT124",
@@ -16,7 +10,7 @@ const privateTechs = [{
   type: "Холодильник",
 }]
 
-export function Tech() {
+export function ContainerTech() {
   return (
     <div className="w-100 px-3 py-3 bg-white rounded">
       <div className="d-flex flex-column w-100">

@@ -29,7 +29,7 @@ export default function useHttp() {
                 return { message: (data.message || "Сервер не доступен :("), errors: actionErrors(data.errors) };
             }
             setLoading(false);
-            return { message: (data.message || "Успех"), errors: null };
+            return { data: data?.data || null, message: (data.message || "Успех"), errors: null };
 
         } catch (error) {
             setLoading(false);

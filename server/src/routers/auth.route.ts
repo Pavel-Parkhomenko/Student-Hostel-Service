@@ -2,8 +2,9 @@ const {Router} = require('express');
 const Account = require('../models/account');
 const {check, validationResult} = require('express-validator')
 const Student = require('../models/student')
-import {IAccount, IStudent} from '../interfaces'
+import {IAccount, IStudent, IMentor} from '../interfaces'
 const nodemailer = require('nodemailer')
+const Mentor = require('../models/mentor')
 const {
   v1: uuidv1,
   v4: uuidv4
@@ -33,7 +34,16 @@ router.post('/login',
       if (password !== acc.password)
         return res.status(400).json({message: 'Пользователя с таким паролем не существует'})
 
-      return res.status(200).json({login: login, message: 'Вход выполнен успешно'})
+      if(acc.role === "mentor") {
+        const mentor = await Mentor.findOne({"account.login": login});
+        console.log(mentor)
+        return res.status(200).json({data: { ...mentor, role: "mentor" }, message: 'Вход выполнен успешно'})
+      } else if (acc.role === "main") {
+        //
+      } else {
+        const student: IStudent = await Student.findOne({"account.login": login});
+        return res.status(200).json({data: { ...student, role: "student" }, message: 'Вход выполнен успешно'})
+      }
 
     } catch (err) {
       return res.status(500).json({message: 'Что-то пошло не так'})

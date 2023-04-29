@@ -3,7 +3,7 @@ import {Types} from "mongoose";
 export interface IClaim {
     _id: Types.ObjectId,
     header: string,
-    description: string,
+    text: string,
     student: IStudent,
     dateAndTime: string
 }

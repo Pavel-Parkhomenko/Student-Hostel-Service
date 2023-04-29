@@ -1,6 +1,7 @@
 export const ROUTES_MENTOR = [
   {path: "/", breadcrumb: "Домашняя"},
   {path: "/mentor", breadcrumb: "Кабинет"},
+  {path: "/mentor/students", breadcrumb: "Студенты"},
   {path: "/mentor/news", breadcrumb: "Новости"},
   {path: "/mentor/news/create", breadcrumb: "Новая новость"},
 ]

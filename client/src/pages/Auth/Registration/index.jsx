@@ -5,7 +5,7 @@ import { fieldsRegistration } from '../../../mocks'
 import { Form } from '../../../componets/Form'
 import '../styles.css'
 
-export function Registration() {
+export function Registration({ setContextState }) {
   const [form, setForm] = useState({
     numberTest: '',
     email: ''

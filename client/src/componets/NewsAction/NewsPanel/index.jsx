@@ -1,19 +1,32 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NewsItem } from '../NewsItem'
 import { NEWS } from '../../../mocks'
-import { Context } from '../../../context'
+import { useHttp } from "../../../hooks"
+import { URL } from "../../../constants"
 
 export function NewsPanel() {
-  const {role} = useContext(Context)
+  const [news, setNews] = useState([])
+  const {loading, request} = useHttp();
+
+  useEffect(() => {
+    async function fetchGetNews() {
+      const {data, message } = await request(URL + '/news/get-news', 'GET')
+      setNews([...data])
+      console.log(data)
+    }
+    fetchGetNews()
+  }, [])
+
   return (
     <div>
-      {NEWS.map(item => <NewsItem
-        key={item.header}
-        header={item.header}
-        content={item.content}
-        imgs={item.imgs}
-        date={item.date}
-        author={item.author}
+      {news.map((item) => <NewsItem
+        id={item._id}
+        key={item.body[0].header}
+        header={item.body[0].header}
+        content={item.body[0].description}
+        img={item.body[0].img}
+        date={item.dateCreate}
+        author={item.mentor}
       />)}
     </div>
   )

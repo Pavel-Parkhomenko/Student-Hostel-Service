@@ -1,10 +1,13 @@
-import { Chat } from './chat'
+import { IChat } from './chat'
 import { IAccount } from './account'
-import { News } from './news'
 import { IStudent } from './student'
+import { IMentor } from './mentor'
+import { INews } from './news'
+
 export {
-    Chat,
-    IAccount,
-    News,
-    IStudent
+  IChat,
+  IAccount,
+  INews,
+  IStudent,
+  IMentor
 }
