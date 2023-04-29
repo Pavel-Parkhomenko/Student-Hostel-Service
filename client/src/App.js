@@ -17,6 +17,7 @@ import { FullNews } from "./componets/NewsAction/FullNews"
 import { MainMentor } from "./componets/ForMentor/MainMentor";
 import { StudentFull } from "./componets/StudentFull";
 import { CreateClaim } from "./componets/ForMentor/CreateClaim";
+import { CreateEvent } from "./componets/ForMentor/CreateEvent";
 
 function App() {
   const [contextState, setContextState] = useState({})
@@ -44,6 +45,7 @@ function App() {
             <Route path="news" element={<NewsPanel />} />
             <Route path="news/:id" element={<FullNews />} />
             <Route path="news/create" element={<NewNews />} />
+            <Route path="events/create" element={<CreateEvent />} />
           </Route>
         </Routes>
       </Router>

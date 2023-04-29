@@ -1,31 +1,16 @@
 import { Types } from 'mongoose'
-export interface IEvents {
+export interface IEvent {
   _id: Types.ObjectId,
-  body: {
-    header: string,
-    description: string,
-    img?: string,
-    guests?: [
-      {
-        firstName: string,
-        secondName: string,
-        middleName: string,
-        description: string,
-      }
-    ],
-    party: [
-      {
-        firstName: string,
-        secondName: string,
-        description: string,
-      }
-    ]
-  },
-  mentor?: {
-    firstName: string,
-    secondName: string,
-    middleName: string,
-  },
+  header: string,
+  description: string,
+  img?: string,
+  party: [
+    {
+      firstName: string,
+      secondName: string,
+      description: string,
+    }
+  ],
   dateEvent: string,
   placeEvent: string
 }

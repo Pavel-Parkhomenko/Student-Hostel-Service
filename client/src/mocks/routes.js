@@ -4,6 +4,8 @@ export const ROUTES_MENTOR = [
   {path: "/mentor/students", breadcrumb: "Студенты"},
   {path: "/mentor/news", breadcrumb: "Новости"},
   {path: "/mentor/news/create", breadcrumb: "Новая новость"},
+  {path: "/mentor/events", breadcrumb: "Мероприятия"},
+  {path: "/mentor/events/create", breadcrumb: "Создать"},
 ]
 
 export const ROUTES_STUDENT = [
