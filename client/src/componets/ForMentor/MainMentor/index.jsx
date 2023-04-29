@@ -9,8 +9,9 @@ export function MainMentor() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const mentor = JSON.parse(localStorage.getItem('mentor'))
       const { data, message } = await request(
-        URL + '/mentor/info-mentor', "POST", { login: "mentor1"}
+        URL + '/mentor/info-mentor', "POST", { login: mentor.account?.login}
       )
       setRes({...data})
 

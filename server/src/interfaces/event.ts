@@ -4,13 +4,6 @@ export interface IEvent {
   header: string,
   description: string,
   img?: string,
-  party: [
-    {
-      firstName: string,
-      secondName: string,
-      description: string,
-    }
-  ],
   dateEvent: string,
   placeEvent: string
 }

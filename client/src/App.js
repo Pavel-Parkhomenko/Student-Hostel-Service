@@ -6,7 +6,7 @@ import { Registration } from './pages/Auth/Registration'
 import { Home } from './pages/Home'
 import { StudentRoom } from './pages/StudentRoom'
 import { NewsPanel } from './componets/NewsAction/NewsPanel'
-import { EventsPanel } from "./componets/EventsPanel";
+import { EventPanel } from "./componets/ViewEvent/EventPanel";
 import { MentorRoom } from './pages/MentorRoom'
 import { MyContext } from './context'
 import { NewNews } from "./componets/NewsAction/NewNews"
@@ -34,7 +34,7 @@ function App() {
             <Route path="claim" element={<Claim />} />
             <Route path="news" element={<NewsPanel />} />
             <Route path="news/:id" element={<FullNews />} />
-            <Route path="events" element={<EventsPanel />} />
+            <Route path="events" element={<EventPanel />} />
             <Route path="chat" element={<h2>Чат</h2>} />
           </Route>
           <Route path='/mentor' element={<MentorRoom />}>
@@ -45,6 +45,7 @@ function App() {
             <Route path="news" element={<NewsPanel />} />
             <Route path="news/:id" element={<FullNews />} />
             <Route path="news/create" element={<NewNews />} />
+            <Route path="events" element={<EventPanel />} />
             <Route path="events/create" element={<CreateEvent />} />
           </Route>
         </Routes>

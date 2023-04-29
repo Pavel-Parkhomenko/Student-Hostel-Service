@@ -4,6 +4,13 @@ import { HideMenu } from './HideMenu'
 
 export function Menu({ menu }) {
   const [visibleLinks, setVisibleLinks] = useState([])
+  const [visiblePerson, setVisiblePerson] = useState('hidde')
+  function handleVisibleOver(id) {
+    handleLink(id)
+  }
+  function handleVisibleOut(id) {
+    handleLink(id)
+  }
   function handleLink(id) {
     const tempArr = visibleLinks
     const tempItem = tempArr[id] === "hidde" ? "visible" : "hidde"
@@ -15,6 +22,10 @@ export function Menu({ menu }) {
   useEffect(() => {
     setVisibleLinks(new Array(menu.length).fill("hidde"))
   }, [])
+
+  function handlePersonIcon() {
+
+  }
 
   return (
     <>
@@ -32,7 +43,9 @@ export function Menu({ menu }) {
               } else {
                 return <li
                   className="nav-item me-2"
-                  onClick={() => handleLink(id)}
+                  // onClick={() => handleLink(id)}
+                  onMouseOver={() => handleVisibleOver(id)}
+                  onMouseOut={() => handleVisibleOut(id)}
                   style={{position: "relative", cursor: "pointer"}}
                   key={id}
                 >
@@ -47,7 +60,17 @@ export function Menu({ menu }) {
               }
             })}
           </ul>
-          <i className="text-primary me-3 bi bi-person-fill fs-3" />
+          <div
+            style={{position: "relative", cursor: "pointer"}}
+            onClick={() => setVisiblePerson(visiblePerson === 'hidde' ? 'visible' : 'hidde')}
+          >
+            <i className="text-primary me-3 bi bi-person-fill fs-3" />
+            <HideMenu
+              onClickLink={() => localStorage.clear()}
+              links={[{to: '/login', name: 'Выход', icon: 'bi bi-arrow-down-right-circle' }]}
+              visibleLink={visiblePerson}
+            />
+          </div>
         </div>
       </nav>
     </>

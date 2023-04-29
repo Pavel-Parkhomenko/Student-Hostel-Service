@@ -25,6 +25,7 @@ app.use('/student', require('./routers/student.route'))
 app.use('/test', require('./routers/test.route'))
 app.use('/mentor', require('./routers/mentor.route'))
 app.use('/news', require('./routers/news.route'))
+app.use('/event', require('./routers/event.route'))
 
 async function start() {
     try {

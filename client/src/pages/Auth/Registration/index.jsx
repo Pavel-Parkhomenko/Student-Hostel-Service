@@ -23,7 +23,7 @@ export function Registration({ setContextState }) {
   async function loginHandle() {
     try {
       const {message, errors} = await request('auth/registr', 'POST', {...form})
-      if (!errors) navigate("/st-room")
+      if (!errors) navigate("/student")
       setErrors(errors)
       setMessage(message)
     } catch (error) {

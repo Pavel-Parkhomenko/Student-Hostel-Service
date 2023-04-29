@@ -42,8 +42,6 @@ router.post('/create-news',async (req, res) => {
       dateCreate: '10.10.2023 18:50',
     })
     const newNews = await news.save()
-    console.log('newNews')
-    console.log(newNews)
     return res.status(200).json({data: { id: newNews._id }, message: 'Новость создана'})
   } catch(err) {
     console.log('/news/create-news ', err.message)
@@ -65,7 +63,6 @@ router.get('/get-news',async (req, res) => {
 
     return res.status(200).json({data: news, message: 'Новости получены'})
   } catch(err) {
-    console.log('/news/get-news ', err.message)
     return res.status(500).json({message: 'Что-то пошло не так - сервер'})
   }
 })
@@ -76,7 +73,6 @@ router.get('/get-news-id',async (req, res) => {
     const data = await News.findOne({ _id: id })
     return res.status(200).json({data: data, message: 'Новость получена'})
   } catch(err) {
-    console.log('/news/get-news-id ', err.message)
     return res.status(500).json({message: 'Что-то пошло не так - сервер'})
   }
 })
