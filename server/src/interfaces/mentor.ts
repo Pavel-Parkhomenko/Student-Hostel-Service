@@ -12,7 +12,7 @@ export interface IMentor {
   middleName: string,
   role?: "mentor"
   img?: string,
-  chats?: Array<IChat>
+  chats?: Array<string>,
   account: IAccount,
   impact: {
     from: number,

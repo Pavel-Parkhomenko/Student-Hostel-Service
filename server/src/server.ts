@@ -26,6 +26,8 @@ app.use('/test', require('./routers/test.route'))
 app.use('/mentor', require('./routers/mentor.route'))
 app.use('/news', require('./routers/news.route'))
 app.use('/event', require('./routers/event.route'))
+app.use('/chat', require('./routers/chat.route'))
+app.use('/common', require('./routers/common.route'))
 
 async function start() {
     try {

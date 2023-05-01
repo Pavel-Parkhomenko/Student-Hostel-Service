@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import readXlsxFile from 'read-excel-file'
 import { useHttp } from "../../hooks";
-import axios from 'axios'
 
 export function Home() {
 
@@ -40,40 +39,16 @@ export function Home() {
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
-  const handleSubmit = async (event) => {
+  const handleSubmit2 = async (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append('name', name);
     formData.append('email', email);
     formData.append('file', file);
-
-    // for (let key of formData.keys()) {
-    //   console.log(key, formData.get(key));
-    // }
     await fetch('http://localhost:5000/test/upload', {
       body: formData,
       method: 'POST'
     })
-
-    // axios.post('http://localhost:5000/test/submit-form', formData)
-    //   .then(response => {
-    //     console.log(response.data);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
-
-    console.log('fetch')
-
-    // try {
-    //   const {message} = await request('http://localhost:5000/test/submit-form', {
-    //     body: formData,
-    //     method: 'POST'
-    //   })
-    //   console.log(message)
-    // } catch (error) {
-    //   console.log(error)
-    // }
   };
 
   return (
@@ -81,7 +56,7 @@ export function Home() {
       <input onChange={e => handleChange(e)} type="file" id="input" className="w-100" />
       <button type="button" onClick={loginHandle} className="btn-primary">test</button>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit2}>
         <label htmlFor="name">Name:</label>
         <input type="text" name="name" id="name" value={name} onChange={handleNameChange} required />
         <br />
@@ -93,6 +68,21 @@ export function Home() {
         <br />
         <button type="submit">Submit</button>
       </form>
+
     </div>
   )
 }
+
+//<div>
+//         <h1>Chat</h1>
+//         <form onSubmit={handleSubmit}>
+//           <input type="text" placeholder="User" value={user} onChange={(e) => setUser(e.target.value)} />
+//           <input type="text" placeholder="Message" value={text} onChange={(e) => setText(e.target.value)} />
+//           <button type="submit">Send</button>
+//         </form>
+//         <ul>
+//           {messages.map((message, index) => (
+//             <li key={index}><strong>{message.user}:</strong> {message.text}</li>
+//           ))}
+//         </ul>
+//       </div>

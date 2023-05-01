@@ -4,23 +4,27 @@ export function MainStudent() {
   const [data, setData] = useState({})
 
   useEffect(() => {
-    setData(JSON.parse(localStorage.getItem("student")))
+    setData(JSON.parse(localStorage.getItem("user")))
   }, [])
 
-  console.log(data)
   return (
     <div className="w-100 px-3 py-3 bg-white rounded">
+      <p className="text-muted mb-3">Здесь вы можете изменить логин, пароль или email</p>
       <div className="d-flex flex-column">
         <div className="row mb-3">
           <label htmlFor="inputEmail1" className="col-sm-2 col-form-label w-25">Email</label>
           <div className="col-sm-10 w-50">
-            <input type="email" className="form-control" id="inputEmail1"/>
+            <input type="email" className="form-control" id="inputEmail1"
+                   placeholder={data.email}
+            />
           </div>
         </div>
         <div className="row mb-3">
           <label htmlFor="inputEmail2" className="col-sm-2 col-form-label w-25">Логин</label>
           <div className="col-sm-10 w-50">
-            <input type="email" className="form-control" id="inputEmail2"/>
+            <input type="email" className="form-control" id="inputEmail2"
+                   placeholder={data.account?.login}
+            />
           </div>
         </div>
       </div>

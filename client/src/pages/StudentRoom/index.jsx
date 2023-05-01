@@ -11,7 +11,7 @@ export function StudentRoom() {
   const [student, setStudent] = useState({})
 
   useEffect(() => {
-    setStudent(JSON.parse(localStorage.getItem("student")))
+    setStudent(JSON.parse(localStorage.getItem("user")))
   }, [])
 
   return (
@@ -23,7 +23,7 @@ export function StudentRoom() {
             <Menu menu={MENU_STUDENT} />
           </Header>
           <BreadCrumbs routes={ROUTES_STUDENT} />
-          <div className="shadow rounded w-100">
+          <div className="rounded w-100">
             <Outlet />
           </div>
         </div>

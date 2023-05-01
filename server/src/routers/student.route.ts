@@ -41,6 +41,7 @@ router.get('/get-info', async (req, res) => {
 
     for (let i = 0; i < data.length; i++) {
       resStudents.push({
+        id: data[i]._id,
         firstName: data[i].firstName,
         middleName: data[i].middleName,
         secondName: data[i].secondName,
@@ -61,6 +62,19 @@ router.get('/get-student-id', async (req, res) => {
     return res.status(200).json({data: data, message: 'Данные загруженны'})
   } catch (err) {
     return res.status(500).json({message: 'Что-то пошло не так'})
+  }
+})
+
+router.post('/change-status-claim', async (req, res) => {
+  try {
+    const { numberTest, ind } = req.body
+    const data = await Student.findOne({numberTest: numberTest})
+    data.remarks[ind].status = 1
+    await data.save()
+    return res.status(200).json({message: 'Статус изменен'})
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({message: 'Что-то пошло не так - сервер'})
   }
 })
 

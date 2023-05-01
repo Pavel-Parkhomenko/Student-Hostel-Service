@@ -18,6 +18,8 @@ import { MainMentor } from "./componets/ForMentor/MainMentor";
 import { StudentFull } from "./componets/StudentFull";
 import { CreateClaim } from "./componets/ForMentor/CreateClaim";
 import { CreateEvent } from "./componets/ForMentor/CreateEvent";
+import { Chat } from "./componets/Chat";
+import { CreateChat } from "./componets/Chat/CreateChat";
 
 function App() {
   const [contextState, setContextState] = useState({})
@@ -35,7 +37,7 @@ function App() {
             <Route path="news" element={<NewsPanel />} />
             <Route path="news/:id" element={<FullNews />} />
             <Route path="events" element={<EventPanel />} />
-            <Route path="chat" element={<h2>Чат</h2>} />
+            <Route path="chat" element={<Chat />} />
           </Route>
           <Route path='/mentor' element={<MentorRoom />}>
             <Route index element={<MainMentor />} />
@@ -47,6 +49,8 @@ function App() {
             <Route path="news/create" element={<NewNews />} />
             <Route path="events" element={<EventPanel />} />
             <Route path="events/create" element={<CreateEvent />} />
+            <Route path="chat" element={<Chat />} />
+            <Route path="chat/create" element={<CreateChat />} />
           </Route>
         </Routes>
       </Router>

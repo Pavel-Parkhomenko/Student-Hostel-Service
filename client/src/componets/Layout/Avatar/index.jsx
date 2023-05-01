@@ -3,7 +3,6 @@ import './style.css'
 import defaultImg from '../../../assets/student.png'
 
 export function Avatar({ data, ava='' }) {
-  console.log(data)
   return (
     <div className="shadow bg-white pt-3 rounded w-30 me-4 avatar__container">
       <img src={ava || defaultImg} className="foto mb-3"/>
@@ -20,6 +19,10 @@ export function Avatar({ data, ava='' }) {
           <p><small className="text-muted">Комната</small>{data.room?.apartament}</p>
         </div>
         <hr className="hr"/>
+        <div className="d-flex flex-column">
+          <p><small className="text-muted">Образование</small>{data.formEducation}</p>
+          <p><small className="text-muted">Номер зачетки</small>{data.numberTest}</p>
+        </div>
       </div>
     </div>
   )

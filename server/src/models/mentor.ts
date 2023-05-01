@@ -22,6 +22,7 @@ const schema = new Schema<IMentor>({
     required: true,
     _id : false,
   },
+  chats: { type: [String], required: false }
 
 }, { versionKey: false })
 

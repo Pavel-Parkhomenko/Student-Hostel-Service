@@ -26,11 +26,11 @@ export function Login({ setContextState }) {
     try {
       const {data, message, errors} = await request(URL + '/auth/login', 'POST', {...form})
       if(!errors && data.role === 'mentor'){
-        localStorage.setItem('mentor', JSON.stringify(data._doc));
+        localStorage.setItem('user', JSON.stringify(data._doc));
         navigate("/mentor")
       }
       if(!errors && data.role === 'student') {
-        localStorage.setItem('student', JSON.stringify(data._doc));
+        localStorage.setItem('user', JSON.stringify(data._doc));
         navigate("/student")
       }
       setErrors(errors)

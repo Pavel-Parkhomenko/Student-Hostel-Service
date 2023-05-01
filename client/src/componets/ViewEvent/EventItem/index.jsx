@@ -37,11 +37,13 @@ export function EventItem(
       </div>
       <div className="card-body">
         <h5 className="card-title">{header}</h5>
-        <img src={url}
-             className="img-thumbnail card-img-top"
-             alt="card-img-top"
-             style={{width: '300px'}}
-        />
+        <div className="m-4 d-flex justify-content-center">
+          <img src={url}
+               className="card-img-top"
+               alt="card-img-top"
+               style={{width: '300px'}}
+          />
+        </div>
         <p className="card-text">{description}</p>
       </div>
       <div className="card-footer d-flex justify-content-between">

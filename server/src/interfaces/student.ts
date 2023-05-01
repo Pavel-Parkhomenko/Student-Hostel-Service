@@ -12,7 +12,8 @@ export interface IStudent {
     privateTechs?: Array<IPrivateTech>,
     room: IRoom,
     remarks?: Array<IRemark>,
-    account?: IAccount
+    account?: IAccount,
+    chats?: Array<string>
 }
 
 interface IAccount {
