@@ -1,17 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
 import { URL } from "../../../constants";
+import { MyContext } from '../../../context'
+import { Loading } from '../../Loading'
+import { EmptyData } from '../../EmptyData'
 
-
-export function Claim({ remarks = [], role }) {
+export function Claim({ remarks = [], role='student' }) {
   const [remarksState, setRemarksState] = useState(remarks)
   const { loading, request } = useHttp()
+  const { toast } = useContext(MyContext)
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'))
-    if(user.remarks) {
-      setRemarksState(user.remarks)
+    async function fetchRemarks() {
+      const user = JSON.parse(localStorage.getItem('user'))
+      const { data, message } = await request(URL + '/student/get-remarks', 'POST', {
+        numberTest: user.numberTest
+      })
+      setRemarksState(data)
     }
+    if(role === 'student') fetchRemarks()
   }, [])
 
   async function handleIRead(event, ind) {
@@ -23,10 +30,16 @@ export function Claim({ remarks = [], role }) {
         ind: ind
       }
     )
+    toast.success(message)
   }
+
+  if(loading) return <Loading />
+
+  if(remarksState.length === 0) return <EmptyData message="Замечания отсуствуют"/>
 
   return (
     <div>
+      <p className="text-muted">Замечания</p>
       {remarksState.map((item, ind) => (
         <div
           className="card mb-3"
@@ -47,12 +60,12 @@ export function Claim({ remarks = [], role }) {
               <span className="px-2">{item.mentor.firstName}</span>
               <span>{item.mentor.middleName}</span>
             </div>
-            { role === 'mentor' ? null :
+            {role === 'mentor' ? null :
               <button type="button" className="btn btn-primary"
                       onClick={( event) => handleIRead(event, ind)}
             >
                 {item.status === 0 ? "Я прочитал" : "Прочитано"}
-            </button> }
+            </button>}
           </div>
         </div>
       ))}

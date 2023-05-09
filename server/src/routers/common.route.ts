@@ -8,13 +8,12 @@ const router = Router()
 router.post('/get-chats', async (req, res) => {
   try {
     const { id, role } = req.body
-    console.log(id, role)
     if(role === 'mentor') {
       const model = await Mentor.findOne({ _id: id });
-      return res.status(200).json({data: model.chats, message: 'Данные найдены'})
+      return res.status(200).json({data: model.chats || [], message: 'Данные найдены'})
     } else {
       const model = await Student.findOne({ _id: id });
-      return res.status(200).json({data: model.chats, message: 'Данные найдены'})
+      return res.status(200).json({data: model.chats || [], message: 'Данные найдены'})
     }
   } catch (err) {
     console.log(err)

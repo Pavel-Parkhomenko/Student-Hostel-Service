@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
 import { URL } from "../../../constants";
+import { Loading } from '../../Loading'
 
 export function MainMentor() {
   const { loading, request } = useHttp()
@@ -15,7 +16,7 @@ export function MainMentor() {
       )
       setRes({...data})
 
-      fetch(URL + '/test/load?' + `img=${data.img}`)
+      fetch(URL + '/mentor/load?' + `img=${data.img}`)
         .then(response => response.blob())
         .then(blob => {
           const url = window.URL.createObjectURL(new Blob([blob]));
@@ -25,7 +26,7 @@ export function MainMentor() {
     fetchData()
   }, [])
 
-  if(loading) return <div>ЗАГРУЗКА</div>
+  if(loading) return<Loading />
 
   return (
     <div className="px-3 py-3 bg-white rounded">

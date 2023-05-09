@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { NewsItem } from '../NewsItem'
-import { NEWS } from '../../../mocks'
 import { useHttp } from "../../../hooks"
 import { URL } from "../../../constants"
+import { Loading } from "../../Loading";
 
 export function NewsPanel() {
   const [news, setNews] = useState([])
@@ -10,12 +10,13 @@ export function NewsPanel() {
 
   useEffect(() => {
     async function fetchGetNews() {
-      const {data, message } = await request(URL + '/news/get-news', 'GET')
+      const {data } = await request(URL + '/news/get-news', 'GET')
       setNews([...data])
-      console.log(data)
     }
     fetchGetNews()
   }, [])
+
+  if(loading) return <Loading />
 
   return (
     <div>

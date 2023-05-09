@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHttp } from '../../../hooks'
 import { URL } from '../../../constants'
 import { EventItem } from "../EventItem"
+import { Loading } from '../../Loading'
 
 export function EventPanel() {
   const [events, setEvents] = useState([])
@@ -9,13 +10,13 @@ export function EventPanel() {
 
   useEffect(() => {
     const getEvents = async () => {
-      const { data, message } = await request(URL + '/event/get-events')
+      const { data } = await request(URL + '/event/get-events')
       setEvents([...data])
     }
     getEvents()
   }, [])
 
-  console.log(events)
+  if(loading) return <Loading />
 
   return(
     <div>

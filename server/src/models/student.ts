@@ -54,7 +54,8 @@ const schema = new Schema<IStudent>({
         required: true,
         _id : false,
     },
-    chats: { type: [String], required: false }
+    chats: { type: [String], required: false },
+    img: { type: String, required: false },
 
 }, { versionKey: false })
 

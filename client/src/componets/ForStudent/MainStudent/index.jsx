@@ -1,64 +1,83 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { SimpleForm } from "../../SimpleForm";
+import { CHANGE_INFO_STUDENT } from "../../../mocks";
+import { useHttp } from "../../../hooks";
+import { URL } from "../../../constants";
+import { MyContext } from '../../../context'
 
 export function MainStudent() {
   const [data, setData] = useState({})
 
   useEffect(() => {
     setData(JSON.parse(localStorage.getItem("user")))
-  }, [])
+  }, []) //data.email data.account?.login
+
+  const { toast } = useContext(MyContext)
+
+  const [form, setForm] = useState({
+    email: '',
+    login: '',
+    oldPassword: '',
+    newPassword: '',
+    repeatPassword: '',
+  })
+  const [file, setFile] = useState(null)
+
+  function handleInput(event) {
+    setForm({...form, [event.target.name]: event.target.value})
+  }
+
+  async function handleClick(event) {
+    event.preventDefault()
+    if(form.newPassword !== form.repeatPassword ){
+      toast.error('Пароли должны совпадать')
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('numberTest', data.numberTest)
+    formData.append('email', form.email)
+    formData.append('login', form.login)
+    formData.append('newPassword', form.newPassword)
+    formData.append('oldPassword', form.oldPassword)
+    formData.append('file', file)
+    const response = await fetch(URL + '/student/update-info', {
+      method: 'POST',
+      body: formData,
+    })
+    const student = await response.json()
+    if(!response.ok){
+      toast.error(student.message)
+    } else {
+      toast.success(student.message)
+      localStorage.setItem('user', JSON.stringify(student.data))
+    }
+  }
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
 
   return (
-    <div className="w-100 px-3 py-3 bg-white rounded">
-      <p className="text-muted mb-3">Здесь вы можете изменить логин, пароль или email</p>
-      <div className="d-flex flex-column">
-        <div className="row mb-3">
-          <label htmlFor="inputEmail1" className="col-sm-2 col-form-label w-25">Email</label>
-          <div className="col-sm-10 w-50">
-            <input type="email" className="form-control" id="inputEmail1"
-                   placeholder={data.email}
-            />
-          </div>
-        </div>
-        <div className="row mb-3">
-          <label htmlFor="inputEmail2" className="col-sm-2 col-form-label w-25">Логин</label>
-          <div className="col-sm-10 w-50">
-            <input type="email" className="form-control" id="inputEmail2"
-                   placeholder={data.account?.login}
-            />
-          </div>
-        </div>
+    <div className="w-100 p-3 bg-white rounded">
+      <div className="mb-4">
+        <p className="text-muted">Выберите свою фотографию</p>
+        <input
+          className="form-control mt-3"
+          type="file"
+          id="file"
+          name="file"
+          onChange={handleFileChange}
+        />
       </div>
-      <hr className="hr" />
-      <div className="d-flex flex-column">
-        <div className="row mb-3">
-          <label htmlFor="inputEmail3" className="col-sm-2 col-form-label w-25">Введите старый пароль</label>
-          <div className="col-sm-10 w-50">
-            <input type="email" className="form-control" id="inputEmail3"/>
-          </div>
-        </div>
-        <div className="row mb-3">
-          <label htmlFor="inputEmail3" className="col-sm-2 col-form-label w-25">Введите новый пароль</label>
-          <div className="col-sm-10 w-50">
-            <input type="email" className="form-control" id="inputEmail3"/>
-          </div>
-        </div>
-        <div className="row mb-3">
-          <label htmlFor="inputEmail4" className="col-sm-2 col-form-label w-25">Повторите пароль</label>
-          <div className="col-sm-10 w-50">
-            <input type="email" className="form-control" id="inputEmail4"/>
-          </div>
-        </div>
-      </div>
-      <hr className="hr" />
-      <div className="d-flex justify-content-between bd-highlight mt-3">
-        <button
-          type="button"
-          className="bg-primary border-0 text-light rounded"
-          onClick={() => console.log()}
-        >
-          Сохранить изменения
-        </button>
-      </div>
+      <SimpleForm
+        fields={CHANGE_INFO_STUDENT}
+        onChange={handleInput}
+        onClick={(event) => handleClick(event)}
+        buttonName="Сохранить"
+        errors={null}
+        messFromServer={''}
+      />
     </div>
   )
 }

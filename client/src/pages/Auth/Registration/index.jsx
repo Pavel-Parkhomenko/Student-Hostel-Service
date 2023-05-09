@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { useHttp } from '../../../hooks'
 import { fieldsRegistration } from '../../../mocks'
-import { Form } from '../../../componets/Form'
+import { Form } from '../Form'
+import { URL } from '../../../constants'
+import { MyContext } from '../../../context'
 import '../styles.css'
 
 export function Registration({ setContextState }) {
@@ -13,6 +15,7 @@ export function Registration({ setContextState }) {
   const [errors, setErrors] = useState(new Map())
   const [message, setMessage] = useState('')
   const navigate = useNavigate();
+  const { toast } = useContext(MyContext)
 
   const {loading, request} = useHttp();
 
@@ -22,7 +25,7 @@ export function Registration({ setContextState }) {
 
   async function loginHandle() {
     try {
-      const {message, errors} = await request('auth/registr', 'POST', {...form})
+      const {message, errors} = await request(URL + '/auth/registr', 'POST', {...form})
       if (!errors) navigate("/login")
       setErrors(errors)
       setMessage(message)

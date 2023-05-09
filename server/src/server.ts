@@ -22,12 +22,13 @@ app.use(express.static(__dirname));
 
 app.use('/auth', require('./routers/auth.route'))
 app.use('/student', require('./routers/student.route'))
-app.use('/test', require('./routers/test.route'))
 app.use('/mentor', require('./routers/mentor.route'))
 app.use('/news', require('./routers/news.route'))
 app.use('/event', require('./routers/event.route'))
 app.use('/chat', require('./routers/chat.route'))
 app.use('/common', require('./routers/common.route'))
+app.use('/admin', require('./routers/admin.route'))
+app.use('/repair', require('./routers/repair.route'))
 
 async function start() {
     try {

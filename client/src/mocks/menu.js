@@ -37,6 +37,12 @@ export const MENU_STUDENT = [
     name: 'Чат',
     to: "chat",
     icon: "bi bi-chat-left-dots"
+  },
+  {
+    id: 4,
+    name: 'Заявки',
+    to: "create-repair",
+    icon: "bi bi-chat-left-dots"
   }
 ]
 
@@ -88,5 +94,50 @@ export const MENU_MENTOR = [
     name: 'Студенты',
     to: "students",
     icon: "bi bi-chat-left-dots"
+  }
+]
+
+export const MENU_ADMIN = [
+  {
+    id: '0',
+    name: 'Кабинет',
+    to: "/admin",
+    icon: "bi bi-house-fill"
+  },
+  {
+    id: '1',
+    name: 'Студенты',
+    to: "students",
+    icon: "bi bi-newspaper",
+    dropdown: [{
+      name: 'Просмотреть',
+      to: "students",
+      icon: "bi bi-newspaper",
+    }, {
+      name: 'Импортировать',
+      to: "students/import",
+      icon: "bi bi-newspaper",
+    }]
+  },
+  {
+    id: '2',
+    name: 'Сотрудники',
+    to: "employee",
+    icon: "bi bi-calendar-event",
+    dropdown: [{
+      name: 'Просмотреть',
+      to: "employee",
+      icon: "bi bi-newspaper",
+    }, {
+      name: 'Новый',
+      to: "employee/create",
+      icon: "bi bi-newspaper",
+    }]
+  },
+  {
+    id: '3',
+    name: 'Места',
+    to: "places",
+    icon: "bi bi-calendar-event",
   }
 ]

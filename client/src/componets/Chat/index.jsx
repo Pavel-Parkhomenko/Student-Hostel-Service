@@ -4,6 +4,8 @@ import { sendMessage, subscribeToMessages } from './api'
 import { Link } from 'react-router-dom'
 import { useHttp } from "../../hooks";
 import { URL } from "../../constants";
+import { Loading } from '../Loading'
+import { EmptyData } from "../EmptyData";
 
 export function Chat() {
   const [activeChatId, setActiveChatId] = useState(0)
@@ -11,7 +13,8 @@ export function Chat() {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState('');
   const { loading, request } = useHttp()
-  const [chats, setChats] = useState([{name: 'default', messages: []}])
+  const [chats, setChats] = useState([])
+  const [activeRole, setActiveRole] = useState('')
   async function handleClickIdChat(ind, id) {
     const { data } = await request(URL + '/chat/get-messages', "POST", {
       id: id
@@ -22,16 +25,19 @@ export function Chat() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
+    setActiveRole(user.role || 'student')
     setUser(user.firstName + " " + user.middleName)
     async function getChats() {
       const res = await request(URL + '/common/get-chats', "POST", {
         role: user.role || "student",
         id: user._id || user.id
       })
-      const { data } = await request(URL + '/chat/get-chats', "POST", {
-        idChats: res.data
-      })
-      setChats(data)
+      if(res.data.length !== 0) {
+        const { data } = await request(URL + '/chat/get-chats', "POST", {
+          idChats: res.data
+        })
+        setChats(data)
+      }
     }
     getChats()
   }, [])
@@ -50,16 +56,23 @@ export function Chat() {
     setText('');
   };
 
+  if(loading) return <Loading />
+
+  console.log(chats)
+
   return (
     <div className="d-flex rounded bg-light p-3" style={{minHeight: "300px"}}>
       <div className="w-25 me-5 border p-2">
-        <div className="border mb-1 rounded">
-          <Link to="create">Создать чат</Link>
-        </div>
+        {
+          activeRole === 'student' ? null :
+          <div className="border mb-1 rounded" style={{height: "50px", textAlign: 'center'}}>
+            <Link to="create">Создать чат</Link>
+          </div>
+        }
         {chats.map((item, ind) => (
           <div
             key={item._id}
-            className="border bg-primary mb-1 rounded"
+            className="border bg-primary mb-1 rounded text-light ps-3"
             onClick={() => handleClickIdChat(ind, item._id)}
             style={{height: "50px"}}
           >
@@ -68,7 +81,7 @@ export function Chat() {
         ))}
       </div>
       <div className="d-flex flex-column justify-content-end w-75">
-        <div className="d-flex flex-column">
+        <div className="d-flex flex-column px-2" style={{maxHeight: '500px', overflowY: "scroll"}}>
           {messages?.map((item, ind) => {
             if(user !== item.user) {
               return (
@@ -85,7 +98,7 @@ export function Chat() {
             }
           })}
         </div>
-        <div className="input-group">
+        <div className="input-group mt-3">
           <input type="text" className="form-control" placeholder="Сообщение" aria-label="Username"
                  aria-describedby="input-group-right"
                  value={text}

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { URL } from "../../../constants";
-import { useHttp } from "../../../hooks";
+import { Link } from 'react-router-dom'
+import { URL } from "../../../constants"
 
 export function NewsItem (
   {
@@ -13,7 +12,6 @@ export function NewsItem (
     author
   }) {
   const [url, setUrl] = useState([])
-  const {loading, request} = useHttp();
 
   useEffect(() => {
     async function fetchGetNewsImg() {

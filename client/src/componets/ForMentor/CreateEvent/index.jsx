@@ -22,17 +22,8 @@ export function CreateEvent() {
     setFile(event.target.files[0]);
   };
 
-  // function handleAddMember() {
-  //   setParty([...party, {
-  //     firstName: form.partyFirstName,
-  //     secondName: form.partySecondName,
-  //     description: form.partyDescription
-  //   }])
-  // }
-
   async function handleSaveEvent() {
     const formData = new FormData()
-    console.log(form)
     formData.append('header', form.header)
     formData.append('description', form.description,)
     formData.append('dateEvent', form.dateEvent)

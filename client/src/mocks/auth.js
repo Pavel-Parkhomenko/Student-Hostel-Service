@@ -34,4 +34,4 @@ export const fieldsLogin = [
     type: "password"
   },
 ]
-// nameField, placeholder, icon, name, id
+// nameField, placeholder, icon, name, id, type

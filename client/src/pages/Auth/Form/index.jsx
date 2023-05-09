@@ -1,5 +1,4 @@
 import React from 'react'
-import './styles.css'
 
 export function Form(
   {
@@ -13,24 +12,27 @@ export function Form(
   return (
     <div>
       <div className="row main-form">
-        <form className="" method="post" action="#">
+        <form className="" method="post" action="Auth/Form#">
           {fields.map(({nameField, placeholder, icon, name, id, type}, ind) =>
-            <div className="form-group" key={id}>
+            <div className="form-group mb-3" key={id}>
               <label htmlFor={id} className="cols-sm-2 control-label">{nameField}</label>
+              <div className="input-group">
+                <span className="input-group-text" id="input-group-left-example">
+                   <i className={icon} />
+                </span>
+                <input
+                  aria-label="Username"
+                  aria-describedby="input-group-left"
+                  type={type}
+                  className="form-control"
+                  name={name}
+                  id={id}
+                  placeholder={placeholder}
+                  onChange={onChange}
+                />
+              </div>
+
               <div className="cols-sm-10" style={{position: "relative"}}>
-                <div className="input-group">
-                  <span className="input-group-addon">
-                    <i className={icon} aria-hidden="true" style={{color: "white"}} />
-                  </span>
-                  <input
-                    type={type}
-                    className="form-control"
-                    name={name}
-                    id={id}
-                    placeholder={placeholder}
-                    onChange={onChange}
-                  />
-                </div>
                 {
                   errors?.has(name)
                     ?
@@ -45,7 +47,7 @@ export function Form(
           <div className="mt-5">
             <button
               type="button"
-              className="bg-primary text-white border-0 w-100"
+              className="btn bg-primary text-white border-0 w-100"
               onClick={onClick}
             >
               {buttonName}

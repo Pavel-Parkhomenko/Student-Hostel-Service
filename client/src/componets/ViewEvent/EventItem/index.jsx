@@ -12,10 +12,6 @@ export function EventItem(
   }
 ) {
   const [url, setUrl] = useState(null)
-  const {loading, request} = useHttp()
-
-  console.log('img')
-  console.log(img)
 
   useEffect(() => {
     async function fetchGetEventImg() {

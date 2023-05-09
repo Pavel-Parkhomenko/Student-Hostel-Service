@@ -1,0 +1,32 @@
+export const CREATE_TECH_FORM = [
+  {
+    nameField: 'Тип',
+    placeholder: 'холодильник',
+    icon: 'bi bi-door-closed-fill',
+    name: 'type',
+    id: 'typeId',
+    type: "text",
+    hr: false,
+    required: true,
+  },
+  {
+    nameField: 'Модель',
+    placeholder: 'Atlant RT-0',
+    icon: 'bi bi-easel2',
+    name: 'model',
+    id: 'modelId',
+    type: "text",
+    hr: false,
+    required: true,
+  },
+  {
+    nameField: 'Серийный номер',
+    placeholder: 'RT00Y00123',
+    icon: 'bi bi-123',
+    name: 'number',
+    id: 'numberId',
+    type: "text",
+    hr: true,
+    required: true,
+  },
+]

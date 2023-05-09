@@ -2,6 +2,9 @@ export const ROUTES_MENTOR = [
   {path: "/", breadcrumb: "Домашняя"},
   {path: "/mentor", breadcrumb: "Кабинет"},
   {path: "/mentor/students", breadcrumb: "Студенты"},
+  {path: "/mentor/students/:id", breadcrumb: "Студент"},
+  {path: "/mentor/students/:id/create", breadcrumb: "Создать замечание"},
+  {path: "/mentor/students/:id/add-tech", breadcrumb: "Добавить технику"},
   {path: "/mentor/news", breadcrumb: "Новости"},
   {path: "/mentor/news/:id", breadcrumb: "Просмотр"},
   {path: "/mentor/news/create", breadcrumb: "Новая новость"},
@@ -18,4 +21,11 @@ export const ROUTES_STUDENT = [
   {path: "/student/chat", breadcrumb: "Чат"},
   {path: "/student/tech", breadcrumb: "Техника"},
   {path: "/student/claim", breadcrumb: "Замечания"},
+  {path: "/student/create-repair", breadcrumb: "Починка оборудования"},
+]
+
+export const ROUTES_ADMIN = [
+  {path: "/", breadcrumb: "Домашняя"},
+  {path: "/admin/students", breadcrumb: "Студенты"},
+  {path: "/admin/students/:id", breadcrumb: "Студент"},
 ]

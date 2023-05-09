@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
 import { URL } from "../../../constants";
 import { useParams } from 'react-router-dom'
+import { MyContext } from '../../../context'
 
 export function CreateClaim() {
   const [dateAndTime, setDateAndTime] = useState('')
   const [header, setHeader] = useState('')
   const [text, setText] = useState('')
-  const [mentorStorage] = useState(JSON.parse(localStorage.getItem("mentor")))
+  const [mentorStorage] = useState(JSON.parse(localStorage.getItem("user")))
   const {loading, request} = useHttp();
   const { id } = useParams()
+  const { toast } = useContext(MyContext)
 
   useEffect(() => {
     const now = new Date();
@@ -42,8 +44,8 @@ export function CreateClaim() {
       },
       dateAndTime
     }
-    const {message} = await request(URL + '/student/create-claim', 'POST', {...form})
-    console.log(message)
+    const { message } = await request(URL + '/student/create-claim', 'POST', {...form})
+    toast.success(message)
   }
 
   return (

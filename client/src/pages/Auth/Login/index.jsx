@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react'
-import {useHttp} from '../../../hooks'
-import {fieldsLogin} from '../../../mocks'
-import {Form} from '../../../componets/Form'
+import { useHttp } from '../../../hooks'
+import { fieldsLogin } from '../../../mocks'
+import { Form } from '../Form'
 import '../styles.css'
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { URL } from '../../../constants'
 
 export function Login({ setContextState }) {
@@ -32,6 +32,10 @@ export function Login({ setContextState }) {
       if(!errors && data.role === 'student') {
         localStorage.setItem('user', JSON.stringify(data._doc));
         navigate("/student")
+      }
+      if(!errors && data.role === 'admin') {
+        localStorage.setItem('user', JSON.stringify(data._doc));
+        navigate("/admin")
       }
       setErrors(errors)
       setMessage(message)

@@ -13,7 +13,8 @@ export interface IStudent {
     room: IRoom,
     remarks?: Array<IRemark>,
     account?: IAccount,
-    chats?: Array<string>
+    chats?: Array<string>,
+    img?: string,
 }
 
 interface IAccount {

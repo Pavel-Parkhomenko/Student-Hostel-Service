@@ -4,6 +4,8 @@ import { IStudent } from './student'
 import { IMentor } from './mentor'
 import { INews } from './news'
 import { IEvent } from './event'
+import { IAdmin } from './admin'
+import { IRepair } from './repair'
 
 export {
   IChat,
@@ -11,5 +13,7 @@ export {
   INews,
   IStudent,
   IMentor,
-  IEvent
+  IEvent,
+  IAdmin,
+  IRepair
 }

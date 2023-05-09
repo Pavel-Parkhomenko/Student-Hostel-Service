@@ -15,14 +15,6 @@ export function Home() {
 
   const {loading, request} = useHttp();
 
-  async function loginHandle() {
-    try {
-      const {message} = await request('/student/import-students', 'POST', file1)
-      console.log(message)
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -54,7 +46,6 @@ export function Home() {
   return (
     <div className="container">
       <input onChange={e => handleChange(e)} type="file" id="input" className="w-100" />
-      <button type="button" onClick={loginHandle} className="btn-primary">test</button>
 
       <form onSubmit={handleSubmit2}>
         <label htmlFor="name">Name:</label>

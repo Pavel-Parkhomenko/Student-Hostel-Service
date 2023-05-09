@@ -1,3 +1,5 @@
+import path from "path";
+
 const {Router} = require('express');
 const {check, validationResult} = require('express-validator')
 const Mentor = require('../models/mentor')
@@ -9,8 +11,6 @@ router.post('/info-mentor', async (req, res) => {
   try {
     const { login } = req.body
     const model: IMentor | null = await Mentor.findOne({ "account.login": login });
-    console.log('model')
-    console.log(model)
     if(!model) return res.status(400).json({message: 'Данных нет'})
     return res.status(200).json({data: model, message: 'Данные найдены'})
   } catch (err) {
@@ -18,5 +18,11 @@ router.post('/info-mentor', async (req, res) => {
   }
 });
 
+router.get('/load', function(req, res) {
+  const img = req.query.img
+  console.log(img)
+  const imagePath = path.join("D:", "diplom-app", "server", 'uploads', img);
+  res.sendFile(imagePath);
+});
 
 module.exports = router

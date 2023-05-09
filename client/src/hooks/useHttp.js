@@ -26,10 +26,20 @@ export default function useHttp() {
 
             if (!response.ok) {
                 setLoading(false);
-                return { message: (data.message || "Сервер не доступен :("), errors: actionErrors(data.errors) };
+                return {
+                    data: null,
+                    message: (data.message || "Ошибка на сервер, сказал клиент"),
+                    errors: actionErrors(data.errors),
+                    status: false
+                }
             }
             setLoading(false);
-            return { data: data?.data || null, message: (data.message || "Успех"), errors: null };
+            return {
+                data: data?.data || null,
+                message: (data.message || "Успех"),
+                errors: null,
+                status: true,
+            };
 
         } catch (error) {
             setLoading(false);

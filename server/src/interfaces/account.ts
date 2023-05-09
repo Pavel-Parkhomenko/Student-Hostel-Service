@@ -4,5 +4,5 @@ export interface IAccount {
     _id?: Types.ObjectId,
     login: string,
     password: string,
-    role: "mentor" | "main" | "student",
+    role: "mentor" | "admin" | "student",
 }
