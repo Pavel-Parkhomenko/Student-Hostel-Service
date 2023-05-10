@@ -1,9 +1,7 @@
-import path from "path";
-
-const {Router} = require('express');
-const {check, validationResult} = require('express-validator')
-const News = require('../models/news')
-import {INews} from '../interfaces'
+import path from "path"
+import { Router } from 'express'
+import { News } from '../models/news'
+import { getDateAndTime } from '../utils'
 
 const router = Router()
 
@@ -18,14 +16,18 @@ const storage = multer.diskStorage({
   }
 })
 
+interface MulterRequest extends Request {
+  file: any;
+}
+
 const upload = multer({ storage: storage })
 router.post('/create-section', upload.single("file"), async (req, res) => {
   try {
     const { header, description, id } = req.body
-    const img = req.file //img.filename
+    const img = (req as unknown as MulterRequest).file.filename
     const candidateNews = await News.findById(id)
     await News.updateOne({ _id: id }, {
-      body: [...candidateNews.body, { header, description, img: img.filename}],
+      body: [...candidateNews.body, { header, description, img: img}],
     })
     return res.status(200).json({message: 'Новость создана'})
   } catch(err) {
@@ -39,7 +41,7 @@ router.post('/create-news',async (req, res) => {
     const { mentor } = req.body
     const news = new News({
       mentor,
-      dateCreate: '10.10.2023 18:50',
+      dateCreate: getDateAndTime(),
     })
     const newNews = await news.save()
     return res.status(200).json({data: { id: newNews._id }, message: 'Новость создана'})
@@ -78,7 +80,7 @@ router.get('/get-news-id',async (req, res) => {
 })
 
 router.get('/load', function(req, res) {
-  const img = req.query.img
+  const img: string = String(req.query.img)
   const imagePath = path.join("D:", "diplom-app", "server", 'uploads', 'news', img);
   res.sendFile(imagePath);
 });

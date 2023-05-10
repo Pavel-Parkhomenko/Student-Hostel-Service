@@ -32,7 +32,15 @@ export function FullMentor() {
   return (
     <div className="px-3 py-3 bg-white rounded">
       <div className="d-flex justify-content-center w-100 mb-5">
-        <img src={url} alt="avatar" style={{ width: '300px', height: "200px"}} />
+        {url
+          ?
+          <img src={url} alt="avatar" style={{ width: '300px', height: "200px"}} />
+          :
+          <div className="d-flex justify-content-center align-items-center"
+               style={{ width: '300px', height: "200px"}}>
+            <p className="text-muted">Картинка остуствует</p>
+          </div>
+        }
       </div>
       <div className="d-flex flex-column align-items-center">
         <div className="d-flex flex-row justify-content-between w-50">

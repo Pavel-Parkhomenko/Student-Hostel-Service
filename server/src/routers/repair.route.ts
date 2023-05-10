@@ -1,6 +1,7 @@
-const { Router } = require('express')
-const Repair = require('../models/repair')
+import { Router } from 'express'
+import { Repair } from '../models/repair'
 import { getDateAndTime } from '../utils'
+
 const router = Router();
 
 router.get('/get-repairs-all', async (req, res) => {
@@ -16,7 +17,6 @@ router.get('/get-repairs-all', async (req, res) => {
 router.post('/get-repairs-id', async (req, res) => {
   try{
     const { numberTest } = req.body
-    console.log(numberTest)
     const condition = { "student.numberTest": numberTest };
     const repairs = await Repair.find(condition)
     return res.status(200).json({data: repairs, message: 'Данные получены'})
@@ -29,7 +29,6 @@ router.post('/get-repairs-id', async (req, res) => {
 router.post('/create', async (req, res) => {
   try {
     const { user, header, description, room } = req.body
-    console.log(user, header, description, room)
     const repair = new Repair()
     repair.student = user
     repair.header = header

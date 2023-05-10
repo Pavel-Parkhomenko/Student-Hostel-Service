@@ -59,4 +59,4 @@ const schema = new Schema<IStudent>({
 
 }, { versionKey: false })
 
-module.exports = model<IStudent>('students', schema);
+export const Student = model<IStudent>('students', schema);

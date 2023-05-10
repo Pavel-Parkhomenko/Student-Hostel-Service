@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
-import { SimpleForm } from "../../SimpleForm";
+import { SimpleForm } from "../../SimpleForm"
 import { CREATE_TECH_FORM } from '../../../mocks'
-import { URL } from "../../../constants";
-import { useParams } from "react-router-dom";
-import { useHttp } from "../../../hooks";
-import { MyContext } from '../../../context'
+import { URL } from "../../../constants"
+import { useParams } from "react-router-dom"
+import { useHttp } from "../../../hooks"
+import { toastMess } from '../../../helpers'
 
 export function CreateTech() {
   const [form, setForm] = useState({
@@ -13,8 +13,7 @@ export function CreateTech() {
     type: '',
   })
   const { id } = useParams()
-  const { loading, request } = useHttp()
-  const { toast } = useContext(MyContext)
+  const { request } = useHttp()
 
   function handleInput(event) {
     setForm({...form, [event.target.name]: event.target.value})
@@ -26,8 +25,8 @@ export function CreateTech() {
       numberTest: id,
       ...form,
     }
-    const { message } = await request(URL + '/student/add-tech', 'POST', {...data})
-    toast.success(message)
+    const { message, status } = await request(URL + '/student/add-tech', 'POST', {...data})
+    toastMess(status, message)
   }
 
   return (

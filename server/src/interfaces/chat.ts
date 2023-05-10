@@ -1,15 +1,10 @@
 export interface IChat {
+    name: string,
     messages: [
         {
-            who: Who,
-            when: string,
-            message: string
+            text?: string,
+            user?: string,
+            createdAt?: string
         }
     ]
-}
-
-interface Who {
-    id: string,
-    firstName: string,
-    secondName: string,
 }

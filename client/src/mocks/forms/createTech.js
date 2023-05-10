@@ -8,6 +8,8 @@ export const CREATE_TECH_FORM = [
     type: "text",
     hr: false,
     required: true,
+    pattern: "[A-Za-zА-Яа-яЁё]{3,20}",
+    title: "Минимум 3 и максимум 20 символов",
   },
   {
     nameField: 'Модель',
@@ -28,5 +30,7 @@ export const CREATE_TECH_FORM = [
     type: "text",
     hr: true,
     required: true,
+    pattern: "[A-Za-z0-9]{5,20}",
+    title: "Минимум 5 и максимум 20 символов",
   },
 ]

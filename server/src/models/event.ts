@@ -9,7 +9,7 @@ const schema = new Schema<IEvent>({
   placeEvent: { type: String, required: true },
 }, { versionKey: false })
 
-module.exports = model<IEvent>('events', schema);
+export const Event = model<IEvent>('events', schema);
 
 //party: {
 //     type: [{

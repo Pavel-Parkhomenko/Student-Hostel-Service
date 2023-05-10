@@ -23,4 +23,4 @@ const schema = new Schema<INews>({
   dateCreate: { type: String, required: true },
 }, { versionKey: false })
 
-module.exports = model<INews>('news', schema);
+export const News = model<INews>('news', schema);

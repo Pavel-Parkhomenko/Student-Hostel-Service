@@ -16,4 +16,4 @@ const schema = new Schema<IAdmin>({
 
 }, { versionKey: false })
 
-module.exports = model<IAdmin>('admin', schema);
+export const Admin = model<IAdmin>('admin', schema);

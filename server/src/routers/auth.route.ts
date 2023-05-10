@@ -1,11 +1,11 @@
-const {Router} = require('express');
-const Account = require('../models/account');
-const {check, validationResult} = require('express-validator')
-const Student = require('../models/student')
-import {IAccount, IStudent, IMentor} from '../interfaces'
-const nodemailer = require('nodemailer')
-const Mentor = require('../models/mentor')
-const Admin = require('../models/admin')
+import { Router } from 'express'
+import { Account } from '../models/account'
+import { check, validationResult } from 'express-validator'
+import nodemailer from 'nodemailer'
+import { Student } from '../models/student'
+import { IAccount, IStudent, IMentor } from '../interfaces'
+import { Mentor } from '../models/mentor'
+import { Admin } from '../models/admin'
 const {
   v1: uuidv1,
   v4: uuidv4

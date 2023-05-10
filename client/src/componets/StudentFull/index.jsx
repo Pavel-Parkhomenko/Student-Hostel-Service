@@ -111,6 +111,9 @@ export function StudentFull() {
       </div>
       <hr className="hr" />
       <div className="d-flex flex-column align-items-center">
+        <button type="button" className="btn btn-light">
+          <Link className="text-decoration-none" to={"add-tech"}>Добавить технику</Link>
+        </button>
         {res.privateTechs?.length !== 0
           ?
           <div className="w-75">
@@ -119,10 +122,12 @@ export function StudentFull() {
           :
           <p>Техники нет</p>
         }
-        <Link to={"add-tech"}>Добавить технику</Link>
       </div>
       <hr className="hr" />
       <div className="d-flex flex-column align-items-center">
+        <button type="button" className="btn btn-light">
+          <Link className="text-decoration-none" to={"create"}>Создать замечание</Link>
+        </button>
         {res.remarks?.length !== 0
           ?
           <div className="w-75">
@@ -131,7 +136,6 @@ export function StudentFull() {
           :
           <p>Замечаний нет</p>
         }
-        <Link to={"create"}>Создать замечание</Link>
       </div>
     </div>
   )

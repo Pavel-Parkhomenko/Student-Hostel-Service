@@ -26,4 +26,4 @@ const schema = new Schema<IMentor>({
 
 }, { versionKey: false })
 
-module.exports = model<IMentor>('mentors', schema);
+export const Mentor = model<IMentor>('mentors', schema);

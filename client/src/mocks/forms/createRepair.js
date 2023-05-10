@@ -8,6 +8,8 @@ export const CREATE_REPAIR_FORM = [
     type: "text",
     hr: false,
     required: true,
+    pattern: "[A-Za-zА-Яа-яЁё0-9]{5,20}",
+    title: "Минимум 5 и максимум 20 символов",
   },
   {
     nameField: 'Описание',

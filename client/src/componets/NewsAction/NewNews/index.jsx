@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { URL } from '../../../constants'
-import { useHttp } from "../../../hooks";
+import { useHttp } from "../../../hooks"
+import { toastMess } from '../../../helpers'
 
 export function NewNews() {
   const [sections, setSections] = useState([])
   const [header, setHeader] = useState('')
   const [description, setDescription] = useState('')
   const [file, setFile] = useState(null)
-  const {loading, request} = useHttp();
+  const {request} = useHttp();
   const [idNews, setIdNews] = useState(0)
 
   useEffect(() => {
     async function getIdFetch() {
-      const mentorData = JSON.parse(localStorage.getItem('mentor'))
-      const {data, message, errors} = await request(URL + '/news/create-news', 'POST', {
+      const mentorData = JSON.parse(localStorage.getItem('user'))
+      const { data } = await request(URL + '/news/create-news', 'POST', {
         mentor: {
           firstName: mentorData.firstName,
           secondName: mentorData.secondName,
@@ -26,7 +27,14 @@ export function NewNews() {
     getIdFetch()
   }, [])
 
-  function handleSaveSection() {
+  function handleSaveSection(event) {
+    event.preventDefault()
+    console.log(file)
+    if(description.length < 5 || description.length > 1000) {
+      toastMess(false, "Неверная длина описания")
+      return
+    }
+    toastMess(true, "Секция создана")
     setSections([...sections, {header, description, file, id: idNews}])
   }
 
@@ -42,9 +50,10 @@ export function NewNews() {
     setFile(event.target.files[0]);
   };
 
-  async function handleSaveNews(event) {
-    event.preventDefault();
-    if(!sections.length) return
+  async function handleSaveNews() {
+    if(!sections.length){
+      toastMess(false, "Сначала нужно создать секцию")
+    }
     const formDataArray = sections.map((item, index) => {
       const formData = new FormData();
       Object.keys(item).forEach(key => {
@@ -60,73 +69,79 @@ export function NewNews() {
 
     Promise.all(requests)
       .then(responses => responses.forEach(
-        response => console.log(response.message)
+        response => toastMess(response.ok, "Обработка запроса...")
       ));
   }
 
   return (
-    <form onSubmit={handleSaveNews}>
-      <div className="bg-light rounded p-3">
-        <p className="text-muted">
-          Сдесь вы можете создать одну секцию новости, к которой вы приклепляете фото
-        </p>
-        <div>
-          <div className="input-group input-group-sm">
-          <span className="input-group-text" id="input-group-sm-example">
-            Заголовок
-          </span>
+    <>
+      <form onSubmit={handleSaveSection}>
+        <div className="bg-light rounded p-3">
+          <p className="text-muted">
+            Сдесь вы можете создать одну секцию новости, к которой вы приклепляете фото
+          </p>
+          <div>
+            <div className="input-group input-group-sm">
+            <span className="input-group-text" id="input-group-sm-example">
+              Заголовок
+            </span>
+              <input
+                type="text"
+                className="form-control"
+                aria-label="Small input group"
+                aria-describedby="input-group-sm"
+                name="header"
+                value={header}
+                onChange={handleHeaderChange}
+                required
+                pattern="[A-Za-zА-Яа-яЁё0-9]{5,15}"
+                title="Минимум 5 и максимум 15 символов"
+              />
+            </div>
+          </div>
+          <div>
             <input
-              type="text"
-              className="form-control"
-              aria-label="Small input group"
-              aria-describedby="input-group-sm"
-              name="header"
-              value={header}
-              onChange={handleHeaderChange}
+              className="form-control mt-3"
+              type="file"
+              id="file"
+              name="file"
+              onChange={handleFileChange}
+              required
             />
           </div>
-        </div>
-        <div>
-          <input
-            className="form-control mt-3"
-            type="file"
-            id="file"
-            name="file"
-            onChange={handleFileChange}
+          <div className="form-floating mt-3">
+          <textarea className="form-control"
+                    placeholder="Напишите здесь текст"
+                    id="floatingTextarea"
+                    style={{minHeight: "300px"}}
+                    name="description"
+                    value={description}
+                    onChange={handleDescriptionChange}
+                    required
           />
+          </div>
+          <div className="d-flex justify-content-between bd-highlight mt-3">
+            <button
+              type="submit"
+              className="btn bg-primary border-0 text-light rounded"
+            >
+              Создать секцию
+            </button>
+            <button
+              type="button"
+              className="btn bg-primary border-0 text-light rounded"
+              onClick={handleSaveNews}
+            >
+              Сохранить новость
+            </button>
+          </div>
         </div>
-        <div className="form-floating mt-3">
-        <textarea className="form-control"
-                  placeholder="Напишите здесь текст"
-                  id="floatingTextarea"
-                  style={{minHeight: "300px"}}
-                  name="description"
-                  value={description}
-                  onChange={handleDescriptionChange}
-        />
-        </div>
-        <div className="d-flex justify-content-between bd-highlight mt-3">
-          <button
-            type="button"
-            className="bg-primary border-0 text-light rounded"
-            onClick={handleSaveSection}
-          >
-            Создать секцию
-          </button>
-          <button
-            type="submit"
-            className="bg-primary border-0 text-light rounded"
-          >
-            Сохранить новость
-          </button>
-        </div>
+      </form>
+      <div className="bg-light rounded p-3 mt-3">
+        {sections.map((item, ind) => (
+          <p className="text-muted" key={ind}>Секция {ind + 1}: {item.header}</p>
+        ))}
       </div>
-    </form>
+    </>
   )
 }
-
-//      <div className="bg-light rounded p-3 mt-3">
-//         {sections ? sections.map((_, ind) => {
-//           return <p className="text-muted" id={ind}>Секция <span>{ind}</span> создана</p>
-//         }) : <p className="text-muted">Вы еще не создали секций</p>}
-//       </div>

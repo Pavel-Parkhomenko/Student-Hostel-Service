@@ -1,12 +1,8 @@
-// @ts-ignore
 import path from "path";
+import { Router } from 'express'
+import { Student } from '../models/student'
+import { Account } from '../models/account'
 
-const { Router } = require('express')
-// @ts-ignore
-const Student = require('../models/student')
-const Account = require('../models/account')
-
-// @ts-ignore
 const router = Router();
 router.post('/import-students',
   async (req, res) => {
@@ -30,7 +26,6 @@ router.post('/import-students',
       Student.insertMany(stObjs).then(() => {
         return res.status(200).json({message: 'Данные успешны выгружены'})
       }).catch((err) => {
-        console.log(err)
         return res.status(400).json({message: 'Не удалось выгрузить данные'})
       })
 
@@ -139,7 +134,7 @@ router.post('/add-tech', async (req, res) => {
       ]
     }
     await Student.findOneAndUpdate({numberTest: numberTest}, update)
-    return res.status(200).json({message: 'Данные обновлены'})
+    return res.status(200).json({message: 'Новые данные добавлены'})
   } catch (err) {
     return res.status(500).json({message: 'Что-то пошло не так'})
   }
@@ -180,10 +175,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
+interface MulterRequest extends Request {
+  file: any;
+}
+
 router.post('/update-info', upload.single("file"), async (req, res) => {
   try {
     const { numberTest, email, login, newPassword, oldPassword } = req.body
-    const img = req.file?.filename || null //img.filename
+    const img = (req as unknown as MulterRequest).file?.filename
     const student = await Student.findOne({numberTest: numberTest})
     const acc = await Account.findOne({login: student.account?.login})
 

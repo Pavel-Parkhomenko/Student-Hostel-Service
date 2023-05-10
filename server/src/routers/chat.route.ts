@@ -1,10 +1,8 @@
-const Student = require("../models/student");
-const Mentor = require('../models/mentor')
-// @ts-ignore
+import { Student } from '../models/student'
+import { Mentor } from '../models/mentor'
 const { Router } = require('express')
-// @ts-ignore
-const Chat = require('../models/chat')
-// @ts-ignore
+import { Chat } from '../models/chat'
+
 const router = Router()
 
 router.get('/create-chat',async (req, res) => {

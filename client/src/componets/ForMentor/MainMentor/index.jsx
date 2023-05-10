@@ -17,7 +17,10 @@ export function MainMentor() {
       setRes({...data})
 
       fetch(URL + '/mentor/load?' + `img=${data.img}`)
-        .then(response => response.blob())
+        .then(response => {
+          if(!response.ok) setUrl('')
+          return response.blob()
+        })
         .then(blob => {
           const url = window.URL.createObjectURL(new Blob([blob]));
           setUrl(url)
@@ -26,13 +29,23 @@ export function MainMentor() {
     fetchData()
   }, [])
 
+
   if(loading) return<Loading />
 
   return (
     <div className="px-3 py-3 bg-white rounded">
-      <div className="d-flex justify-content-center w-100 mb-5">
-        <img src={url} alt="avatar" style={{ width: '300px', height: "200px"}} />
-      </div>
+      {url
+        ?
+        <img src={url} alt="avatar" style={{ width: '300px' }} />
+        :
+        <div className="d-flex justify-content-center align-items-center">
+          <p className="text-muted bg-light rounded-4"
+             style={{ width: '300px', height: "200px", textAlign: 'center'}}
+          >
+            Фотография остуствует
+          </p>
+        </div>
+      }
       <div className="d-flex flex-column align-items-center">
         <div className="d-flex flex-row justify-content-between w-50">
           <small className="text-muted">Фамилия</small>

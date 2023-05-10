@@ -22,7 +22,7 @@ export function NewsPanel() {
     <div>
       {news.map((item) => <NewsItem
         id={item._id}
-        key={item.body[0].header}
+        key={item._id}
         header={item.body[0].header}
         content={item.body[0].description}
         img={item.body[0].img}

@@ -1,9 +1,7 @@
-import path from "path";
-
-const {Router} = require('express');
-const {check, validationResult} = require('express-validator')
-const Mentor = require('../models/mentor')
-import {IMentor} from '../interfaces'
+import path from "path"
+import { Router } from 'express'
+import { Mentor } from '../models/mentor'
+import { IMentor } from '../interfaces'
 
 const router = Router()
 
@@ -19,8 +17,8 @@ router.post('/info-mentor', async (req, res) => {
 });
 
 router.get('/load', function(req, res) {
-  const img = req.query.img
-  console.log(img)
+  const img: string = String(req.query.img)
+  if(img === 'undefined') return res.status(400)
   const imagePath = path.join("D:", "diplom-app", "server", 'uploads', img);
   res.sendFile(imagePath);
 });

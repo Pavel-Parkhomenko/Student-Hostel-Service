@@ -27,4 +27,4 @@ const schema = new Schema<IRepair>({
   status: { type: Number, required: true },
 }, { versionKey: false })
 
-module.exports = model<IRepair>('repairs', schema);
+export const Repair = model<IRepair>('repairs', schema);

@@ -1,13 +1,16 @@
-import mongoose, {model} from "mongoose";
-const chatSchema = new mongoose.Schema({
+import { Schema, model, Types } from 'mongoose'
+
+import { IChat } from '../interfaces'
+
+const chatSchema = new Schema<IChat>({
   name: { type: String, required: false },
   messages: {
     type: [{
       text: { type: String, required: false },
       user: { type: String, required: false },
-      createdAt: { type: Date, default: Date.now },
+      createdAt: { type: String, default: Date.now, required: false },
     }]
   },
 });
 
-module.exports = model('chats', chatSchema);
+export const Chat = model<IChat>('chats', chatSchema);

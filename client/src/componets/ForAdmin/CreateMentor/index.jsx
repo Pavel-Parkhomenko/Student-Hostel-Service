@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { SimpleForm } from "../../SimpleForm";
 import { CREATE_MENTOR_FORM } from '../../../mocks'
+import { useHttp } from '../../../hooks'
+import { URL } from '../../../constants'
+import { toastMess } from '../../../helpers'
 
 export function CreateMentor() {
   const [form, setForm] = useState({
@@ -13,12 +16,18 @@ export function CreateMentor() {
     password: '',
   })
 
+  const { request } = useHttp()
+
   function handleInput(event) {
     setForm({...form, [event.target.name]: event.target.value})
   }
 
-  function handleClick() {
-    console.log(form)
+  async function handleClick(event) {
+    event.preventDefault()
+    const { message, status } = await request(URL + '/admin/create-employee', 'POST', {
+      ...form
+    })
+    toastMess(status, message)
   }
 
   return (
@@ -26,7 +35,7 @@ export function CreateMentor() {
       <SimpleForm
         fields={CREATE_MENTOR_FORM}
         onChange={handleInput}
-        onClick={handleClick}
+        onClick={(event) => handleClick(event)}
         buttonName="Сохранить"
         errors={null}
         messFromServer={''}

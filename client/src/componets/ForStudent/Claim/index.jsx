@@ -60,7 +60,15 @@ export function Claim({ remarks = [], role='student' }) {
               <span className="px-2">{item.mentor.firstName}</span>
               <span>{item.mentor.middleName}</span>
             </div>
-            {role === 'mentor' ? null :
+            {role === 'mentor' ?
+              <div>
+                {item.status === 0 ?
+                  <span className="text-danger">Не прочитано</span>
+                  :
+                  <span className="text-success">Прочитано</span>
+                }
+              </div>
+              :
               <button type="button" className="btn btn-primary"
                       onClick={( event) => handleIRead(event, ind)}
             >

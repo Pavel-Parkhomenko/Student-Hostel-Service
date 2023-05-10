@@ -13,4 +13,4 @@ const schema = new Schema<IAccount>({
     role: {type: String, required: false}
 }, { versionKey: false })
 
-module.exports = model<IAccount>('accounts', schema);
+export const Account = model<IAccount>('accounts', schema);

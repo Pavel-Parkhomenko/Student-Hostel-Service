@@ -12,7 +12,9 @@ export function BreadCrumbs({ routes }) {
             <NavLink
               key={match.pathname}
               className="breadcrumb-item"
-              style={match.pathname === '/' ? {pointerEvents: "none", color: "gray"} : {}}
+              style={match.pathname === '/' ? {
+                pointerEvents: "none", color: "gray"
+              } : {}}
               to={match.pathname}>
               {breadcrumb}
             </NavLink>

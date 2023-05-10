@@ -1,8 +1,7 @@
-import {IMentor} from "../interfaces";
-import {IStudent} from "../interfaces";
-const Mentor = require('../models/mentor')
-const Student = require('../models/student')
-const { Router } = require('express')
+import { Mentor } from '../models/mentor'
+import { Student } from '../models/student'
+import { Router } from 'express'
+
 const router = Router()
 
 router.post('/get-chats', async (req, res) => {
