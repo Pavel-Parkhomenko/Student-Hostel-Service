@@ -3,6 +3,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
+    overflow-y: hidden;
+    position: relative;
+    background-color: white;
 }
 
 .container__auth-into {
@@ -12,6 +16,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    z-index: 2;
 }
 
 .err__message {
@@ -19,4 +24,12 @@
     color: red;
     height: 14px;
     position: absolute;
+}
+
+.auth__figure {
+    background-color: #0e052a;
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    rotate: 45deg;
 }

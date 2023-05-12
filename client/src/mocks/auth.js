@@ -10,7 +10,7 @@ export const fieldsRegistration = [
   {
     nameField: 'Email',
     placeholder: 'example@gmail.com',
-    icon: 'bi bi-lock-fill',
+    icon: 'bi bi-person',
     name: 'email',
     id: 'passwordEmail',
     type: "email"

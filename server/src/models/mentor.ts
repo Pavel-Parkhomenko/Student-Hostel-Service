@@ -5,6 +5,8 @@ const schema = new Schema<IMentor>({
   firstName: { type: String, required: true },
   middleName: { type: String, required: true },
   secondName: { type: String, required: true },
+  phone: { type: String, required: false },
+  email: { type: String, required: false },
   role: { type: String, required: false },
   img: { type: String, required: false },
   account: {

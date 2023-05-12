@@ -10,7 +10,7 @@ export function MainStudent() {
 
   useEffect(() => {
     setData(JSON.parse(localStorage.getItem("user")))
-  }, []) //data.email data.account?.login
+  }, [])
 
   const { toast } = useContext(MyContext)
 

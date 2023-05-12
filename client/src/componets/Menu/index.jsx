@@ -67,7 +67,7 @@ export function Menu({ menu }) {
             <i className="text-primary me-3 bi bi-person-fill fs-3" />
             <HideMenu
               onClickLink={() => localStorage.clear()}
-              links={[{to: '/login', name: 'Выход', icon: 'bi bi-arrow-down-right-circle' }]}
+              links={[{to: '/', name: 'Выход', icon: 'bi bi-arrow-down-right-circle' }]}
               visibleLink={visiblePerson}
             />
           </div>

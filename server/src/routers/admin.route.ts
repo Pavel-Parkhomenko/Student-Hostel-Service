@@ -1,8 +1,18 @@
 import { Router } from 'express'
 import { Mentor } from '../models/mentor'
 import { Account } from '../models/account'
+import { Admin } from '../models/admin'
 
 const router = Router()
+
+router.get('/get-admin-info', async (req, res) => {
+  try {
+    const admin = await Admin.find()[0]
+    return res.status(200).json({data: admin, message: 'Данные получены'})
+  } catch (err) {
+    return res.status(500).json({message: 'Что-то пошло не так'})
+  }
+});
 
 router.get('/get-employee', async (req, res) => {
   try {

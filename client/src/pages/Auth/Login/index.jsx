@@ -1,22 +1,22 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useHttp } from '../../../hooks'
 import { fieldsLogin } from '../../../mocks'
 import { Form } from '../Form'
 import '../styles.css'
 import { Link, useNavigate } from "react-router-dom";
 import { URL } from '../../../constants'
+import { toastMess } from '../../../helpers'
 
-export function Login({ setContextState }) {
+export function Login() {
   const [form, setForm] = useState({
     login: '',
     password: '',
   })
 
   const [errors, setErrors] = useState(new Map())
-  const [mess, setMessage] = useState('')
   const navigate = useNavigate();
 
-  const {loading, request} = useHttp();
+  const { request } = useHttp();
 
   function handleInput(event) {
     setForm({...form, [event.target.name]: event.target.value})
@@ -24,7 +24,7 @@ export function Login({ setContextState }) {
 
   async function loginHandle() {
     try {
-      const {data, message, errors} = await request(URL + '/auth/login', 'POST', {...form})
+      const {data, message, errors, status} = await request(URL + '/auth/login', 'POST', {...form})
       if(!errors && data.role === 'mentor'){
         localStorage.setItem('user', JSON.stringify(data._doc));
         navigate("/mentor")
@@ -38,7 +38,7 @@ export function Login({ setContextState }) {
         navigate("/admin")
       }
       setErrors(errors)
-      setMessage(message)
+      toastMess(status, message)
     } catch (error) {
       console.log(error)
     }
@@ -54,13 +54,14 @@ export function Login({ setContextState }) {
           onClick={loginHandle}
           buttonName="Вход"
           errors={errors}
-          messFromServer={mess}
+          messFromServer={''}
         />
         <div>
           <span>У вас еще нет аккаунта?</span>&nbsp;&nbsp;
           <Link to='/reg'>Регистрация</Link>
         </div>
       </div>
+      <div className="auth__figure"/>
     </div>
   )
 }

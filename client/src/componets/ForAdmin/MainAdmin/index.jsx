@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 
-export function MainAdmin() {
-  const [res, setRes] = useState({})
+export function MainAdmin(data = null) {
+  const [res, setRes] = useState(data)
 
   useEffect(() => {
     const fetchData = async () => {
       const admin = JSON.parse(localStorage.getItem('user'))
       setRes(admin)
     }
-    fetchData()
-  }, [])
+    if(!data) fetchData()
+  }, [data])
 
   return (
     <div className="px-3 py-3 bg-white rounded">

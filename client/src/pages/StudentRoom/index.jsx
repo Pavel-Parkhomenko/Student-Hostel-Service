@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 import { Header } from '../../componets/Layout/Header'
 import { Menu } from '../../componets/Menu'
 import { Footer } from '../../componets/Layout/Footer'
-import { MENU_STUDENT, ROUTES_STUDENT, STUDENT } from "../../mocks"
+import { MENU_STUDENT, ROUTES_STUDENT } from "../../mocks"
 import { BreadCrumbs } from "../../componets/BreadCrumbs"
 export function StudentRoom() {
   const [student, setStudent] = useState({})

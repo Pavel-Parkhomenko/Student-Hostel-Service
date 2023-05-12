@@ -1,79 +1,34 @@
-import React, { useState, useEffect } from 'react'
-import readXlsxFile from 'read-excel-file'
-import { useHttp } from "../../hooks";
+import React from 'react'
+import home1 from '../../assets/home/home1.jpg'
+import { Link } from 'react-router-dom'
+import './style.css'
 
 export function Home() {
-
-  const [file1, setFile1] = useState([])
-
-  function handleChange(event) {
-    readXlsxFile(event.target.files[0]).then((rows) => {
-      console.log(rows)
-      setFile1(rows)
-    })
-  }
-
-  const {loading, request} = useHttp();
-
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [file, setFile] = useState(null);
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
-  const handleSubmit2 = async (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('file', file);
-    await fetch('http://localhost:5000/test/upload', {
-      body: formData,
-      method: 'POST'
-    })
-  };
-
   return (
-    <div className="container">
-      <input onChange={e => handleChange(e)} type="file" id="input" className="w-100" />
-
-      <form onSubmit={handleSubmit2}>
-        <label htmlFor="name">Name:</label>
-        <input type="text" name="name" id="name" value={name} onChange={handleNameChange} required />
-        <br />
-        <label htmlFor="email">Email:</label>
-        <input type="email" name="email" id="email" value={email} onChange={handleEmailChange} required />
-        <br />
-        <label htmlFor="file">File:</label>
-        <input type="file" name="file" id="file" onChange={handleFileChange} required />
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-
+    <div className="home__container">
+      <div>
+        <div className="home__img-container">
+          <img alt="img1" className="home__img1" src={home1} />
+          <img alt="img2" className="home__img2" src={home1} />
+          <img alt="img3" className="home__img3" src={home1} />
+        </div>
+      </div>
+      <div className="home__container-text">
+        <h1>Добро пожаловать</h1>
+        <p>
+          Данная ситема предназначеня для управлением общежитием.
+          Она включает в себя три роли, для которых реализованы все необходимые функции.
+          Всё, что Вам необходимо, данное приложение вам предоставит.
+        </p>
+        <div className="home__container-links">
+          <button className="btn btn-primary">
+            <Link className="home__link link1" to='/login'>Войти</Link>
+          </button>
+          <button className="btn btn-light">
+            <Link className="home__link link2" to='/reg'>Регистрация</Link>
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
-
-//<div>
-//         <h1>Chat</h1>
-//         <form onSubmit={handleSubmit}>
-//           <input type="text" placeholder="User" value={user} onChange={(e) => setUser(e.target.value)} />
-//           <input type="text" placeholder="Message" value={text} onChange={(e) => setText(e.target.value)} />
-//           <button type="submit">Send</button>
-//         </form>
-//         <ul>
-//           {messages.map((message, index) => (
-//             <li key={index}><strong>{message.user}:</strong> {message.text}</li>
-//           ))}
-//         </ul>
-//       </div>

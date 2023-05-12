@@ -250,4 +250,15 @@ router.post('/get-remarks', async (req, res) => {
   }
 })
 
+router.post('/get-my-mentor', async (req, res) => {
+  try {
+    const { numberTest } = req.body
+    const data = await Student.findOne({numberTest: numberTest})
+    return res.status(200).json({data: data.remarks || [], message: 'Данные загруженны'})
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({message: 'Что-то пошло не так - сервер'})
+  }
+})
+
 module.exports = router

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHttp } from "../../hooks"
 import { URL } from "../../constants"
 import { useParams } from "react-router-dom"
+import { Loading } from "../Loading"
 
 export function FullMentor() {
   const { loading, request } = useHttp()
@@ -12,7 +13,7 @@ export function FullMentor() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, message } = await request(
+      const { data } = await request(
         URL + '/mentor/info-mentor', "POST", { login: id}
       )
       setRes({...data})
@@ -27,21 +28,24 @@ export function FullMentor() {
     fetchData()
   }, [])
 
-  if(loading) return <div>ЗАГРУЗКА</div>
+  if(loading) return <Loading />
 
   return (
     <div className="px-3 py-3 bg-white rounded">
-      <div className="d-flex justify-content-center w-100 mb-5">
-        {url
-          ?
-          <img src={url} alt="avatar" style={{ width: '300px', height: "200px"}} />
-          :
-          <div className="d-flex justify-content-center align-items-center"
-               style={{ width: '300px', height: "200px"}}>
-            <p className="text-muted">Картинка остуствует</p>
-          </div>
-        }
-      </div>
+      {url
+        ?
+        <div className="d-flex justify-content-center align-items-center mb-3">
+          <img className="rounded-4" src={url} alt="avatar" style={{ maxHeight: '400px' }} />
+        </div>
+        :
+        <div className="d-flex justify-content-center align-items-center">
+          <p className="text-muted bg-light rounded-4"
+             style={{ width: '300px', height: "200px", textAlign: 'center'}}
+          >
+            Фотография остуствует
+          </p>
+        </div>
+      }
       <div className="d-flex flex-column align-items-center">
         <div className="d-flex flex-row justify-content-between w-50">
           <small className="text-muted">Фамилия</small>
@@ -75,6 +79,16 @@ export function FullMentor() {
         </div>
       </div>
       <hr className="hr" />
+      <div className="d-flex flex-column align-items-center">
+        <div className="d-flex flex-row justify-content-between w-50">
+          <small className="text-muted">Телефон</small>
+          <p>{res.phone || 'Нет данных'}</p>
+        </div>
+        <div className="d-flex flex-row justify-content-between w-50">
+          <small className="text-muted">Email</small>
+          <p>{res.email || 'Нет данных'}</p>
+        </div>
+      </div>
     </div>
   )
 }

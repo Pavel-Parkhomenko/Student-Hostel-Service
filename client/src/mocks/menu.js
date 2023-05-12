@@ -43,6 +43,12 @@ export const MENU_STUDENT = [
     name: 'Заявки',
     to: "create-repair",
     icon: "bi bi-chat-left-dots"
+  },
+  {
+    id: 4,
+    name: 'Воспитатели',
+    to: "employee-info",
+    icon: "bi bi-calendar-event"
   }
 ]
 
@@ -138,6 +144,12 @@ export const MENU_ADMIN = [
     id: '3',
     name: 'Места',
     to: "places",
+    icon: "bi bi-calendar-event",
+  },
+  {
+    id: '4',
+    name: 'Отчеты',
+    to: "reports",
     icon: "bi bi-calendar-event",
   }
 ]

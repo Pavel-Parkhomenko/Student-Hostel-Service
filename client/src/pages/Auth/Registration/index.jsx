@@ -4,20 +4,18 @@ import { useHttp } from '../../../hooks'
 import { fieldsRegistration } from '../../../mocks'
 import { Form } from '../Form'
 import { URL } from '../../../constants'
-import { MyContext } from '../../../context'
 import '../styles.css'
+import { toastMess } from "../../../helpers";
 
-export function Registration({ setContextState }) {
+export function Registration() {
   const [form, setForm] = useState({
     numberTest: '',
     email: ''
   })
   const [errors, setErrors] = useState(new Map())
-  const [message, setMessage] = useState('')
   const navigate = useNavigate();
-  const { toast } = useContext(MyContext)
 
-  const {loading, request} = useHttp();
+  const { request } = useHttp();
 
   function handleInput(event) {
     setForm({...form, [event.target.name]: event.target.value})
@@ -25,12 +23,12 @@ export function Registration({ setContextState }) {
 
   async function loginHandle() {
     try {
-      const {message, errors} = await request(URL + '/auth/registr', 'POST', {...form})
+      const {message, errors, status} = await request(URL + '/auth/registr', 'POST', {...form})
       if (!errors) navigate("/login")
       setErrors(errors)
-      setMessage(message)
+      toastMess(status, message)
     } catch (error) {
-      console.log(error)
+      toastMess(false, "Ой, кажется, что-то сломалось")
     }
   }
 
@@ -44,13 +42,14 @@ export function Registration({ setContextState }) {
           onClick={loginHandle}
           buttonName="Регистрация"
           errors={errors}
-          messFromServer={message}
+          messFromServer={''}
         />
         <div>
           <span>У вас уже есть аккаунт?</span>&nbsp;&nbsp;
           <Link to='/login'>Вход</Link>
         </div>
       </div>
+      <div className="auth__figure"/>
     </div>
   )
 }

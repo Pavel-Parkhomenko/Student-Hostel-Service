@@ -33,9 +33,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const [contextState, setContextState] = useState({
+  const [contextState] = useState({
     toast
   })
+
   return (
     <MyContext.Provider value={contextState}>
       <ToastContainer position="top-center" autoClose={5000} hideProgressBar={true}
@@ -45,8 +46,8 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login setContextState={setContextState} />} />
-          <Route path='/reg' element={<Registration setContextState={setContextState}/>} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/reg' element={<Registration />} />
           <Route path='/student' element={<StudentRoom />}>
             <Route index element={<MainStudent />} />
             <Route path="tech" element={<ContainerTech />} />
@@ -55,6 +56,8 @@ function App() {
             <Route path="news/:id" element={<FullNews />} />
             <Route path="events" element={<EventPanel />} />
             <Route path="chat" element={<Chat />} />
+            <Route path="employee-info" element={<EmployeeList />} />
+            <Route path="employee-info/:id" element={<FullMentor />} />
             <Route path="create-repair" element={<CreateRepair />} />
           </Route>
           <Route path='/mentor' element={<MentorRoom />}>

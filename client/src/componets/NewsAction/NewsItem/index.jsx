@@ -27,11 +27,14 @@ export function NewsItem (
 
   return (
     <div className="card mb-3">
-      <div className="m-3 d-flex justify-content-center">
-        <img src={url}
-             className="card-img-top"
-             alt="card-img-top"
-             style={{width: '300px'}}
+      <div className="d-flex justify-content-center card-img-top"
+           style={{backgroundColor: 'rgba(218,229,226,0.87)'}}
+      >
+        <img
+          className="m-3"
+          alt="img"
+          src={url}
+          style={{maxHeight: '300px', maxWidth: '300px'}}
         />
       </div>
       <div className="card-body">

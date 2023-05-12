@@ -10,6 +10,8 @@ export interface IMentor {
   firstName: string,
   secondName: string,
   middleName: string,
+  phone?: string,
+  email?: string,
   role?: "mentor"
   img?: string,
   chats?: Array<string>,

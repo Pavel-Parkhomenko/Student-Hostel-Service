@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
 import { URL } from "../../../constants";
 import { Link } from "react-router-dom";
+import { Loading } from "../../Loading";
 
 export function EmployeeList() {
   const { loading, request } = useHttp()
@@ -9,11 +10,14 @@ export function EmployeeList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, message } = await request(URL + '/admin/get-employee', "GET")
+      const { data } = await request(URL + '/admin/get-employee', "GET")
       setRes([...data])
     }
     fetchData()
   }, [])
+
+  if(loading) return <Loading />
+
   return(
     <div className="min-vh-100 bg-light rounded p-3">
       <table className="table table-striped">

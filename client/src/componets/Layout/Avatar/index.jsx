@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './style.css'
 import defaultImg from '../../../assets/student.png'
 import { URL } from "../../../constants";
+import { Link } from "react-router-dom";
 
 export function Avatar({ data }) {
 
@@ -22,8 +23,6 @@ export function Avatar({ data }) {
     }
     fetchData()
   }, [data])
-
-  console.log(url)
 
   return (
     <div className="shadow bg-white pt-3 rounded w-30 me-4" style={{height: '800px'}}>
@@ -62,12 +61,10 @@ export function Avatar({ data }) {
           <p>{data.numberTest}</p>
         </div>
         <hr className="hr"/>
-        <div className="d-flex flex-column">
-          <p className="d-flex justify-content-between">
-            <small className="text-muted">Баллы</small>
-            {data.balls || 0}
-          </p>
-        </div>
+        <p className="d-flex justify-content-between">
+          <small className="text-muted">Баллы</small>
+          {data.balls || 0}
+        </p>
       </div>
     </div>
   )

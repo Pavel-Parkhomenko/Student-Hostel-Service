@@ -43,7 +43,8 @@ export function SimpleForm(
       ))}
       <button
         type="submit"
-        className="btn btn-primary w-25"
+        className="btn btn-primary"
+        style={{width: '150px'}}
       >
         {buttonName}
       </button>
