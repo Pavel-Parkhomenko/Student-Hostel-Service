@@ -8,7 +8,7 @@ export function MainAdmin(data = null) {
       const admin = JSON.parse(localStorage.getItem('user'))
       setRes(admin)
     }
-    if(!data) fetchData()
+    fetchData()
   }, [data])
 
   return (

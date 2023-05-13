@@ -2,6 +2,9 @@ import { Router } from 'express'
 import { Mentor } from '../models/mentor'
 import { Account } from '../models/account'
 import { Admin } from '../models/admin'
+import { Student } from '../models/student'
+import { getDateAndTime } from '../utils'
+import path from "path";
 
 const router = Router()
 
@@ -47,6 +50,49 @@ router.post('/create-employee', async (req, res) => {
     await mentor.save()
     await acc.save()
     return res.status(200).json({message: 'Сотрудник создан'})
+  } catch (err) {
+    return res.status(500).json({message: 'Что-то пошло не так'})
+  }
+});
+
+router.get('/delete-student', async (req, res) => {
+  try {
+    const id = req.query.id
+    const admin = await Student.deleteOne({ numberTest: id })
+    return res.status(200).json({data: admin, message: 'Студент успешно выселен'})
+  } catch (err) {
+    return res.status(500).json({message: 'Что-то пошло не так'})
+  }
+});
+
+const ExcelJS = require('exceljs');
+router.get('/report-balls', async (req, res) => {
+  try {
+    const dirname = __dirname.split("\\").slice(0,3).join('\\')
+    const filename = `balls-${getDateAndTime().split(' ')[0]}.xlsx`
+    const students = await Student.find({}, 'firstName middleName secondName balls')
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Data');
+
+    // Заголовки столбцов
+    const headersRus = ['Имя', 'Отчество', 'Фамилия', 'Баллы']
+    const headers = Object.keys(students[0]['_doc']).slice(1)
+    worksheet.addRow(headersRus);
+
+    // Данные
+    students.forEach(obj => {
+      const row = [];
+      headers.forEach(header => {
+        row.push(obj[header]);
+      });
+      worksheet.addRow(row);
+    });
+
+    // Сохранение файла
+    await workbook.xlsx.writeFile('reports/' + filename);
+    const filePath = path.join(dirname, 'reports', `${filename}`);
+    res.sendFile(filePath);
   } catch (err) {
     return res.status(500).json({message: 'Что-то пошло не так'})
   }

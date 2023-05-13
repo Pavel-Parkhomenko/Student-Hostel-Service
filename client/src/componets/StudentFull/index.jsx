@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useHttp } from "../../hooks"
 import { URL } from "../../constants"
 import { TableTech} from '../ForStudent/Tech/TableTech'
 import { Claim } from "../ForStudent";
 import defaultImg from '../../assets/student.png'
 import { Loading } from "../Loading";
+import { toastMess } from "../../helpers";
+
+const userRole = JSON.parse(localStorage.getItem('user')).role
 
 export function StudentFull() {
   const { loading, request } = useHttp()
@@ -13,10 +16,11 @@ export function StudentFull() {
   const [res, setRes] = useState({})
   const [url, setUrl] = useState('')
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, message } = await request(
+      const { data } = await request(
         URL + `/student/get-student-id?id=${id}`
       )
       setRes({...data})
@@ -38,10 +42,18 @@ export function StudentFull() {
   }, [])
 
   async function handleChangeBalls() {
-    const { message } = await request(URL + '/student/update-balls', "POST", {
+    const { message, status, data } = await request(URL + '/student/update-balls', "POST", {
       numberTest: id,
       balls
     })
+    setRes({...res, balls: data})
+    toastMess(status, message)
+  }
+
+  async function handleDeleteStudent() {
+    const { message, status } = await request(URL + `/admin/delete-student?id=${id}`)
+    toastMess(status, message)
+    return navigate('/admin/students')
   }
 
   if(loading) return <Loading />
@@ -124,19 +136,42 @@ export function StudentFull() {
         }
       </div>
       <hr className="hr" />
-      <div className="d-flex flex-column align-items-center">
-        <button type="button" className="btn btn-light">
-          <Link className="text-decoration-none" to={"create"}>Создать замечание</Link>
-        </button>
-        {res.remarks?.length !== 0
+      {
+        userRole === 'mentor'
+        ?
+        <div className="d-flex flex-column align-items-center">
+          <button type="button" className="btn btn-light">
+            <Link className="text-decoration-none" to={"create"}>Создать замечание</Link>
+          </button>
+          {res.remarks?.length !== 0
+            ?
+            <div className="w-75">
+              <Claim remarks={res.remarks} role="mentor" />
+            </div>
+            :
+            <p>Замечаний нет</p>
+          }
+        </div>
+        :
+        null
+      }
+      {
+        userRole === 'admin'
           ?
-          <div className="w-75">
-            <Claim remarks={res.remarks} role="mentor" />
+          <div>
+            <button
+              className="btn btn-danger"
+              onClick={handleDeleteStudent}
+            >
+              Выселить
+            </button>
+            <br/>
+            <small className="text-danger">Будут удалены все данные о студенте.
+              Также он потеряет доступ к своей учетной записи</small>
           </div>
           :
-          <p>Замечаний нет</p>
-        }
-      </div>
+          null
+      }
     </div>
   )
 }

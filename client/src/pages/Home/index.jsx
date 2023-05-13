@@ -1,5 +1,7 @@
 import React from 'react'
 import home1 from '../../assets/home/home1.jpg'
+import home2 from '../../assets/home/home2.jpg'
+import home3 from '../../assets/home/home3.jpg'
 import { Link } from 'react-router-dom'
 import './style.css'
 
@@ -9,8 +11,8 @@ export function Home() {
       <div>
         <div className="home__img-container">
           <img alt="img1" className="home__img1" src={home1} />
-          <img alt="img2" className="home__img2" src={home1} />
-          <img alt="img3" className="home__img3" src={home1} />
+          <img alt="img2" className="home__img2" src={home3} />
+          <img alt="img3" className="home__img3" src={home2} />
         </div>
       </div>
       <div className="home__container-text">

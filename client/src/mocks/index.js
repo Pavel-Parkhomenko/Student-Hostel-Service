@@ -9,6 +9,7 @@ import { CHANGE_INFO_STUDENT } from './forms/mainStudent'
 import { CREATE_TECH_FORM } from './forms/createTech'
 import { CREATE_REPAIR_FORM } from './forms/createRepair'
 import { CHANGE_MENTOR_DATA_FORM } from './forms/changeMentorData'
+import { ADD_STUDENT_FORM } from './forms/addStudent'
 export {
   fieldsLogin,
   fieldsRegistration,
@@ -21,5 +22,6 @@ export {
   CHANGE_INFO_STUDENT,
   CREATE_TECH_FORM,
   CREATE_REPAIR_FORM,
-  CHANGE_MENTOR_DATA_FORM
+  CHANGE_MENTOR_DATA_FORM,
+  ADD_STUDENT_FORM
 }

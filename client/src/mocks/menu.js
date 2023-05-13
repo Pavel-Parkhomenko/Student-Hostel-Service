@@ -123,7 +123,12 @@ export const MENU_ADMIN = [
       name: 'Импортировать',
       to: "students/import",
       icon: "bi bi-newspaper",
-    }]
+    },{
+      name: 'Добавить',
+      to: "students/add",
+      icon: "bi bi-newspaper",
+    },
+    ]
   },
   {
     id: '2',
@@ -151,5 +156,5 @@ export const MENU_ADMIN = [
     name: 'Отчеты',
     to: "reports",
     icon: "bi bi-calendar-event",
-  }
+  },
 ]

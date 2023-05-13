@@ -29,6 +29,9 @@ import { AccPlaces } from "./componets/ForAdmin/AccPlaces";
 import { CreateMentor } from "./componets/ForAdmin/CreateMentor";
 import { CreateTech } from "./componets/ForAdmin/CreateTech";
 import { CreateRepair } from "./componets/ForStudent/CreateRepair";
+import { AddStudent } from "./componets/ForAdmin/AddStudent";
+import { Reports } from "./componets/ForAdmin/Reports";
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -77,6 +80,7 @@ function App() {
           <Route path='/admin' element={<AdminRoom />}>
             <Route index element={<MainAdmin />} />
             <Route path="students" element={<StudentList />} />
+            <Route path="students/add" element={<AddStudent />} />
             <Route path="students/:id" element={<StudentFull />} />
             <Route path="students/:id/add-tech" element={<CreateTech />} />
             <Route path="students/import" element={<ImportStudents />} />
@@ -84,6 +88,7 @@ function App() {
             <Route path="employee/:id" element={<FullMentor />} />
             <Route path="employee/create" element={<CreateMentor />} />
             <Route path="places" element={<AccPlaces />} />
+            <Route path="reports" element={<Reports />} />
           </Route>
         </Routes>
       </Router>

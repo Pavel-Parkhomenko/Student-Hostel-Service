@@ -30,6 +30,7 @@ export const ROUTES_ADMIN = [
   {path: "/", breadcrumb: "Домашняя"},
   {path: "/admin", breadcrumb: "Кабинет"},
   {path: "/admin/students", breadcrumb: "Студенты"},
+  {path: "/admin/students/add", breadcrumb: "Добавить"},
   {path: "/admin/employee", breadcrumb: "Сотрудники"},
   {path: "/admin/employee/:id", breadcrumb: "Сотрудник"},
   {path: "/admin/students/import", breadcrumb: "Импорт"},

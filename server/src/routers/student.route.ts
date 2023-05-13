@@ -7,7 +7,7 @@ const router = Router();
 router.post('/import-students',
   async (req, res) => {
     try {
-      const students = req.body
+      const { students, type } = req.body
       let stObjs = []
       for (let i = 1; i < students.length; i++) {
         stObjs.push({
@@ -15,6 +15,7 @@ router.post('/import-students',
           secondName: students[i][1],
           middleName: students[i][2],
           formEducation: students[i][3],
+          balls: 0,
           numberTest: students[i][4] as number,
           room: {
             floor: students[i][5] as number,
@@ -23,11 +24,21 @@ router.post('/import-students',
           }
         })
       }
-      Student.insertMany(stObjs).then(() => {
-        return res.status(200).json({message: 'Данные успешны выгружены'})
-      }).catch((err) => {
-        return res.status(400).json({message: 'Не удалось выгрузить данные'})
-      })
+      if(type === 'add') {
+        Student.insertMany(stObjs).then(() => {
+          return res.status(200).json({message: 'Данные успешны выгружены'})
+        }).catch((err) => {
+          return res.status(400).json({message: 'Не удалось выгрузить данные'})
+        })
+      } else {
+        await Account.deleteMany({ role: 'student'})
+        await Student.deleteMany()
+        Student.insertMany(stObjs).then(() => {
+          return res.status(200).json({message: 'Данные успешны выгружены'})
+        }).catch((err) => {
+          return res.status(400).json({message: 'Не удалось выгрузить данные'})
+        })
+      }
 
     } catch (err) {
       return res.status(500).json({message: 'Что-то пошло не так'})
@@ -154,14 +165,15 @@ router.post('/update-balls', async (req, res) => {
         balls: Number(balls) + Number(student.balls)
       }
     }
-    await Student.findOneAndUpdate({numberTest: numberTest}, update)
-    return res.status(200).json({message: 'Данные обновлены'})
+    const newStudent = await Student.findOneAndUpdate({numberTest: numberTest}, update, {
+      new: true
+    })
+    return res.status(200).json({data: newStudent.balls, message: 'Данные обновлены'})
   } catch (err) {
     return res.status(500).json({message: 'Что-то пошло не так'})
   }
 })
 
-// @ts-ignore
 const multer  = require("multer");
 
 const storage = multer.diskStorage({
@@ -232,7 +244,6 @@ router.get('/load', function(req, res) {
     if(img === 'undefined') return res.status(400)
     const imagePath = path.join("D:", "diplom-app", "server", 'uploads', 'students', `${img}`);
     if(!imagePath) return res.status(400)
-    console.log(imagePath)
     res.sendFile(imagePath);
   } catch (err){
     return res.status(400)
@@ -250,11 +261,20 @@ router.post('/get-remarks', async (req, res) => {
   }
 })
 
-router.post('/get-my-mentor', async (req, res) => {
+router.post('/add-student', async (req, res) => {
   try {
-    const { numberTest } = req.body
-    const data = await Student.findOne({numberTest: numberTest})
-    return res.status(200).json({data: data.remarks || [], message: 'Данные загруженны'})
+    const { firstName, secondName, middleName,
+      formEducation, floor, block, apartament
+    } = req.body
+
+    const student = new Student({
+      firstName, secondName, middleName, formEducation,
+      room: {
+        floor, block, apartament
+      }
+    })
+    await student.save()
+    return res.status(200).json({message: 'Новый студент добавлен'})
   } catch (err) {
     console.log(err)
     return res.status(500).json({message: 'Что-то пошло не так - сервер'})
