@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './style.css'
 import defaultImg from '../../../assets/student.png'
-import { URL } from "../../../constants";
+import { SERVER } from "../../../constants";
 import { Link } from "react-router-dom";
 
 export function Avatar({ data }) {
@@ -10,7 +10,7 @@ export function Avatar({ data }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      fetch(URL + '/student/load?' + `img=${data.img}`)
+      fetch(SERVER + '/student/load?' + `img=${data.img}`)
         .then(response => {
           if(!response.ok) throw new Error()
           return response.blob()

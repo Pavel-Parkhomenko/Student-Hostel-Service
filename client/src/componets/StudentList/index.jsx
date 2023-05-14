@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHttp } from "../../hooks";
-import { URL } from "../../constants";
+import { SERVER } from "../../constants";
 import { Link } from "react-router-dom";
 import { Loading } from '../Loading'
 
@@ -10,7 +10,7 @@ export function StudentList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await request(URL + '/student/get-info', "GET")
+      const { data } = await request(SERVER + '/student/get-info', "GET")
       setRes([...data])
     }
     fetchData()

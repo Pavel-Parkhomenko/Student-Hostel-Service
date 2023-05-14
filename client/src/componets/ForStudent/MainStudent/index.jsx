@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { SimpleForm } from "../../SimpleForm";
 import { CHANGE_INFO_STUDENT } from "../../../mocks";
-import { useHttp } from "../../../hooks";
-import { URL } from "../../../constants";
-import { MyContext } from '../../../context'
+import { SERVER } from "../../../constants";
+import { toastMess } from '../../../helpers'
 
 export function MainStudent() {
   const [data, setData] = useState({})
@@ -11,8 +10,6 @@ export function MainStudent() {
   useEffect(() => {
     setData(JSON.parse(localStorage.getItem("user")))
   }, [])
-
-  const { toast } = useContext(MyContext)
 
   const [form, setForm] = useState({
     email: '',
@@ -30,7 +27,7 @@ export function MainStudent() {
   async function handleClick(event) {
     event.preventDefault()
     if(form.newPassword !== form.repeatPassword ){
-      toast.error('Пароли должны совпадать')
+      toastMess(false, 'Пароли должны совпадать')
       return
     }
 
@@ -41,15 +38,13 @@ export function MainStudent() {
     formData.append('newPassword', form.newPassword)
     formData.append('oldPassword', form.oldPassword)
     formData.append('file', file)
-    const response = await fetch(URL + '/student/update-info', {
+    const response = await fetch(SERVER + '/student/update-info', {
       method: 'POST',
       body: formData,
     })
     const student = await response.json()
-    if(!response.ok){
-      toast.error(student.message)
-    } else {
-      toast.success(student.message)
+    toastMess(response.ok, student.message)
+    if(response.ok){
       localStorage.setItem('user', JSON.stringify(student.data))
     }
   }

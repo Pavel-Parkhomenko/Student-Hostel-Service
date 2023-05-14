@@ -56,6 +56,16 @@ const schema = new Schema<IStudent>({
     },
     chats: { type: [String], required: false },
     img: { type: String, required: false },
+    pay: {
+        type: [
+            {
+                date: { type: String, required: false },
+                receipt: { type: String, required: false },
+            }
+        ],
+        required: false,
+        _id : false,
+    }
 
 }, { versionKey: false })
 

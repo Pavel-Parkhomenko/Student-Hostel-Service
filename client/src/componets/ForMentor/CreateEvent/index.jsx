@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.css'
-import { URL } from '../../../constants'
+import { SERVER } from '../../../constants'
 import { dateFormat, toastMess } from '../../../helpers'
 
 export function CreateEvent() {
@@ -44,7 +44,7 @@ export function CreateEvent() {
     formData.append('dateEvent', dateFormat(selectedDate))
     formData.append('placeEvent', form.placeEvent)
     formData.append('file', file)
-    const res = await fetch(URL + '/event/create-event', {
+    const res = await fetch(SERVER + '/event/create-event', {
       method: 'POST',
       body: formData,
     })

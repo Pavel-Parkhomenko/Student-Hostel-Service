@@ -15,6 +15,12 @@ export interface IStudent {
     account?: IAccount,
     chats?: Array<string>,
     img?: string,
+    pay?: Array<IPay>,
+}
+
+interface IPay {
+    date: string,
+    receipt: string,
 }
 
 interface IAccount {

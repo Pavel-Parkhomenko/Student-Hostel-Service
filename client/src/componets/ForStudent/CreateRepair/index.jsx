@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { SimpleForm } from "../../SimpleForm";
 import { CREATE_REPAIR_FORM } from '../../../mocks'
-import { URL } from "../../../constants";
+import { SERVER } from "../../../constants";
 import { useHttp } from "../../../hooks";
 import { ViewRepairs } from "../../ViewRepairs";
 import { MyContext } from '../../../context'
@@ -16,7 +16,7 @@ export function CreateRepair() {
   useEffect(() => {
     const fetchData = async () => {
       const numberTest = JSON.parse(localStorage.getItem('user')).numberTest
-      const { data, message } = await request(URL + `/repair/get-repairs-id`, "POST", {
+      const { data, message } = await request(SERVER + `/repair/get-repairs-id`, "POST", {
         numberTest: numberTest
       })
       setRes([...data])
@@ -44,7 +44,7 @@ export function CreateRepair() {
         numberTest: user.numberTest
       }
     }
-    const { data, message } = await request(URL + '/repair/create', 'POST', {...repair})
+    const { data, message } = await request(SERVER + '/repair/create', 'POST', {...repair})
     setRes([...res, data])
     toast.success(message)
   }

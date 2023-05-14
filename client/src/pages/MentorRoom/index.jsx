@@ -12,7 +12,7 @@ export function MentorRoom() {
       <div className="container pt-3 st-room__container">
         <div className="w-100">
           <Header>
-            <Menu menu={MENU_MENTOR} />
+            <Menu menu={MENU_MENTOR} role="Воспитатель"/>
           </Header>
           <BreadCrumbs routes={ROUTES_MENTOR} />
           <div className="rounded w-100">

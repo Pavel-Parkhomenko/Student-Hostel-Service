@@ -20,7 +20,7 @@ export function StudentRoom() {
         <Avatar data={student} />
         <div className="w-100">
           <Header>
-            <Menu menu={MENU_STUDENT} />
+            <Menu menu={MENU_STUDENT} role="Студент"/>
           </Header>
           <BreadCrumbs routes={ROUTES_STUDENT} />
           <div className="rounded w-100">

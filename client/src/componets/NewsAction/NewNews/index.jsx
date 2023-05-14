@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { URL } from '../../../constants'
+import { SERVER } from '../../../constants'
 import { useHttp } from "../../../hooks"
 import { toastMess } from '../../../helpers'
 
@@ -14,7 +14,7 @@ export function NewNews() {
   useEffect(() => {
     async function getIdFetch() {
       const mentorData = JSON.parse(localStorage.getItem('user'))
-      const { data } = await request(URL + '/news/create-news', 'POST', {
+      const { data } = await request(SERVER + '/news/create-news', 'POST', {
         mentor: {
           firstName: mentorData.firstName,
           secondName: mentorData.secondName,
@@ -36,6 +36,8 @@ export function NewNews() {
     }
     toastMess(true, "Секция создана")
     setSections([...sections, {header, description, file, id: idNews}])
+    setDescription('')
+    setHeader('')
   }
 
   const handleHeaderChange = (event) => {
@@ -62,7 +64,7 @@ export function NewNews() {
       return formData;
     });
 
-    let requests = formDataArray.map(item => fetch(URL + '/news/create-section', {
+    let requests = formDataArray.map(item => fetch(SERVER + '/news/create-section', {
       method: 'POST',
       body: item,
     }));

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
-import { URL } from "../../../constants";
+import { SERVER } from "../../../constants";
 import { Link } from "react-router-dom";
 import { Loading } from "../../Loading";
 
@@ -10,7 +10,7 @@ export function EmployeeList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await request(URL + '/admin/get-employee', "GET")
+      const { data } = await request(SERVER + '/admin/get-employee', "GET")
       setRes([...data])
     }
     fetchData()

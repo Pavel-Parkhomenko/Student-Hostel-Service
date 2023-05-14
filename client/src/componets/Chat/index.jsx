@@ -3,7 +3,7 @@ import { Message } from "./Message";
 import { sendMessage, subscribeToMessages } from './api'
 import { Link } from 'react-router-dom'
 import { useHttp } from "../../hooks";
-import { URL } from "../../constants";
+import { SERVER } from "../../constants";
 import { Loading } from '../Loading'
 import { EmptyData } from "../EmptyData";
 
@@ -16,7 +16,7 @@ export function Chat() {
   const [chats, setChats] = useState([])
   const [activeRole, setActiveRole] = useState('')
   async function handleClickIdChat(ind, id) {
-    const { data } = await request(URL + '/chat/get-messages', "POST", {
+    const { data } = await request(SERVER + '/chat/get-messages', "POST", {
       id: id
     })
     setMessages(data?.messages)
@@ -28,12 +28,12 @@ export function Chat() {
     setActiveRole(user.role || 'student')
     setUser(user.firstName + " " + user.middleName)
     async function getChats() {
-      const res = await request(URL + '/common/get-chats', "POST", {
+      const res = await request(SERVER + '/common/get-chats', "POST", {
         role: user.role || "student",
         id: user._id || user.id
       })
       if(res.data.length !== 0) {
-        const { data } = await request(URL + '/chat/get-chats', "POST", {
+        const { data } = await request(SERVER + '/chat/get-chats', "POST", {
           idChats: res.data
         })
         setChats(data)

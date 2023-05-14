@@ -10,6 +10,7 @@ import { CREATE_TECH_FORM } from './forms/createTech'
 import { CREATE_REPAIR_FORM } from './forms/createRepair'
 import { CHANGE_MENTOR_DATA_FORM } from './forms/changeMentorData'
 import { ADD_STUDENT_FORM } from './forms/addStudent'
+import { PAY_HOSTEL_FORM } from './forms/payHostel'
 export {
   fieldsLogin,
   fieldsRegistration,
@@ -23,5 +24,5 @@ export {
   CREATE_TECH_FORM,
   CREATE_REPAIR_FORM,
   CHANGE_MENTOR_DATA_FORM,
-  ADD_STUDENT_FORM
+  ADD_STUDENT_FORM, PAY_HOSTEL_FORM,
 }

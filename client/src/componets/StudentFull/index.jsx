@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useHttp } from "../../hooks"
-import { URL } from "../../constants"
+import { SERVER } from "../../constants"
 import { TableTech} from '../ForStudent/Tech/TableTech'
 import { Claim } from "../ForStudent";
 import defaultImg from '../../assets/student.png'
 import { Loading } from "../Loading";
 import { toastMess } from "../../helpers";
-
-const userRole = JSON.parse(localStorage.getItem('user')).role
 
 export function StudentFull() {
   const { loading, request } = useHttp()
@@ -18,15 +16,17 @@ export function StudentFull() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const userRole = useMemo(() => JSON.parse(localStorage.getItem('user')).role, [])
+
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await request(
-        URL + `/student/get-student-id?id=${id}`
+        SERVER + `/student/get-student-id?id=${id}`
       )
       setRes({...data})
       if(data.balls) setBalls(data.balls)
 
-      fetch(URL + '/student/load?' + `img=${data.img}`)
+      fetch(SERVER + '/student/load?' + `img=${data.img}`)
         .then(response => {
           if(!response.ok) throw new Error()
           return response.blob()
@@ -42,7 +42,7 @@ export function StudentFull() {
   }, [])
 
   async function handleChangeBalls() {
-    const { message, status, data } = await request(URL + '/student/update-balls', "POST", {
+    const { message, status, data } = await request(SERVER + '/student/update-balls', "POST", {
       numberTest: id,
       balls
     })
@@ -51,7 +51,7 @@ export function StudentFull() {
   }
 
   async function handleDeleteStudent() {
-    const { message, status } = await request(URL + `/admin/delete-student?id=${id}`)
+    const { message, status } = await request(SERVER + `/admin/delete-student?id=${id}`)
     toastMess(status, message)
     return navigate('/admin/students')
   }

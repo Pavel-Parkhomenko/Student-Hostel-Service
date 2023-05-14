@@ -12,7 +12,7 @@ export function AdminRoom() {
       <div className="container pt-3 st-room__container">
         <div className="w-100">
           <Header>
-            <Menu menu={MENU_ADMIN} />
+            <Menu menu={MENU_ADMIN} role='Комендант' />
           </Header>
           <BreadCrumbs routes={ROUTES_ADMIN} />
           <div className="rounded w-100">

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
-import { URL } from "../../../constants";
+import { SERVER } from "../../../constants";
 import { MyContext } from '../../../context'
 import { Loading } from '../../Loading'
 import { EmptyData } from '../../EmptyData'
@@ -13,7 +13,7 @@ export function Claim({ remarks = [], role='student' }) {
   useEffect(() => {
     async function fetchRemarks() {
       const user = JSON.parse(localStorage.getItem('user'))
-      const { data, message } = await request(URL + '/student/get-remarks', 'POST', {
+      const { data, message } = await request(SERVER + '/student/get-remarks', 'POST', {
         numberTest: user.numberTest
       })
       setRemarksState(data)
@@ -25,7 +25,7 @@ export function Claim({ remarks = [], role='student' }) {
     event.target.textContent = "Прочитано"
     const user = JSON.parse(localStorage.getItem('user'))
     const { message } = await request(
-      URL + `/student/change-status-claim`, "POST", {
+      SERVER + `/student/change-status-claim`, "POST", {
         numberTest: user.numberTest,
         ind: ind
       }

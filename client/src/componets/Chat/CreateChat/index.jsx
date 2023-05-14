@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import { useHttp } from "../../../hooks";
-import { URL } from "../../../constants";
+import { SERVER } from "../../../constants";
 
 export function CreateChat() {
   const { loading, request } = useHttp()
@@ -12,9 +12,9 @@ export function CreateChat() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, message } = await request(URL + '/student/get-info', "GET")
+      const { data, message } = await request(SERVER + '/student/get-info', "GET")
       setRes([...data])
-      const id = await request(URL + '/chat/create-chat', "GET")
+      const id = await request(SERVER + '/chat/create-chat', "GET")
       setChatId(id.data.id)
     }
     fetchData()

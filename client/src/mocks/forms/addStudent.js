@@ -75,7 +75,7 @@ export const ADD_STUDENT_FORM = [
     id: 'blockStudentId',
     type: "number",
     required: true,
-    pattern: "[0-9]{1-3}",
+    pattern: "[0-9]{1,3}",
     title: "Введите номер этажа",
   },
   {

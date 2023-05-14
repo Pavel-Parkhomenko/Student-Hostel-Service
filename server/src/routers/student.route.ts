@@ -1,13 +1,13 @@
 import path from "path";
-import { Router } from 'express'
-import { Student } from '../models/student'
-import { Account } from '../models/account'
+import {Router} from 'express'
+import {Student} from '../models/student'
+import {Account} from '../models/account'
 
 const router = Router();
 router.post('/import-students',
   async (req, res) => {
     try {
-      const { students, type } = req.body
+      const {students, type} = req.body
       let stObjs = []
       for (let i = 1; i < students.length; i++) {
         stObjs.push({
@@ -24,14 +24,14 @@ router.post('/import-students',
           }
         })
       }
-      if(type === 'add') {
+      if (type === 'add') {
         Student.insertMany(stObjs).then(() => {
           return res.status(200).json({message: 'Данные успешны выгружены'})
         }).catch((err) => {
           return res.status(400).json({message: 'Не удалось выгрузить данные'})
         })
       } else {
-        await Account.deleteMany({ role: 'student'})
+        await Account.deleteMany({role: 'student'})
         await Student.deleteMany()
         Student.insertMany(stObjs).then(() => {
           return res.status(200).json({message: 'Данные успешны выгружены'})
@@ -78,7 +78,7 @@ router.get('/get-student-id', async (req, res) => {
 
 router.post('/change-status-claim', async (req, res) => {
   try {
-    const { numberTest, ind } = req.body
+    const {numberTest, ind} = req.body
     const data = await Student.findOne({numberTest: numberTest})
     data.remarks[ind].status = 1
     await data.save()
@@ -117,7 +117,7 @@ router.get('/get-places', async (req, res) => {
     const resStudents = []
 
     for (let i = 0; i < data.length; i++) {
-      if(!resStudents[data[i].room?.floor]) {
+      if (!resStudents[data[i].room?.floor]) {
         resStudents[data[i].room?.floor] = [data[i].room]
       } else {
         resStudents[data[i].room?.floor] = [...resStudents[data[i].room?.floor], data[i].room]
@@ -156,7 +156,7 @@ router.post('/update-balls', async (req, res) => {
     const {numberTest, balls} = req.body
     const student = await Student.findOne({numberTest: numberTest})
     let update = {}
-    if(!student.balls) {
+    if (!student.balls) {
       update = {
         balls: Number(balls)
       }
@@ -174,7 +174,7 @@ router.post('/update-balls', async (req, res) => {
   }
 })
 
-const multer  = require("multer");
+const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -185,7 +185,7 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({storage: storage})
 
 interface MulterRequest extends Request {
   file: any;
@@ -193,17 +193,17 @@ interface MulterRequest extends Request {
 
 router.post('/update-info', upload.single("file"), async (req, res) => {
   try {
-    const { numberTest, email, login, newPassword, oldPassword } = req.body
+    const {numberTest, email, login, newPassword, oldPassword} = req.body
     const img = (req as unknown as MulterRequest).file?.filename
     const student = await Student.findOne({numberTest: numberTest})
     const acc = await Account.findOne({login: student.account?.login})
 
-    if(acc.password !== oldPassword && oldPassword !== '') {
+    if (acc.password !== oldPassword && oldPassword !== '') {
       return res.status(400).json({message: 'Пароль должен совпадать со старым паролем'})
     }
 
     const previewAcc = await Account.findOne({login: login})
-    if(previewAcc) {
+    if (previewAcc) {
       return res.status(400).json({message: 'Такой логин уже существует'})
     }
 
@@ -216,21 +216,21 @@ router.post('/update-info', upload.single("file"), async (req, res) => {
       password: acc.password
     }
 
-    if(email !== '') update.email = email
-    if(login !== '') {
+    if (email !== '') update.email = email
+    if (login !== '') {
       update['account.login'] = login
       accUpdate.login = login
     }
-    if(newPassword !== '') accUpdate.password = newPassword
+    if (newPassword !== '') accUpdate.password = newPassword
 
     await Account.findOneAndUpdate({login: student.account?.login}, accUpdate)
     await Student.findOneAndUpdate({numberTest: numberTest}, update)
-    if(img){
+    if (img) {
       await Student.findOneAndUpdate({numberTest: numberTest}, {
         img: img
       })
     }
-    const studentNew = await Student.findOne({ numberTest: numberTest})
+    const studentNew = await Student.findOne({numberTest: numberTest})
     return res.status(200).json({data: studentNew, message: 'Данные обновлены'})
   } catch (err) {
     console.log(err.message)
@@ -238,21 +238,21 @@ router.post('/update-info', upload.single("file"), async (req, res) => {
   }
 })
 
-router.get('/load', function(req, res) {
+router.get('/load', function (req, res) {
   try {
     const img = req.query.img
-    if(img === 'undefined') return res.status(400)
+    if (img === 'undefined') return res.status(400)
     const imagePath = path.join("D:", "diplom-app", "server", 'uploads', 'students', `${img}`);
-    if(!imagePath) return res.status(400)
+    if (!imagePath) return res.status(400)
     res.sendFile(imagePath);
-  } catch (err){
+  } catch (err) {
     return res.status(400)
   }
 });
 
 router.post('/get-remarks', async (req, res) => {
   try {
-    const { numberTest } = req.body
+    const {numberTest} = req.body
     const data = await Student.findOne({numberTest: numberTest})
     return res.status(200).json({data: data.remarks || [], message: 'Данные загруженны'})
   } catch (err) {
@@ -263,7 +263,8 @@ router.post('/get-remarks', async (req, res) => {
 
 router.post('/add-student', async (req, res) => {
   try {
-    const { firstName, secondName, middleName,
+    const {
+      firstName, secondName, middleName,
       formEducation, floor, block, apartament
     } = req.body
 
@@ -275,6 +276,33 @@ router.post('/add-student', async (req, res) => {
     })
     await student.save()
     return res.status(200).json({message: 'Новый студент добавлен'})
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({message: 'Что-то пошло не так - сервер'})
+  }
+})
+
+router.post('/pay-hostel', async (req, res) => {
+  try {
+    const { receipt, numberTest } = req.body
+    const student = await Student.findOne({ numberTest })
+    let update = []
+    if(student.pay) {
+      update = [
+        ...student.pay, {
+          date: String(new Date()),
+          receipt
+        }
+      ]
+    } else {
+      update = [{
+          date: String(new Date()),
+          receipt
+        }]
+    }
+    student.pay = update
+    await student.save()
+    return res.status(200).json({message: 'Квитанция добалена'})
   } catch (err) {
     console.log(err)
     return res.status(500).json({message: 'Что-то пошло не так - сервер'})

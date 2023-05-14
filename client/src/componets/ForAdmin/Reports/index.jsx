@@ -12,11 +12,12 @@ export function Reports() {
   }
 
   return (
-    <div className='p-3 bg-white rounded'>
+    <div className='p-3 bg-white rounded min-vh-100'>
       <div>
-        <p>Отчет по количеству баллов</p>
+        <p>1. Отчет по количеству баллов</p>
+        <p className="text-muted">Отчет представлет собой файл формата Excel</p>
         <button
-          className="btn btn-primary mt-3"
+          className="btn btn-primary mt-2"
           onClick={handleReportBalls}
         >
           Получить

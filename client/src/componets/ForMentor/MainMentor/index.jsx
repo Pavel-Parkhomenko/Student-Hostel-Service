@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
-import { URL } from "../../../constants";
+import { SERVER } from "../../../constants";
 import { Loading } from '../../Loading'
 import { CHANGE_MENTOR_DATA_FORM } from "../../../mocks";
 import { SimpleForm } from "../../SimpleForm";
@@ -29,11 +29,11 @@ export function MainMentor() {
     const fetchData = async () => {
       const mentor = JSON.parse(localStorage.getItem('user'))
       const { data } = await request(
-        URL + '/mentor/info-mentor', "POST", { login: mentor.account?.login}
+        SERVER + '/mentor/info-mentor', "POST", { login: mentor.account?.login}
       )
       setRes({...data})
 
-      fetch(URL + '/mentor/load?' + `img=${data.img}`)
+      fetch(SERVER + '/mentor/load?' + `img=${data.img}`)
         .then(response => {
           if(!response.ok) setUrl('')
           return response.blob()
@@ -68,7 +68,7 @@ export function MainMentor() {
     formData.append('phone', form.phone)
     formData.append('email', form.email)
     formData.append('file', file)
-    const response = await fetch(URL + '/mentor/update-info', {
+    const response = await fetch(SERVER + '/mentor/update-info', {
       method: 'POST',
       body: formData,
     })

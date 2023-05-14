@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { SimpleForm } from "../../SimpleForm";
 import { ADD_STUDENT_FORM } from "../../../mocks";
 import { useHttp } from "../../../hooks";
-import { URL } from "../../../constants";
+import { SERVER } from "../../../constants";
 import { toastMess } from "../../../helpers";
 
 export function AddStudent() {
@@ -25,7 +25,7 @@ export function AddStudent() {
 
   async function handleClick(event) {
     event.preventDefault()
-    const { message, status } = await request(URL + '/student/add-student', 'POST', {
+    const { message, status } = await request(SERVER + '/student/add-student', 'POST', {
       ...form
     })
     toastMess(status, message)

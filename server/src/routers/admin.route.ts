@@ -65,6 +65,16 @@ router.get('/delete-student', async (req, res) => {
   }
 });
 
+router.get('/get-payments', async (req, res) => {
+  try {
+    const students = await Student.find({ formEducation: 'платное' },
+      "firstName middleName secondName numberTest pay")
+    return res.status(200).json({ data: students, message: 'Студент полученны' })
+  } catch (err) {
+    return res.status(500).json({ message: 'Что-то пошло не так' })
+  }
+});
+
 const ExcelJS = require('exceljs');
 router.get('/report-balls', async (req, res) => {
   try {

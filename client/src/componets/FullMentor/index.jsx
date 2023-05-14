@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHttp } from "../../hooks"
-import { URL } from "../../constants"
+import { SERVER } from "../../constants"
 import { useParams } from "react-router-dom"
 import { Loading } from "../Loading"
 
@@ -14,11 +14,11 @@ export function FullMentor() {
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await request(
-        URL + '/mentor/info-mentor', "POST", { login: id}
+        SERVER + '/mentor/info-mentor', "POST", { login: id}
       )
       setRes({...data})
 
-      fetch(URL + '/mentor/load?' + `img=${data.img}`)
+      fetch(SERVER + '/mentor/load?' + `img=${data.img}`)
         .then(response => response.blob())
         .then(blob => {
           const url = window.URL.createObjectURL(new Blob([blob]));

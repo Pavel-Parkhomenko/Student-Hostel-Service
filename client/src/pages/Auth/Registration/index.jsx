@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useHttp } from '../../../hooks'
 import { fieldsRegistration } from '../../../mocks'
 import { Form } from '../Form'
-import { URL } from '../../../constants'
+import { SERVER } from '../../../constants'
 import '../styles.css'
 import { toastMess } from "../../../helpers";
 
@@ -23,7 +23,7 @@ export function Registration() {
 
   async function loginHandle() {
     try {
-      const {message, errors, status} = await request(URL + '/auth/registr', 'POST', {...form})
+      const {message, errors, status} = await request(SERVER + '/auth/registr', 'POST', {...form})
       if (!errors) navigate("/login")
       setErrors(errors)
       toastMess(status, message)

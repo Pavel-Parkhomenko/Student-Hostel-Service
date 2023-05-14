@@ -11,14 +11,20 @@ export const MENU_STUDENT = [
         icon: "bi bi-newspaper",
       },
       {
-      name: 'Техника',
-      to: "tech",
-      icon: "bi bi-newspaper",
-    }, {
-      name: 'Замечания',
-      to: "claim",
-      icon: "bi bi-newspaper",
-    }]
+        name: 'Техника',
+        to: "tech",
+        icon: "bi bi-newspaper",
+      },
+      {
+        name: 'Замечания',
+        to: "claim",
+        icon: "bi bi-newspaper",
+      },
+      {
+        name: 'Оплата за проживание',
+        to: "pay-hostel",
+        icon: "bi bi-newspaper",
+      }]
   },
   {
     id: 1,
@@ -45,7 +51,7 @@ export const MENU_STUDENT = [
     icon: "bi bi-chat-left-dots"
   },
   {
-    id: 4,
+    id: 5,
     name: 'Воспитатели',
     to: "employee-info",
     icon: "bi bi-calendar-event"
@@ -119,15 +125,22 @@ export const MENU_ADMIN = [
       name: 'Просмотреть',
       to: "students",
       icon: "bi bi-newspaper",
-    }, {
-      name: 'Импортировать',
-      to: "students/import",
-      icon: "bi bi-newspaper",
-    },{
-      name: 'Добавить',
-      to: "students/add",
-      icon: "bi bi-newspaper",
     },
+      {
+        name: 'Импортировать',
+        to: "students/import",
+        icon: "bi bi-newspaper",
+      },
+      {
+        name: 'Добавить',
+        to: "students/add",
+        icon: "bi bi-newspaper",
+      },
+      {
+        name: 'Просмотр оплаты',
+        to: "students/view-pay-hostel",
+        icon: "bi bi-newspaper",
+      },
     ]
   },
   {

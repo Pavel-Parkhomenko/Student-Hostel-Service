@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import readXlsxFile from "read-excel-file"
 import { useHttp } from "../../../hooks"
-import { URL } from '../../../constants'
+import { SERVER } from '../../../constants'
 import { toastMess } from '../../../helpers'
 
 export function ImportStudents() {
@@ -17,7 +17,7 @@ export function ImportStudents() {
 
   async function handleImport(event) {
     event.preventDefault()
-    const { message, status } = await request(URL + '/student/import-students', 'POST', {
+    const { message, status } = await request(SERVER + '/student/import-students', 'POST', {
       students: file,
       type: valueRadio
     })

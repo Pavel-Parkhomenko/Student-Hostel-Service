@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { HideMenu } from './HideMenu'
 
-export function Menu({ menu }) {
+export function Menu({ menu, role = 'Пользователь' }) {
   const [visibleLinks, setVisibleLinks] = useState([])
   const [visiblePerson, setVisiblePerson] = useState('hidde')
   function handleVisibleOver(id) {
@@ -33,7 +33,7 @@ export function Menu({ menu }) {
         className="shadow rounded mb-3 navbar navbar-expand-md navbar-light bg-light"
       >
         <div className="container-fluid">
-          <ul className="navbar-nav me-auto mb-2">
+          <ul className="navbar-nav">
             {menu.map(({id, name, to, icon, dropdown}) => {
               if(!dropdown) {
                 return <li className="nav-item me-2" key={id}>
@@ -62,8 +62,10 @@ export function Menu({ menu }) {
           </ul>
           <div
             style={{position: "relative", cursor: "pointer"}}
+            className="d-flex align-items-center"
             onClick={() => setVisiblePerson(visiblePerson === 'hidde' ? 'visible' : 'hidde')}
           >
+            <span className="text-primary me-3">{role}</span>
             <i className="text-primary me-3 bi bi-person-fill fs-3" />
             <HideMenu
               onClickLink={() => localStorage.clear()}

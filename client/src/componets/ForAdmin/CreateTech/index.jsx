@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { SimpleForm } from "../../SimpleForm"
 import { CREATE_TECH_FORM } from '../../../mocks'
-import { URL } from "../../../constants"
+import { SERVER } from "../../../constants"
 import { useParams } from "react-router-dom"
 import { useHttp } from "../../../hooks"
 import { toastMess } from '../../../helpers'
@@ -25,7 +25,7 @@ export function CreateTech() {
       numberTest: id,
       ...form,
     }
-    const { message, status } = await request(URL + '/student/add-tech', 'POST', {...data})
+    const { message, status } = await request(SERVER + '/student/add-tech', 'POST', {...data})
     toastMess(status, message)
   }
 

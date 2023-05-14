@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useHttp } from "../../../hooks"
-import { URL } from "../../../constants"
+import { SERVER } from "../../../constants"
 import { Loading } from "../../Loading";
 
 export function FullNews() {
@@ -12,8 +12,8 @@ export function FullNews() {
 
   useEffect(() => {
     async function fetchGetNews() {
-      const {data } = await request(URL + `/news/get-news-id?id=${id}`, 'GET')
-      const requests = data.body.map(item => fetch(URL + `/news/load?img=${item.img}`))
+      const {data } = await request(SERVER + `/news/get-news-id?id=${id}`, 'GET')
+      const requests = data.body.map(item => fetch(SERVER + `/news/load?img=${item.img}`))
       const responses = await Promise.all(requests);
       const blobs = responses.map(item => item.blob())
       const imgs = await Promise.all(blobs);

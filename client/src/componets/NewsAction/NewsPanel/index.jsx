@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NewsItem } from '../NewsItem'
 import { useHttp } from "../../../hooks"
-import { URL } from "../../../constants"
+import { SERVER } from "../../../constants"
 import { Loading } from "../../Loading";
 
 export function NewsPanel() {
@@ -10,8 +10,8 @@ export function NewsPanel() {
 
   useEffect(() => {
     async function fetchGetNews() {
-      const {data } = await request(URL + '/news/get-news', 'GET')
-      setNews([...data])
+      const { data } = await request(SERVER + '/news/get-news', 'GET')
+      setNews([...data.reverse()])
     }
     fetchGetNews()
   }, [])
@@ -19,7 +19,7 @@ export function NewsPanel() {
   if(loading) return <Loading />
 
   return (
-    <div>
+    <div className="d-flex flex-wrap">
       {news.map((item) => <NewsItem
         id={item._id}
         key={item._id}

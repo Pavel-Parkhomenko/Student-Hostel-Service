@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
-import { URL } from "../../../constants";
+import { SERVER } from "../../../constants";
 import { useParams } from 'react-router-dom'
 import { MyContext } from '../../../context'
 import { dateFormat } from '../../../helpers'
@@ -38,7 +38,7 @@ export function CreateClaim() {
       },
       dateAndTime
     }
-    const { message } = await request(URL + '/student/create-claim', 'POST', {...form})
+    const { message } = await request(SERVER + '/student/create-claim', 'POST', {...form})
     toast.success(message)
   }
 

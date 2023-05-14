@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
-import { URL } from "../../../constants";
+import { SERVER } from "../../../constants";
 import { Loading } from "../../Loading";
 
 export function AccPlaces() {
@@ -9,7 +9,7 @@ export function AccPlaces() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, message } = await request(URL + '/student/get-places', "GET")
+      const { data, message } = await request(SERVER + '/student/get-places', "GET")
       setRes([...data])
     }
     fetchData()
@@ -44,8 +44,8 @@ export function AccPlaces() {
             return (
               <div className="d-flex border-bottom mb-2 flex-wrap" key={ind}>
                 <p className="me-5" style={{width: '40px'}}>{ind}</p>
-                {item.map((place) => (
-                  <div className="bg-primary rounded ms-2 px-3 h-50 text-light">
+                {item.map((place, ind) => (
+                  <div key={ind} className="bg-primary rounded ms-2 px-3 h-50 text-light">
                     <span>{place.floor}-</span>
                     <span>{place.block}-</span>
                     <span>{place.apartament}</span>

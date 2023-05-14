@@ -4,7 +4,7 @@ import { fieldsLogin } from '../../../mocks'
 import { Form } from '../Form'
 import '../styles.css'
 import { Link, useNavigate } from "react-router-dom";
-import { URL } from '../../../constants'
+import { SERVER } from '../../../constants'
 import { toastMess } from '../../../helpers'
 
 export function Login() {
@@ -24,7 +24,7 @@ export function Login() {
 
   async function loginHandle() {
     try {
-      const {data, message, errors, status} = await request(URL + '/auth/login', 'POST', {...form})
+      const {data, message, errors, status} = await request(SERVER + '/auth/login', 'POST', {...form})
       if(!errors && data.role === 'mentor'){
         localStorage.setItem('user', JSON.stringify(data._doc));
         navigate("/mentor")

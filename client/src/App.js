@@ -27,13 +27,15 @@ import { EmployeeList } from "./componets/ForAdmin/EmployeeList"
 import { FullMentor } from "./componets/FullMentor";
 import { AccPlaces } from "./componets/ForAdmin/AccPlaces";
 import { CreateMentor } from "./componets/ForAdmin/CreateMentor";
-import { CreateTech } from "./componets/ForAdmin/CreateTech";
-import { CreateRepair } from "./componets/ForStudent/CreateRepair";
-import { AddStudent } from "./componets/ForAdmin/AddStudent";
-import { Reports } from "./componets/ForAdmin/Reports";
+import { CreateTech } from "./componets/ForAdmin/CreateTech"
+import { CreateRepair } from "./componets/ForStudent/CreateRepair"
+import { AddStudent } from "./componets/ForAdmin/AddStudent"
+import { Reports } from "./componets/ForAdmin/Reports"
+import { PayHostel } from "./componets/ForStudent/PayHostel"
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { ViewPayHostel } from "./componets/ForAdmin/ViewPayHostel";
 
 function App() {
   const [contextState] = useState({
@@ -54,6 +56,7 @@ function App() {
           <Route path='/student' element={<StudentRoom />}>
             <Route index element={<MainStudent />} />
             <Route path="tech" element={<ContainerTech />} />
+            <Route path="pay-hostel" element={<PayHostel />} />
             <Route path="claim" element={<Claim />} />
             <Route path="news" element={<NewsPanel />} />
             <Route path="news/:id" element={<FullNews />} />
@@ -84,6 +87,7 @@ function App() {
             <Route path="students/:id" element={<StudentFull />} />
             <Route path="students/:id/add-tech" element={<CreateTech />} />
             <Route path="students/import" element={<ImportStudents />} />
+            <Route path="students/view-pay-hostel" element={<ViewPayHostel />} />
             <Route path="employee" element={<EmployeeList />} />
             <Route path="employee/:id" element={<FullMentor />} />
             <Route path="employee/create" element={<CreateMentor />} />

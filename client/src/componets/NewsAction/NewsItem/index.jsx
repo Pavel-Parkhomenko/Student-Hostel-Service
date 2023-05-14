@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { URL } from "../../../constants"
+import { SERVER } from "../../../constants"
 
 export function NewsItem (
   {
@@ -15,7 +15,7 @@ export function NewsItem (
 
   useEffect(() => {
     async function fetchGetNewsImg() {
-      fetch(URL + `/news/load?img=${img}`)
+      fetch(SERVER + `/news/load?img=${img}`)
         .then(response => response.blob())
         .then(blob => {
           const url = window.URL.createObjectURL(new Blob([blob]));
@@ -26,9 +26,8 @@ export function NewsItem (
   }, [img])
 
   return (
-    <div className="card mb-3">
+    <div className="card mb-3 me-3" style={{width: '47%'}}>
       <div className="d-flex justify-content-center card-img-top"
-           style={{backgroundColor: 'rgba(218,229,226,0.87)'}}
       >
         <img
           className="m-3"

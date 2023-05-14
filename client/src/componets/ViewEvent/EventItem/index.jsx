@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHttp } from '../../../hooks'
-import { URL } from '../../../constants'
+import { SERVER } from '../../../constants'
 
 export function EventItem(
   {
@@ -15,7 +15,7 @@ export function EventItem(
 
   useEffect(() => {
     async function fetchGetEventImg() {
-      fetch(URL + `/event/load?img=${img}`)
+      fetch(SERVER + `/event/load?img=${img}`)
         .then(response => response.blob())
         .then(blob => {
           const url = window.URL.createObjectURL(new Blob([blob]));
