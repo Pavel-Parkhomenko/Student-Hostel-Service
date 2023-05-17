@@ -1,6 +1,7 @@
 import React from 'react'
 import { RepairStatus0 } from "../ForAdmin/RepairAction/RepairStatus0";
 import { RepairStatus1 } from "../ForAdmin/RepairAction/RepairStatus1";
+import { EmptyData } from "../EmptyData";
 
 const STATUS = {
   0: 'Новый',
@@ -10,11 +11,10 @@ const STATUS = {
 
 export function ViewRepairs({ repairs = [], role, children }) {
   if(repairs.length === 0) {
-    return <p>Заявок нет</p>
+    return <EmptyData message="Заявок на починку оборудования нет"/>
   }
   return (
     <div className='mt-3'>
-      <h4>Заявки на починку</h4>
       {repairs.map((item, ind) => (
         <div
           className="card mb-3"

@@ -9,6 +9,7 @@
     position: relative;
     width: max-content;
     margin-top: 100px;
+    margin-left: 50px;
 }
 
 .home__img1, .home__img2, .home__img3 {
@@ -30,8 +31,7 @@
 
 .home__container-text {
     padding: 130px 100px 0 0;
-    margin-left: 350px;
-    /*background-color: blue;*/
+    margin-left: 300px;
     color: white;
 }
 
@@ -47,10 +47,12 @@
 
 .link1 {
     color: white;
-    width: 45%;
+    width: 100px;
+    display: block;
 }
 
 .link2 {
     color: #0e052a;
-    width: 45%;
+    width: 100px;
+    display: block;
 }
