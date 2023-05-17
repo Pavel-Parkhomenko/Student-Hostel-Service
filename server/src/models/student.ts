@@ -61,11 +61,13 @@ const schema = new Schema<IStudent>({
             {
                 date: { type: String, required: false },
                 receipt: { type: String, required: false },
+                payment: { type: Number, required: false },
             }
         ],
         required: false,
         _id : false,
-    }
+    },
+    dateInHostel: { type: String, required: false },
 
 }, { versionKey: false })
 

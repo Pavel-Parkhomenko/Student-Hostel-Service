@@ -26,7 +26,7 @@ export function EventItem(
   }, [img])
 
   return(
-    <div className="card mb-3">
+    <div className="card mb-3 me-3" style={{width: '47%'}}>
       <div className="card-header bg-transparent text-muted">
         <i className="bi bi-calendar-check text-primary fs-5 pe-2" />
         <span>Дата проведения: </span><span className="text-primary">{dateEvent}</span>
@@ -37,7 +37,7 @@ export function EventItem(
           <img src={url}
                className="card-img-top"
                alt="card-img-top"
-               style={{maxHeight: '400px', maxWidth: '400px'}}
+               style={{maxWidth: '200px'}}
           />
         </div>
         <p className="card-text">{description}</p>

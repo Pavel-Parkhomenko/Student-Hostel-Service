@@ -1,4 +1,4 @@
-import { Schema, model, Types } from 'mongoose'
+import { Schema, model } from 'mongoose'
 
 import { IChat } from '../interfaces'
 
@@ -8,7 +8,7 @@ const chatSchema = new Schema<IChat>({
     type: [{
       text: { type: String, required: false },
       user: { type: String, required: false },
-      createdAt: { type: String, default: Date.now, required: false },
+      createdAt: { type: String, required: false },
     }]
   },
 });

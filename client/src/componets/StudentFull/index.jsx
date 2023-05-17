@@ -8,7 +8,7 @@ import defaultImg from '../../assets/student.png'
 import { Loading } from "../Loading";
 import { toastMess } from "../../helpers";
 
-export function StudentFull() {
+export function StudentFull(props) {
   const { loading, request } = useHttp()
   const [balls, setBalls] = useState(0)
   const [res, setRes] = useState({})
@@ -123,9 +123,7 @@ export function StudentFull() {
       </div>
       <hr className="hr" />
       <div className="d-flex flex-column align-items-center">
-        <button type="button" className="btn btn-light">
-          <Link className="text-decoration-none" to={"add-tech"}>Добавить технику</Link>
-        </button>
+        { props.children || null }
         {res.privateTechs?.length !== 0
           ?
           <div className="w-75">

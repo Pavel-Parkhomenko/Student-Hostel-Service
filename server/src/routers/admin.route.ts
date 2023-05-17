@@ -3,7 +3,8 @@ import { Mentor } from '../models/mentor'
 import { Account } from '../models/account'
 import { Admin } from '../models/admin'
 import { Student } from '../models/student'
-import { getDateAndTime } from '../utils'
+import { Hostel } from '../models/hostel'
+import { getDateAndTime, getMonthsUntilSeptember } from '../utils'
 import path from "path";
 
 const router = Router()
@@ -68,12 +69,75 @@ router.get('/delete-student', async (req, res) => {
 router.get('/get-payments', async (req, res) => {
   try {
     const students = await Student.find({ formEducation: 'платное' },
-      "firstName middleName secondName numberTest pay")
-    return res.status(200).json({ data: students, message: 'Студент полученны' })
+      "firstName middleName secondName numberTest pay dateInHostel")
+    let result: Number = 0
+    let studentsNew = []
+    for(let i = 0; i < students.length; i++) {
+      result = students[i].pay.reduce(function(sum, elem) {
+        return sum + elem.payment;
+      }, 0);
+      studentsNew = [...studentsNew, {
+        // @ts-ignore
+          ...students[i]!._doc,
+          sum: result,
+        }
+      ]
+    }
+    const hostel = (await Hostel.find())[0]
+    return res.status(200).json({ data: { studentsNew, sumHostel: hostel.costsHostel },
+      message: 'Студент полученны' })
   } catch (err) {
     return res.status(500).json({ message: 'Что-то пошло не так' })
   }
 });
+
+const MONTH = {
+  Sep: 0,
+  Oct: 1,
+  Nov: 2,
+  Dec: 3,
+  Jan: 4,
+  Feb: 5,
+  Mar: 6,
+  Apr: 7,
+  May: 8,
+  Jun: 9,
+  Jul: 10,
+  Aug: 11,
+}
+
+router.post('/change-pay-hostel', async (req, res) => {
+  try {
+    const { cost } = req.body
+    const hostel = (await Hostel.find())[0]
+    if(!hostel) {
+      await Hostel.create({
+        costHostel: cost,
+        costsHostel: [cost, 0,0,0,0,0,0,0,0,0,0,0],
+      })
+    } else {
+      const costsHostel = hostel.costsHostel
+      const monthCur = new Date().toLocaleString('eng', { month: 'short' })
+
+      for(let i = 0; i <= Object.keys(MONTH).length; i++) {
+        if(i <= MONTH[monthCur]) {
+          if(costsHostel[i] === 0) costsHostel[i] = cost
+          if(i === MONTH[monthCur]) costsHostel[i] = cost
+        } else {
+          costsHostel[i] = 0
+        }
+      }
+      hostel.costsHostel = costsHostel
+      hostel.costHostel = cost
+      await hostel.save()
+    }
+    return res.status(200).json({ data: cost, message: 'Данные обновленны' })
+  } catch (err) {
+    console.log(err.message)
+    return res.status(500).json({ message: 'Что-то пошло не так' })
+  }
+});
+
 
 const ExcelJS = require('exceljs');
 router.get('/report-balls', async (req, res) => {
@@ -104,6 +168,62 @@ router.get('/report-balls', async (req, res) => {
     const filePath = path.join(dirname, 'reports', `${filename}`);
     res.sendFile(filePath);
   } catch (err) {
+    return res.status(500).json({message: 'Что-то пошло не так'})
+  }
+});
+
+router.get('/report-pays', async (req, res) => {
+  try {
+    const dirname = __dirname.split("\\").slice(0,3).join('\\')
+    const filename = `pays-${getDateAndTime().split(' ')[0]}.xlsx`
+    const students = await Student.find({
+      formEducation: 'платное'
+    }, 'firstName middleName secondName pay')
+    const hostel = (await Hostel.find())[0]
+    const costHostel = hostel.costsHostel.reduce(function(sum, elem) {
+      return sum + elem;
+    }, 0);
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Data');
+
+    // Заголовки столбцов
+    const headersRus = ['Имя', 'Отчество', 'Фамилия', 'Сумма', 'Остаток по оплате', 'Статус']
+    worksheet.addRow(headersRus);
+
+    function changeRow(row, type) { //green FF00FF00 //red FFFF0000
+      row._cells.at(-1).font = {
+        color: type === 'Задолженности нет' ?  { argb: 'FF00FF00' } : { argb: 'FFFF0000' }
+      };
+    }
+
+    let result = 0
+    let status = ''
+    for(let i = 0; i < students.length; i++) {
+      result = 0
+      status = ''
+      if(students[i].pay.length === 0) {
+        status = costHostel > result ? 'Задолженность' : 'Задолженности нет'
+        let row = worksheet.addRow(
+          [students[i].firstName, students[i].middleName, students[i].secondName, result, costHostel-result, status]);
+        changeRow(row, status)
+      } else {
+        result = students[i].pay.reduce(function(sum, elem) {
+          return sum + elem.payment;
+        }, 0);
+        status = costHostel > result ? 'Задолженность' : 'Задолженности нет'
+        let row = worksheet.addRow(
+          [students[i].firstName, students[i].middleName, students[i].secondName, result, costHostel-result, status]);
+        changeRow(row, status)
+      }
+    }
+
+    // Сохранение файла
+    await workbook.xlsx.writeFile('reports/' + filename);
+    const filePath = path.join(dirname, 'reports', `${filename}`);
+    res.sendFile(filePath);
+  } catch (err) {
+    console.log(err.message)
     return res.status(500).json({message: 'Что-то пошло не так'})
   }
 });

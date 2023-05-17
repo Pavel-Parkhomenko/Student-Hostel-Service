@@ -90,7 +90,7 @@ export function MainMentor() {
         {url
           ?
           <div className="d-flex justify-content-center align-items-center mb-3">
-            <img className="rounded-4" src={url} alt="avatar" style={{ maxHeight: '400px' }} />
+            <img className="rounded-4" src={url} alt="avatar" style={{maxWidth: '300px'}} />
           </div>
           :
           <div className="d-flex justify-content-center align-items-center">
@@ -162,8 +162,11 @@ export function MainMentor() {
             onChange={handleInput}
             onClick={(event) => handleClick(event)}
             buttonName="Сохранить"
-            errors={null}
-            messFromServer={''}
+            placeHolders={{
+              login: res.account?.login || '',
+              email: res.email || 'введите свой email',
+              phone: res.phone || '',
+            }}
           />
         </div>
       </div>

@@ -25,6 +25,14 @@ const schema = new Schema<IRepair>({
   },
   dateCreate: { type: String, required: true },
   status: { type: Number, required: true },
+  run: {
+    type: {
+      date: { type: String, required: true },
+      master: { type: String, required: true },
+    },
+    required: false,
+    _id : false,
+  },
 }, { versionKey: false })
 
 export const Repair = model<IRepair>('repairs', schema);

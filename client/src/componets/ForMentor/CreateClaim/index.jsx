@@ -1,18 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
 import { SERVER } from "../../../constants";
 import { useParams } from 'react-router-dom'
-import { MyContext } from '../../../context'
-import { dateFormat } from '../../../helpers'
+import { dateFormat, toastMess } from '../../../helpers'
 
 export function CreateClaim() {
   const [dateAndTime, setDateAndTime] = useState('')
   const [header, setHeader] = useState('')
   const [text, setText] = useState('')
   const [mentorStorage] = useState(JSON.parse(localStorage.getItem("user")))
-  const {loading, request} = useHttp();
+  const { request } = useHttp();
   const { id } = useParams()
-  const { toast } = useContext(MyContext)
 
   useEffect(() => {
     setDateAndTime(dateFormat())
@@ -26,7 +24,8 @@ export function CreateClaim() {
     setText(event.target.value);
   };
 
-  const btnClickHandle = async () => {
+  const btnClickHandle = async (event) => {
+    event.preventDefault()
     const form = {
       numberTest: id,
       header,
@@ -38,12 +37,12 @@ export function CreateClaim() {
       },
       dateAndTime
     }
-    const { message } = await request(SERVER + '/student/create-claim', 'POST', {...form})
-    toast.success(message)
+    const { message, status } = await request(SERVER + '/student/create-claim', 'POST', {...form})
+    toastMess(status, message)
   }
 
   return (
-    <div className="card mb-3">
+    <form className="card mb-3" onSubmit={(event) => btnClickHandle(event)}>
       <div className="card-header bg-transparent text-muted">
         <i className="bi bi-calendar-check text-primary fs-5 pe-2" />
         {dateAndTime}
@@ -58,6 +57,7 @@ export function CreateClaim() {
               id="inputEmail1"
               value={header}
               onChange={handleHeaderChange}
+              required
             />
           </div>
         </div>
@@ -70,6 +70,7 @@ export function CreateClaim() {
               id="inputEmail2"
               value={text}
               onChange={handleTextChange}
+              required
             />
           </div>
         </div>
@@ -82,13 +83,12 @@ export function CreateClaim() {
           <span>{mentorStorage.middleName}</span>
         </div>
         <button
-          type="button"
+          type="submit"
           className="btn btn-primary"
-          onClick={btnClickHandle}
         >
           Создать
         </button>
       </div>
-    </div>
+    </form>
   )
 }

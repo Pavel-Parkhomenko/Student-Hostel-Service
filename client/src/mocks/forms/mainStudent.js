@@ -7,7 +7,7 @@ export const CHANGE_INFO_STUDENT = [
     id: 'emailId',
     type: "email",
     required: false,
-    summaryBefore: 'Здесь вы можете изменить логин, пароль или email'
+    summaryBefore: 'Данная форма позволяет изменить одно или несколько полей'
   },
   {
     nameField: 'Логин',

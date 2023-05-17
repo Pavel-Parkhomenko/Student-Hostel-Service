@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useHttp } from '../../../hooks'
 import { SERVER } from '../../../constants'
-import { Loading } from "../../Loading";
-import { getDaysDifference, dateFormat } from '../../../helpers'
+import { Loading } from "../../Loading"
+import { dateFormat, paymentHelp, fullSumHostel } from '../../../helpers'
 
 export function ViewPayHostel() {
   const { loading, request } = useHttp()
   const [payments, setPayments] = useState([])
+  const [sumHostel, setSumHostel] = useState([])
   useEffect(() => {
     async function fetchPayments() {
       const { data } = await request(SERVER + '/admin/get-payments')
-      setPayments(data)
+      setPayments(data.studentsNew)
+      setSumHostel(data.sumHostel)
     }
     fetchPayments()
   }, [])
@@ -25,11 +27,11 @@ export function ViewPayHostel() {
           <th scope="col">#</th>
           <th scope="col">ФИО</th>
           <th scope="col">Последняя оплата</th>
-          <th scope="col">Прошло кол-во дней</th>
+          <th scope="col">Статус</th>
         </tr>
         </thead>
         <tbody>
-        {payments.map(({ firstName, middleName, secondName, numberTest, pay}, ind) => (
+        {payments.map(({ firstName, middleName, secondName, numberTest, pay, dateInHostel, sum}, ind) => (
           <tr key={numberTest}>
             <th scope="row">{ind + 1}</th>
             <td className="d-flex flex-column">
@@ -42,27 +44,17 @@ export function ViewPayHostel() {
               <>
                 <td>
                   <span className="text-primary">{dateFormat(new Date(pay.at(-1).date))}</span><br/>
-                  <span>{pay[0].receipt}</span>
                 </td>
-                {getDaysDifference(new Date(pay.at(-1).date), new Date()) > 30
-                  ?
-                  <td className="text-danger">
-                    { getDaysDifference(new Date(pay.at(-1).date), new Date()) }
-                    <i className="bi bi-exclamation-circle ms-2" /><br/>
-                    <span>Задолженность</span>
-                  </td>
-                  :
-                  <td className="text-success">
-                    { getDaysDifference(new Date(pay.at(-1).date), new Date()) }
-                    <i className="bi bi-check-circle ms-2"/><br/>
-                    <span>Вовремя</span>
-                  </td>
-                }
+                <td>
+                  {paymentHelp(dateInHostel, sumHostel, sum)}
+                </td>
               </>
               :
               <>
                 <td>Оплаты еще не было</td>
-                <td> - </td>
+                <td>
+                  <span className="text-danger">Задолженность {fullSumHostel(sumHostel)} BYN</span>
+                </td>
               </>
             }
           </tr>

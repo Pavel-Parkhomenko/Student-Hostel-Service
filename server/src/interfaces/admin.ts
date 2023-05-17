@@ -10,4 +10,5 @@ export interface IAdmin {
    login: string,
  },
   img: string,
+  costHostel?: number,
 }

@@ -8,13 +8,13 @@ export function BreadCrumbs({ routes }) {
     <>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
-          {breadcrumbs.map(({match, breadcrumb}) => (
+          {breadcrumbs.map(({match, breadcrumb}, ind) => (
             <NavLink
               key={match.pathname}
-              className="breadcrumb-item"
+              className="breadcrumb-item text-decoration-none"
               style={match.pathname === '/' ? {
                 pointerEvents: "none", color: "gray"
-              } : {}}
+              } : {fontWeight: 'bold'}}
               to={match.pathname}>
               {breadcrumb}
             </NavLink>

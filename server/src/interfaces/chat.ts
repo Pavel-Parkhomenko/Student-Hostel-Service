@@ -1,4 +1,5 @@
 export interface IChat {
+    _id: string,
     name: string,
     messages: [
         {

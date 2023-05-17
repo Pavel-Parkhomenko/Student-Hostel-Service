@@ -70,8 +70,9 @@ export function MainStudent() {
         onChange={handleInput}
         onClick={(event) => handleClick(event)}
         buttonName="Сохранить"
-        errors={null}
-        messFromServer={''}
+        placeHolders={{
+          login: data.account?.login || ''
+        }}
       />
     </div>
   )

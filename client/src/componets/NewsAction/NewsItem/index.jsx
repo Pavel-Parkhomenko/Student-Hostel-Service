@@ -33,7 +33,7 @@ export function NewsItem (
           className="m-3"
           alt="img"
           src={url}
-          style={{maxHeight: '300px', maxWidth: '300px'}}
+          style={{maxWidth: '300px'}}
         />
       </div>
       <div className="card-body">

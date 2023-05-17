@@ -6,14 +6,14 @@ export const MENU_STUDENT = [
     icon: "bi bi-house-fill",
     dropdown: [
       {
-        name: 'Личные данные',
+        name: 'Учетная запись',
         to: "",
-        icon: "bi bi-newspaper",
+        icon: "bi bi-file-person-fill",
       },
       {
         name: 'Техника',
         to: "tech",
-        icon: "bi bi-newspaper",
+        icon: "bi bi-tools",
       },
       {
         name: 'Замечания',
@@ -48,13 +48,13 @@ export const MENU_STUDENT = [
     id: 4,
     name: 'Заявки',
     to: "create-repair",
-    icon: "bi bi-chat-left-dots"
+    icon: "bi bi-tools"
   },
   {
     id: 5,
     name: 'Воспитатели',
     to: "employee-info",
-    icon: "bi bi-calendar-event"
+    icon: "bi bi-people"
   }
 ]
 
@@ -73,7 +73,7 @@ export const MENU_MENTOR = [
     dropdown: [{
       name: 'Создать',
       to: "news/create",
-      icon: "bi bi-newspaper",
+      icon: "bi bi-pencil",
     }, {
       name: 'Просмотреть',
       to: "news",
@@ -88,7 +88,7 @@ export const MENU_MENTOR = [
     dropdown: [{
       name: 'Создать',
       to: "events/create",
-      icon: "bi bi-newspaper",
+      icon: "bi bi-pencil",
     }, {
       name: 'Просмотреть',
       to: "events",
@@ -105,7 +105,7 @@ export const MENU_MENTOR = [
     id: '4',
     name: 'Студенты',
     to: "students",
-    icon: "bi bi-chat-left-dots"
+    icon: "bi bi-people"
   }
 ]
 
@@ -129,17 +129,22 @@ export const MENU_ADMIN = [
       {
         name: 'Импортировать',
         to: "students/import",
-        icon: "bi bi-newspaper",
+        icon: "bi bi-building-add",
       },
       {
         name: 'Добавить',
         to: "students/add",
-        icon: "bi bi-newspaper",
+        icon: "bi bi-person-add",
       },
       {
         name: 'Просмотр оплаты',
         to: "students/view-pay-hostel",
-        icon: "bi bi-newspaper",
+        icon: "bi bi-wallet2",
+      },
+      {
+        name: 'Заявки на починку',
+        to: "students/repairs",
+        icon: "bi bi-card-list",
       },
     ]
   },
@@ -155,14 +160,14 @@ export const MENU_ADMIN = [
     }, {
       name: 'Новый',
       to: "employee/create",
-      icon: "bi bi-newspaper",
+      icon: "bi bi-person-add",
     }]
   },
   {
     id: '3',
     name: 'Места',
     to: "places",
-    icon: "bi bi-calendar-event",
+    icon: "bi bi-table",
   },
   {
     id: '4',

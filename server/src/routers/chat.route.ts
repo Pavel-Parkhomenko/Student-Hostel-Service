@@ -15,21 +15,22 @@ router.get('/create-chat',async (req, res) => {
   }
 })
 
-router.post('/add-id-to-user',async (req, res) => {
+router.post('/create-chat',async (req, res) => {
   try {
-    const { arrayId, idChat, name, idMentor } = req.body
+    const { arrayId, name, idMentor } = req.body
+    const chat = await Chat.create({
+      name,
+      messages: [],
+    })
     for (let i = 0; i < arrayId.length; i++) {
       const doc = await Student.findById(arrayId[i])
-      doc.chats = [...doc.chats, idChat]
+      doc.chats = [...doc.chats, chat._id]
       await doc.save();
     }
-    const doc = await Chat.findById(idChat)
-    doc.name = name
-    await doc.save();
     const mentor = await Mentor.findById(idMentor)
-    mentor.chats = [...mentor.chats, idChat]
+    mentor.chats = [...mentor.chats, chat._id]
     await mentor.save()
-    return res.status(200).json({data: '', message: 'Данные добавлены'})
+    return res.status(200).json({data: '', message: 'Чат создан'})
   } catch(err) {
     return res.status(500).json({message: 'Что-то пошло не так - сервер'})
   }

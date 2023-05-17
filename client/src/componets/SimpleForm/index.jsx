@@ -6,9 +6,9 @@ export function SimpleForm(
     onChange,
     onClick,
     buttonName,
-    errors = new Map(),
-    messFromServer
+    placeHolders = {},
   }) {
+  console.log(placeHolders)
   return (
     <form className="d-flex flex-column" onSubmit={onClick}>
       {fields.map((
@@ -27,7 +27,7 @@ export function SimpleForm(
                 name={name}
                 type={type}
                 className="form-control form-control-sm"
-                placeholder={placeholder || ''}
+                placeholder={placeHolders[name] || placeholder || ''}
                 onChange={onChange}
                 pattern={pattern || ".*"}
                 title={title || 'Разрешены любые символы'}

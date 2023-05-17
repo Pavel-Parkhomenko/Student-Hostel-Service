@@ -43,14 +43,12 @@ export function Menu({ menu, role = 'Пользователь' }) {
               } else {
                 return <li
                   className="nav-item me-2"
-                  // onClick={() => handleLink(id)}
                   onMouseOver={() => handleVisibleOver(id)}
                   onMouseOut={() => handleVisibleOut(id)}
                   style={{position: "relative", cursor: "pointer"}}
                   key={id}
                 >
-                  {/*<i className={icon}></i>*/}
-                  <i className="bi bi-arrow-down-right-circle text-success"></i>
+                  <i className="bi bi-arrow-down-right-circle text-warning"></i>
                   <span className="nav-link d-inline">{name}</span>
                   <HideMenu
                     links={dropdown}

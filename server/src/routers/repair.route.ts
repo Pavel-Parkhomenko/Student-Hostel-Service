@@ -6,7 +6,6 @@ const router = Router();
 
 router.get('/get-repairs-all', async (req, res) => {
   try{
-    console.log('repairs')
     const repairs = await Repair.find()
     return res.status(200).json({data: repairs, message: 'Данные получены'})
   } catch(err) {
@@ -35,7 +34,35 @@ router.post('/create', async (req, res) => {
     repair.description = description
     repair.room = room
     repair.dateCreate = getDateAndTime()
-    repair.status = 0
+    repair.status = 0 //0 - только сделан 1 - в процессе 2 - завершен
+    const newRepair = await repair.save()
+    return res.status(200).json({data: newRepair, message: 'Данные сохранены'})
+  } catch(err) {
+    return res.status(500).json({message: 'Что-то пошло не так'})
+  }
+})
+
+router.post('/change-run', async (req, res) => {
+  try {
+    const { master, id } = req.body
+    const repair = await Repair.findOne({ _id: id })
+    repair.status = 1
+    repair.run = {
+      master,
+      date: getDateAndTime()
+    }
+    const newRepair = await repair.save()
+    return res.status(200).json({data: newRepair, message: 'Данные сохранены'})
+  } catch(err) {
+    return res.status(500).json({message: 'Что-то пошло не так'})
+  }
+})
+
+router.post('/change-status-to-2', async (req, res) => {
+  try {
+    const { id } = req.body
+    const repair = await Repair.findOne({ _id: id })
+    repair.status = 2
     const newRepair = await repair.save()
     return res.status(200).json({data: newRepair, message: 'Данные сохранены'})
   } catch(err) {

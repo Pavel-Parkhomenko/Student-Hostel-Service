@@ -1,20 +1,34 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import formEducationImg from '../../../assets/formEducation.png'
 import { PAY_HOSTEL_FORM } from "../../../mocks"
 import { SimpleForm } from "../../SimpleForm"
 import { useHttp } from '../../../hooks'
 import { SERVER } from '../../../constants'
-import { toastMess, dateFormat, getDaysDifference } from "../../../helpers"
+import { toastMess, dateFormat, getDaysDifference, paymentHelp, sumHostelStudent } from "../../../helpers"
 
 export function PayHostel() {
   const user = useMemo(() => JSON.parse(localStorage.getItem('user')), [])
   const [payments, setPayments] = useState(user.pay || [])
+  const [paysState, setPaysState] = useState({})
 
   const [form, setForm] = useState({
     receipt: '',
+    payment: ''
   })
 
   const { request } = useHttp()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log('fetchData')
+      const { data } = await request(SERVER + '/student/get-pay', 'POST', {
+        numberTest: user.numberTest
+      })
+      setPaysState(data) //pays/ sumHostel/ curPay
+      setPayments(data.pays.reverse())
+    }
+    fetchData()
+  }, [])
 
   function handleInput(event) {
     setForm({...form, [event.target.name]: event.target.value})
@@ -25,13 +39,15 @@ export function PayHostel() {
     const { message, status } = await request(SERVER + '/student/pay-hostel', 'POST', {
       numberTest: user.numberTest,
       receipt: form.receipt,
+      payment: form.payment
     })
     toastMess(status, message)
     if(status) {
-      setPayments([...payments, {
-        date: new Date(),
+      setPayments([{
+        date: String(new Date()),
         receipt: form.receipt,
-      }])
+        payment: Number(form.payment)
+      }, ...payments])
     }
   }
 
@@ -59,26 +75,25 @@ export function PayHostel() {
         messFromServer={''}
       />
       <div className="mt-3">
-        {
-          payments[0]?.date
-            ?
-            getDaysDifference(new Date(payments.at(-1).date), new Date()) > 30
-              ?
-              <p className="text-danger">У вас имеется задолженность</p>
-              :
-              <p className="text-success">Задолженность отсутсвует</p>
-            :
-            <p className="text-warning">Вы еще не производили оплату</p>
+        {Object.keys(paysState).length !== 0
+          ?
+          <div>
+            <p>{paymentHelp(user.dateInHostel, paysState.sumHostel, sumHostelStudent(payments))}</p>
+            <p>Оплаченно всего: {sumHostelStudent(payments)} (BYN)</p>
+          </div>
+          :
+          <p>Загрузка...</p>
         }
       </div>
       <div className="mt-3">
+        <p>Текущая стоимость проживания: <span>{paysState?.curPay} (BYN)</span></p>
         <p>История оплаты</p>
         {payments.map((item, ind) => (
           <div key={ind}>
             <span>{ind + 1}.</span>
-            <span className="mx-3">{item.receipt}</span>
+            <span className="mx-3">{item.payment} (BYN)</span>
             <span className="text-primary">{dateFormat(new Date(item.date))}</span>
-            { ind === payments.length - 1 ? <span className="mx-2 text-warning">Последняя оплата</span> : null}
+            { ind === 0 ? <span className="mx-2 text-warning">Последняя оплата</span> : null}
           </div>
         ))}
       </div>

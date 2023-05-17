@@ -16,7 +16,8 @@ export function CreateRepair() {
   useEffect(() => {
     const fetchData = async () => {
       const numberTest = JSON.parse(localStorage.getItem('user')).numberTest
-      const { data, message } = await request(SERVER + `/repair/get-repairs-id`, "POST", {
+      console.log(numberTest)
+      const { data } = await request(SERVER + `/repair/get-repairs-id`, "POST", {
         numberTest: numberTest
       })
       setRes([...data])
@@ -62,7 +63,7 @@ export function CreateRepair() {
         />
       </div>
       <div>
-        <ViewRepairs repairs={res}/>
+        <ViewRepairs repairs={res.reverse()}/>
       </div>
     </>
   )

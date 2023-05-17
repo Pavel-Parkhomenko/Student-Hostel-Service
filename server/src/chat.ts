@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express()
 import { Chat } from './models/chat'
+import { getDateAndTime } from './utils'
 
 app.use(express.json());
 
@@ -30,18 +31,24 @@ io.on('connection', async (socket) => {
     console.log('user disconnected');
   });
 
+  socket.on('testUser', async (data) => {
+    console.log('user connected: ', data)
+  })
+
   socket.on('message', async (data) => {
     const chat = await Chat.findOne({ _id: data.id });
+    const dateAndTime = getDateAndTime()
     // @ts-ignore
     chat.messages = [...chat.messages, {
       user: data.user as string,
-      text: data.text as string
+      text: data.text as string,
+      createdAt: dateAndTime
     }]
     await chat.save()
-    socket.emit('message', {
+    io.emit('message', {
       user: data.user,
       text: data.text,
-      createdAt: Date.now,
+      createdAt: dateAndTime
     });
   });
 

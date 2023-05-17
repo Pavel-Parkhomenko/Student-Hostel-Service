@@ -13,6 +13,10 @@ export interface IRepair {
   },
   dateCreate: string,
   status: number,
+  run?: {
+    date: string,
+    master: string,
+  }
 }
 
 interface IRoom {

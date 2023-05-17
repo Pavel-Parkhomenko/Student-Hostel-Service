@@ -9,7 +9,7 @@ export function HideMenu({ links, visibleLink, onClickLink = () => {} }) {
         {links.map(({to, name, icon}) => {
           return <div key={name}>
             <div className="py-2" onClick={onClickLink}>
-              <i className={icon}></i>
+              <i className={`${icon} text-primary`}></i>
               <Link className="nav-link d-inline" aria-current="page" key={to} to={to}>{name}</Link>
             </div>
           </div>

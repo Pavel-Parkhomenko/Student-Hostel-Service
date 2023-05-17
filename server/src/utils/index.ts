@@ -15,3 +15,17 @@ export function getDateAndTime() {
     const seconds = now.getSeconds().toString().padStart(2, '0');
     return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`
 }
+
+export function getMonthsUntilSeptember() {
+    const today = new Date();
+    let year = today.getFullYear()
+    if(today.getMonth() < 11) {
+        year = year - 1
+    }
+    const september = new Date(year, 8, 1);
+
+    const diffInMonths = (september.getFullYear() - today.getFullYear()) * 12 +
+      (september.getMonth() - today.getMonth());
+
+    return Math.abs(diffInMonths);
+}

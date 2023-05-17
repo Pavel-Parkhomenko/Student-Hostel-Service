@@ -13,6 +13,7 @@ const schema = new Schema<IAdmin>({
     },
     required: true
   },
+  costHostel: { type: Number, required: false },
 
 }, { versionKey: false })
 

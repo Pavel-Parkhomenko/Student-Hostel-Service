@@ -1,6 +1,6 @@
 import openSocket from 'socket.io-client';
 const socket = openSocket('http://localhost:5001/', {
-  reconnectionAttempts: 3
+  reconnectionAttempts: 20
 });
 
 function sendMessage(message) {

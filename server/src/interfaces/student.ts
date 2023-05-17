@@ -16,11 +16,13 @@ export interface IStudent {
     chats?: Array<string>,
     img?: string,
     pay?: Array<IPay>,
+    dateInHostel?: string,
 }
 
 interface IPay {
     date: string,
     receipt: string,
+    payment: number,
 }
 
 interface IAccount {

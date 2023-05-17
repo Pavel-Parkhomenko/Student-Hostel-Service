@@ -1,7 +1,7 @@
 body {
     /*background-color: #cac9ce;*/
-    background-color: #cac9ce;
-    /*background-image: url("./assets/fon.jpg");*/
+    /*background-color: #cac9ce;*/
+    background: url('./assets/fon-7.png') fixed;
     /*background-repeat: no-repeat;*/
     /*background-size: 100%;*/
 }

@@ -2,6 +2,7 @@ import path from "path";
 import {Router} from 'express'
 import {Student} from '../models/student'
 import {Account} from '../models/account'
+import {Hostel} from "../models/hostel";
 
 const router = Router();
 router.post('/import-students',
@@ -16,6 +17,7 @@ router.post('/import-students',
           middleName: students[i][2],
           formEducation: students[i][3],
           balls: 0,
+          dateInHostel: String(new Date()),
           numberTest: students[i][4] as number,
           room: {
             floor: students[i][5] as number,
@@ -48,19 +50,7 @@ router.post('/import-students',
 router.get('/get-info', async (req, res) => {
   try {
     const data = await Student.find()
-    const resStudents = []
-
-    for (let i = 0; i < data.length; i++) {
-      resStudents.push({
-        id: data[i]._id,
-        firstName: data[i].firstName,
-        middleName: data[i].middleName,
-        secondName: data[i].secondName,
-        numberTest: data[i].numberTest
-      })
-    }
-    return res.status(200).json({data: resStudents, message: 'Данные загруженны'})
-
+    return res.status(200).json({data: data, message: 'Данные загруженны'})
   } catch (err) {
     return res.status(500).json({message: 'Что-то пошло не так'})
   }
@@ -270,6 +260,7 @@ router.post('/add-student', async (req, res) => {
 
     const student = new Student({
       firstName, secondName, middleName, formEducation,
+      dateInHostel: String(new Date()),
       room: {
         floor, block, apartament
       }
@@ -284,25 +275,44 @@ router.post('/add-student', async (req, res) => {
 
 router.post('/pay-hostel', async (req, res) => {
   try {
-    const { receipt, numberTest } = req.body
+    const { receipt, numberTest, payment } = req.body
     const student = await Student.findOne({ numberTest })
     let update = []
     if(student.pay) {
       update = [
         ...student.pay, {
           date: String(new Date()),
-          receipt
+          receipt, payment
         }
       ]
     } else {
       update = [{
           date: String(new Date()),
-          receipt
+          receipt, payment
         }]
     }
     student.pay = update
     await student.save()
     return res.status(200).json({message: 'Квитанция добалена'})
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({message: 'Что-то пошло не так - сервер'})
+  }
+})
+
+router.post('/get-pay', async (req, res) => {
+  try {
+    const { numberTest } = req.body
+    const student = await Student.findOne({ numberTest })
+    const hostel = (await Hostel.find())[0]
+    return res.status(200).json({
+      data: {
+        pays: student.pay || [],
+        sumHostel: hostel.costsHostel,
+        curPay: hostel.costHostel,
+      },
+      message: 'Квитанция добалена'
+    })
   } catch (err) {
     console.log(err)
     return res.status(500).json({message: 'Что-то пошло не так - сервер'})

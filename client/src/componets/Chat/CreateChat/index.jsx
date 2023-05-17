@@ -2,34 +2,30 @@ import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import { useHttp } from "../../../hooks";
 import { SERVER } from "../../../constants";
+import { toastMess } from "../../../helpers";
 
 export function CreateChat() {
-  const { loading, request } = useHttp()
+  const { request } = useHttp()
   const [res, setRes] = useState([])
   const [usersId, setUsersId] = useState([])
-  const [chatId, setChatId] = useState('')
   const [name, setName] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
       const { data, message } = await request(SERVER + '/student/get-info', "GET")
       setRes([...data])
-      const id = await request(SERVER + '/chat/create-chat', "GET")
-      setChatId(id.data.id)
     }
     fetchData()
   }, [])
 
   async function handleCreateChat(event) {
-    console.log(event)
     event.preventDefault()
-    console.log('send form')
-    // await request(URL + '/chat/add-id-to-user', 'POST', {
-    //   arrayId: usersId,
-    //   idChat: chatId,
-    //   name: name,
-    //   idMentor: JSON.parse(localStorage.getItem('user'))._id
-    // })
+    const { message, status } = await request(SERVER + '/chat/create-chat', 'POST', {
+      arrayId: usersId,
+      name: name,
+      idMentor: JSON.parse(localStorage.getItem('user'))._id
+    })
+    toastMess(status, message)
   }
 
   return (
@@ -38,8 +34,8 @@ export function CreateChat() {
         <div className="input-group input-group-sm">
           <span className="input-group-text" id="input-group-sm-example">Название чата</span>
           <input
-            pattern="[A-Za-zА-Яа-яЁё]{5,10}"
-            title="Минимум 5 и максимум 10 символов"
+            pattern="[A-Za-zА-Яа-яЁё-.0-9]{3,10}"
+            title="Минимум 3 и максимум 10 символов"
             type="text"
             className="form-control"
             aria-label="input group"

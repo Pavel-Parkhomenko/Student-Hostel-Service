@@ -8,6 +8,7 @@
 .home__img-container {
     position: relative;
     width: max-content;
+    margin-top: 100px;
 }
 
 .home__img1, .home__img2, .home__img3 {
