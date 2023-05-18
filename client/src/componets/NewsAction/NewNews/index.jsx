@@ -96,8 +96,6 @@ export function NewNews() {
                 value={header}
                 onChange={handleHeaderChange}
                 required
-                pattern="[A-Za-zА-Яа-яЁё0-9]{5,15}"
-                title="Минимум 5 и максимум 15 символов"
               />
             </div>
           </div>

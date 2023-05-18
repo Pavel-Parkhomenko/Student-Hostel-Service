@@ -42,7 +42,7 @@ export function FullMentor() {
           <p className="text-muted bg-light rounded-4"
              style={{ width: '300px', height: "200px", textAlign: 'center'}}
           >
-            Фотография остуствует
+            Фотография отсуствует
           </p>
         </div>
       }

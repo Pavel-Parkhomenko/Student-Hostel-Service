@@ -26,6 +26,9 @@ router.post('/create-section', upload.single("file"), async (req, res) => {
     const { header, description, id } = req.body
     const img = (req as unknown as MulterRequest).file.filename
     const candidateNews = await News.findById(id)
+    console.log('-----')
+    console.log(candidateNews.body)
+
     await News.updateOne({ _id: id }, {
       body: [...candidateNews.body, { header, description, img: img}],
     })

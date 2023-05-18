@@ -37,7 +37,7 @@ export function EventItem(
           <img src={url}
                className="card-img-top"
                alt="card-img-top"
-               style={{maxWidth: '200px'}}
+               style={{maxWidth: '400px'}}
           />
         </div>
         <p className="card-text">{description}</p>

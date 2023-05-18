@@ -60,6 +60,7 @@ export function Login() {
           <span>У вас еще нет аккаунта?</span>&nbsp;&nbsp;
           <Link to='/reg'>Регистрация</Link>
         </div>
+        <Link className="text-primary text-decoration-none" to='/'>На главную</Link>
       </div>
       <div className="auth__figure"/>
     </div>

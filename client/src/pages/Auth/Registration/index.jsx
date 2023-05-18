@@ -48,6 +48,7 @@ export function Registration() {
           <span>У вас уже есть аккаунт?</span>&nbsp;&nbsp;
           <Link to='/login'>Вход</Link>
         </div>
+        <Link className="text-primary text-decoration-none" to='/'>На главную</Link>
       </div>
       <div className="auth__figure"/>
     </div>

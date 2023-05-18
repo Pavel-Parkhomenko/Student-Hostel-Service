@@ -30,7 +30,7 @@ export function CreateEvent() {
 
   async function handleSaveEvent(event) {
     event.preventDefault()
-    if(form.description.length < 10 || form.description.length > 100) {
+    if(form.description.length < 10 || form.description.length > 1000) {
       toastMess(false, "Описание слишком короткое или длинное")
       return
     }
@@ -68,8 +68,6 @@ export function CreateEvent() {
           name="header"
           onChange={handleInput}
           required
-          pattern="[A-Za-zА-Яа-яЁё]{5,15}"
-          title="Минимум 5 и максимум 15 символов"
         />
       </div>
 
@@ -109,8 +107,8 @@ export function CreateEvent() {
           name="placeEvent"
           onChange={handleInput}
           required
-          pattern=".{5,30}"
-          title="Минимум 5 и максимум 30 символов"
+          pattern=".{5,40}"
+          title="Минимум 5 и максимум 40 символов"
         />
       </div>
       <div className="input-group input-group-sm">

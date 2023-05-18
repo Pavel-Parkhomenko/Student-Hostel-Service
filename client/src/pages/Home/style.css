@@ -2,7 +2,7 @@
     height: 100vh;
     padding: 20px;
     display: flex;
-    background-color: #0e052a;
+    color: #0e052a;
 }
 
 .home__img-container {
@@ -32,7 +32,6 @@
 .home__container-text {
     padding: 130px 100px 0 0;
     margin-left: 300px;
-    color: white;
 }
 
 .home__container-links {
@@ -45,14 +44,13 @@
     text-decoration: none;
 }
 
-.link1 {
-    color: white;
+.home__link1 {
     width: 100px;
     display: block;
+    color: white;
 }
 
-.link2 {
-    color: #0e052a;
+.home__link2 {
     width: 100px;
     display: block;
 }

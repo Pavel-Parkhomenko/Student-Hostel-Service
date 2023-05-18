@@ -43,7 +43,7 @@ export function MainStudent() {
       body: formData,
     })
     const student = await response.json()
-    toastMess(response.ok, student.message)
+    toastMess(response.ok, response.message)
     if(response.ok){
       localStorage.setItem('user', JSON.stringify(student.data))
     }

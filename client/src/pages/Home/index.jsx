@@ -23,10 +23,10 @@ export function Home() {
         </p>
         <div className="home__container-links">
           <button className="btn btn-primary">
-            <Link className="home__link link1" to='/login'>Войти</Link>
+            <Link className="home__link home__link1" to='/login'>Войти</Link>
           </button>
           <button className="btn btn-light">
-            <Link className="home__link link2" to='/reg'>Регистрация</Link>
+            <Link className="home__link home__link2" to='/reg'>Регистрация</Link>
           </button>
         </div>
       </div>

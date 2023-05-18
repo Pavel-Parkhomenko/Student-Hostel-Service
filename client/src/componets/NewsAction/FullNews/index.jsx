@@ -30,13 +30,13 @@ export function FullNews() {
   return (
     <div className="card mb-3">
       {news?.body?.map(({ header, description, img }, ind) => (
-        <div className="card-body d-flex flex-column" key={ind}>
+        <div className="card-body d-flex flex-column px-5" key={ind}>
           <h5 className="card-title">{header}</h5>
           <div className="m-3 d-flex justify-content-center">
             <img src={img}
                  className="card-img-top"
                  alt="card-img-top"
-                 style={{width: '300px'}}
+                 style={{maxWidth: '400px'}}
             />
           </div>
           <p className="card-text d-inline">{description}</p>
