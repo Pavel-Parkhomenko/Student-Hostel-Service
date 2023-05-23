@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHttp } from "../../../hooks";
 import { SERVER } from "../../../constants";
 import { Loading } from "../../Loading";
+import { Link } from "react-router-dom";
 
 export function AccPlaces() {
   const { loading, request } = useHttp()
@@ -19,6 +20,9 @@ export function AccPlaces() {
 
   return(
     <div className="bg-light rounded p-3">
+      <button className="btn btn-light mb-3">
+        <Link className="text-primary text-decoration-none" to={'free-places'}>Посмотреть свободные места</Link>
+      </button>
       <div className="d-flex">
         <div className="bg-primary rounded ms-2 px-3 text-light"
              style={{height: '25px'}}

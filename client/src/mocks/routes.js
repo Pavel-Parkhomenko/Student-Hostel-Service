@@ -34,6 +34,7 @@ export const ROUTES_ADMIN = [
   {path: "/admin", breadcrumb: "Кабинет"},
   {path: "/admin/students", breadcrumb: "Студенты"},
   {path: "/admin/places", breadcrumb: "Места"},
+  {path: "/admin/places/free-places", breadcrumb: "Свободные места"},
   {path: "/admin/reports", breadcrumb: "Отчеты"},
   {path: "/admin/students/repairs", breadcrumb: "Заявки на починку"},
   {path: "/admin/students/view-pay-hostel", breadcrumb: "Учет оплаты"},

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { StudentList } from '../../StudentList'
 import { useHttp } from "../../../hooks";
 import { SERVER } from "../../../constants";
-import { Link } from "react-router-dom";
 import { Loading } from '../../Loading'
 
 export function StudentsListMentor() {
@@ -11,7 +10,10 @@ export function StudentsListMentor() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await request(SERVER + '/student/get-info', "GET")
+      const impact = JSON.parse(localStorage.getItem('user')).impact
+      const { data } = await request(SERVER + '/mentor/get-students-by-impact', "POST", {
+        impact
+      })
       setRes([...data])
     }
     fetchData()

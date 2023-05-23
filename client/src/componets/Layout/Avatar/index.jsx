@@ -41,7 +41,7 @@ export function Avatar({ data }) {
         <hr className="hr"/>
         <div className="d-flex flex-column justify-content-between">
           <p className="d-flex justify-content-between">
-            <small className="text-muted">Этажи</small>
+            <small className="text-muted">Этаж</small>
             {data.room?.floor}
           </p>
           <p className="d-flex justify-content-between">
@@ -65,6 +65,7 @@ export function Avatar({ data }) {
           <small className="text-muted">Баллы</small>
           {data.balls || 0}
         </p>
+        <p><Link to={'balls-info'}>История начисления</Link></p>
       </div>
     </div>
   )

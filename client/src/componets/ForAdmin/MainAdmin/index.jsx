@@ -32,8 +32,13 @@ export function MainAdmin(data = null) {
     toastMess(status, message)
   }
 
+  async function handlePlaces() {
+    await request(SERVER + '/admin/change-places', 'GET')
+  }
+
   return (
     <div className="px-3 py-3 bg-white rounded">
+      <button onClick={handlePlaces}>Places</button>
       <div className="p-lg-5">
         <SimpleForm
           fields={ADMIN_MAIN_FORM}

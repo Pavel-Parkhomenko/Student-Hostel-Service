@@ -15,6 +15,8 @@ export function AddStudent() {
     floor: 0,
     block: 0,
     apartament: 0,
+    faculty: '',
+    group: ''
   })
 
   const { request } = useHttp()

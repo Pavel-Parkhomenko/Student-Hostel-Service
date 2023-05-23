@@ -1,16 +1,21 @@
 import path from "path";
-import {Router} from 'express'
-import {Student} from '../models/student'
-import {Account} from '../models/account'
-import {Hostel} from "../models/hostel";
+import { Router } from 'express'
+import { Student } from '../models/student'
+import { Account } from '../models/account'
+import { Hostel } from "../models/hostel";
+import { getDefaultPlaces } from '../utils'
 
 const router = Router();
 router.post('/import-students',
   async (req, res) => {
     try {
       const {students, type} = req.body
+      const hostel = (await Hostel.find())[0]
+      const freePlaces = hostel.places
+      let busyPlaces = []
       let stObjs = []
       for (let i = 1; i < students.length; i++) {
+        busyPlaces.push(`${students[i][5]}-${students[i][6]}-${students[i][7]}`)
         stObjs.push({
           firstName: students[i][0],
           secondName: students[i][1],
@@ -23,23 +28,37 @@ router.post('/import-students',
             floor: students[i][5] as number,
             block: students[i][6] as number,
             apartament: students[i][7] as number,
-          }
+          },
+          faculty: students[i][8],
+          group: students[i][9],
         })
       }
       if (type === 'add') {
-        Student.insertMany(stObjs).then(() => {
-          return res.status(200).json({message: 'Данные успешны выгружены'})
-        }).catch((err) => {
-          return res.status(400).json({message: 'Не удалось выгрузить данные'})
-        })
-      } else {
+        await Student.insertMany(stObjs)
+        for(let i = 0; i < busyPlaces.length; i++) {
+          const index = freePlaces.findIndex(element => element === busyPlaces[i]);
+          if (index !== -1) {
+            freePlaces.splice(index, 1, 'Занято');
+          }
+        }
+        hostel.places = freePlaces
+        await hostel.save()
+        return res.status(200).json({message: 'Данные успешны выгружены'})
+      }
+      else {
+        const places = getDefaultPlaces()
+        for(let i = 0; i < busyPlaces.length; i++) {
+          const index = places.findIndex(element => element === busyPlaces[i]);
+          if (index !== -1) {
+            places.splice(index, 1, 'Занято');
+          }
+        }
+        hostel.places = places
+        await hostel.save()
         await Account.deleteMany({role: 'student'})
         await Student.deleteMany()
-        Student.insertMany(stObjs).then(() => {
-          return res.status(200).json({message: 'Данные успешны выгружены'})
-        }).catch((err) => {
-          return res.status(400).json({message: 'Не удалось выгрузить данные'})
-        })
+        await Student.insertMany(stObjs)
+        return res.status(200).json({message: 'Данные успешны выгружены'})
       }
 
     } catch (err) {
@@ -231,7 +250,11 @@ router.post('/update-info', upload.single("file"), async (req, res) => {
 router.get('/load', function (req, res) {
   try {
     const img = req.query.img
-    if (img === 'undefined') return res.status(400)
+    if (img === 'undefined'){
+      const imageDefaultPath = path.join("D:", "diplom-app", "server", 'uploads', 'student.png');
+      res.sendFile(imageDefaultPath);
+      return
+    }
     const imagePath = path.join("D:", "diplom-app", "server", 'uploads', 'students', `${img}`);
     if (!imagePath) return res.status(400)
     res.sendFile(imagePath);
@@ -255,7 +278,7 @@ router.post('/add-student', async (req, res) => {
   try {
     const {
       firstName, secondName, middleName,
-      formEducation, floor, block, apartament
+      formEducation, floor, block, apartament, faculty, group
     } = req.body
 
     const student = new Student({
@@ -263,7 +286,8 @@ router.post('/add-student', async (req, res) => {
       dateInHostel: String(new Date()),
       room: {
         floor, block, apartament
-      }
+      },
+      faculty, group
     })
     await student.save()
     return res.status(200).json({message: 'Новый студент добавлен'})
@@ -315,6 +339,22 @@ router.post('/get-pay', async (req, res) => {
     })
   } catch (err) {
     console.log(err)
+    return res.status(500).json({message: 'Что-то пошло не так - сервер'})
+  }
+})
+
+router.post('/get-balls', async (req, res) => {
+  try {
+    const { numberTest } = req.body
+    const student = await Student.findOne({ numberTest })
+    return res.status(200).json(
+      {
+        data: {
+          balls: student.balls || 0,
+          ballsInfo: student.ballsInfo || []
+        }, message: 'Данные получены'})
+
+  } catch (err) {
     return res.status(500).json({message: 'Что-то пошло не так - сервер'})
   }
 })

@@ -12,7 +12,10 @@ export function CreateChat() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, message } = await request(SERVER + '/student/get-info', "GET")
+      const impact = JSON.parse(localStorage.getItem('user')).impact
+      const { data } = await request(SERVER + '/mentor/get-students-by-impact', "POST", {
+        impact
+      })
       setRes([...data])
     }
     fetchData()

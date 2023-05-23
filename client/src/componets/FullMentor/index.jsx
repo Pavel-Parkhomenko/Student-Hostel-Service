@@ -63,13 +63,6 @@ export function FullMentor() {
       <hr className="hr" />
       <div className="d-flex flex-column align-items-center">
         <div className="d-flex flex-row justify-content-between w-50">
-          <small className="text-muted">Логин</small>
-          <p>{res.account?.login}</p>
-        </div>
-      </div>
-      <hr className="hr" />
-      <div className="d-flex flex-column align-items-center">
-        <div className="d-flex flex-row justify-content-between w-50">
           <small className="text-muted">Этажи начало</small>
           <p>{res.impact?.from}</p>
         </div>

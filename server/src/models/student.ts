@@ -6,6 +6,14 @@ const schema = new Schema<IStudent>({
     middleName: { type: String, required: true },
     secondName: { type: String, required: true },
     balls: { type: Number, required: false },
+    ballsInfo: {
+      type: [{
+            num: { type: Number, required: false },
+            summary: { type: String, required: false },
+          }],
+        required: false,
+        _id : false,
+    },
     dateEntry: { type: String, required: false },
     formEducation: { type: String, required: true },
     numberTest: { type: Number, required: true, default: 0 },
@@ -68,6 +76,8 @@ const schema = new Schema<IStudent>({
         _id : false,
     },
     dateInHostel: { type: String, required: false },
+    faculty: { type: String, required: false },
+    group: { type: String, required: false },
 
 }, { versionKey: false })
 

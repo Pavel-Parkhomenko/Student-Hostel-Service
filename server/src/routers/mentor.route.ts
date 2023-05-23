@@ -3,6 +3,7 @@ import { Router } from 'express'
 import { Mentor } from '../models/mentor'
 import { IMentor } from '../interfaces'
 import { Account } from "../models/account"
+import { Student } from "../models/student";
 const multer  = require("multer")
 
 const router = Router()
@@ -76,6 +77,50 @@ router.post('/update-info', upload.single("file"), async (req, res) => {
     return res.status(200).json({data: newMentor, message: 'Данные обновлены'})
   } catch (err) {
     console.log(err.message)
+    return res.status(500).json({message: 'Что-то пошло не так'})
+  }
+})
+
+router.post('/get-students-by-impact', async (req, res) => {
+  try {
+    const { impact } = req.body
+    const data = await Student.find()
+    const students  = []
+    for(let i = 0; i < data.length; i++) {
+      if(data[i].room.floor >= impact.from && data[i].room.floor <= impact.to) {
+        students.push(data[i])
+      }
+    }
+    return res.status(200).json({data: students, message: 'Данные загруженны'})
+  } catch (err) {
+    return res.status(500).json({message: 'Что-то пошло не так'})
+  }
+})
+
+router.post('/update-balls-v2', async (req, res) => {
+  try {
+    const { numberTest, num, summary } = req.body
+    const student = await Student.findOne({numberTest: numberTest})
+
+    let update = {}
+    if (!student.ballsInfo || student.ballsInfo?.length === 0) {
+      update = {
+        ballsInfo: [{
+          num: Number(num), summary
+        }],
+        balls: Number(num),
+      }
+    } else {
+      update = {
+        ballsInfo: [...student.ballsInfo, { num, summary }],
+        balls: Number(num) + Number(student.balls)
+      }
+    }
+    const newStudent = await Student.findOneAndUpdate({numberTest: numberTest}, update, {
+      new: true
+    })
+    return res.status(200).json({data: newStudent.balls, message: 'Данные обновлены'})
+  } catch (err) {
     return res.status(500).json({message: 'Что-то пошло не так'})
   }
 })

@@ -106,21 +106,19 @@ export function StudentFull(props) {
           <small className="text-muted">Номер зачетки</small>
           <p>{res.numberTest}</p>
         </div>
+        <div className="d-flex flex-row justify-content-between w-50">
+          <small className="text-muted">Факультет</small>
+          <p>{res.faculty}</p>
+        </div>
+        <div className="d-flex flex-row justify-content-between w-50">
+          <small className="text-muted">Группа</small>
+          <p>{res.group}</p>
+        </div>
       </div>
       <hr className="hr" />
-      <div className="d-flex flex-column align-items-center">
-        <label htmlFor="formControlInputBalls" className="form-label">Начислить баллы</label>
-        <input type="number" className="form-control w-25" id="formControlInputBalls" placeholder="50"
-               value={balls}
-               onChange={(event) => setBalls(event.target.value)}
-        />
-        <small className="text-muted">*количество может быть отрицательным</small>
-        <button type="button" className="btn btn-primary mt-3"
-                onClick={handleChangeBalls}
-        >
-          Сохранить
-        </button>
-      </div>
+      <button type="button" className="btn btn-light">
+        <Link className="text-decoration-none" to={"change-balls"}>Начислить баллы</Link>
+      </button>
       <hr className="hr" />
       <div className="d-flex flex-column align-items-center">
         { props.children || null }
@@ -173,3 +171,17 @@ export function StudentFull(props) {
     </div>
   )
 }
+
+//<div className="d-flex flex-column align-items-center">
+//         <label htmlFor="formControlInputBalls" className="form-label">Начислить баллы</label>
+//         <input type="number" className="form-control w-25" id="formControlInputBalls" placeholder="50"
+//                value={balls}
+//                onChange={(event) => setBalls(event.target.value)}
+//         />
+//         <small className="text-muted">*количество может быть отрицательным</small>
+//         <button type="button" className="btn btn-primary mt-3"
+//                 onClick={handleChangeBalls}
+//         >
+//           Сохранить
+//         </button>
+//       </div>

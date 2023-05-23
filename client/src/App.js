@@ -39,6 +39,9 @@ import { StudentsListMentor } from "./componets/ForMentor/StudentsListMentor";
 
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { ChangeBalls } from "./componets/ForMentor/ChangeBalls";
+import { BallsInfo } from "./componets/ForStudent/BallsInfo";
+import { FreePlaces } from "./componets/ForAdmin/FreePlaces";
 
 function App() {
   const [contextState] = useState({
@@ -62,6 +65,7 @@ function App() {
             <Route path="pay-hostel" element={<PayHostel />} />
             <Route path="claim" element={<Claim />} />
             <Route path="news" element={<NewsPanel />} />
+            <Route path="balls-info" element={<BallsInfo />} />
             <Route path="news/:id" element={<FullNews />} />
             <Route path="events" element={<EventPanel />} />
             <Route path="chat" element={<Chat />} />
@@ -75,6 +79,7 @@ function App() {
             <Route path="students/:id" element={<FullStudentMentor />} />
             <Route path="students/:id/create" element={<CreateClaim />} />
             <Route path="students/:id/add-tech" element={<CreateTech />} />
+            <Route path="students/:id/change-balls" element={<ChangeBalls />} />
             <Route path="news" element={<NewsPanel />} />
             <Route path="news/:id" element={<FullNews />} />
             <Route path="news/create" element={<NewNews />} />
@@ -96,6 +101,7 @@ function App() {
             <Route path="employee/:id" element={<FullMentor />} />
             <Route path="employee/create" element={<CreateMentor />} />
             <Route path="places" element={<AccPlaces />} />
+            <Route path="places/free-places" element={<FreePlaces />} />
             <Route path="reports" element={<Reports />} />
           </Route>
         </Routes>

@@ -9,6 +9,7 @@ export interface IStudent {
     formEducation: "платное" | "бесплатное",
     dateEntry?: string,
     balls?: number,
+    ballsInfo?: Array<IBallsInfo>,
     privateTechs?: Array<IPrivateTech>,
     room: IRoom,
     remarks?: Array<IRemark>,
@@ -17,8 +18,14 @@ export interface IStudent {
     img?: string,
     pay?: Array<IPay>,
     dateInHostel?: string,
+    faculty: string,
+    group: string,
 }
 
+interface IBallsInfo {
+    num: number,
+    summary: string
+}
 interface IPay {
     date: string,
     receipt: string,

@@ -4,7 +4,7 @@ import { Account } from '../models/account'
 import { Admin } from '../models/admin'
 import { Student } from '../models/student'
 import { Hostel } from '../models/hostel'
-import { getDateAndTime, getMonthsUntilSeptember } from '../utils'
+import {getDateAndTime, getDefaultPlaces} from '../utils'
 import path from "path";
 
 const router = Router()
@@ -132,6 +132,47 @@ router.post('/change-pay-hostel', async (req, res) => {
       await hostel.save()
     }
     return res.status(200).json({ data: cost, message: 'Данные обновленны' })
+  } catch (err) {
+    console.log(err.message)
+    return res.status(500).json({ message: 'Что-то пошло не так' })
+  }
+});
+
+router.get('/change-places', async (req, res) => {
+  try {
+    const places = getDefaultPlaces()
+    const hostelBd = (await Hostel.find())[0]
+    hostelBd.places = places
+    await hostelBd.save()
+    return res.status(200).json({ data: '', message: 'Данные обновленны' })
+  } catch (err) {
+    console.log(err.message)
+    return res.status(500).json({ message: 'Что-то пошло не так' })
+  }
+});
+
+router.get('/get-free-places', async (req, res) => {
+  try {
+    const hostelBd = (await Hostel.find())[0]
+    const places = hostelBd.places
+    const freePlaces = []
+    let floor = 0
+    for (let i = 0; i < places.length; i++) {
+      if(places[i] === 'Занято') continue
+      floor = Number(places[i].split('-')[0])
+      if (!freePlaces[floor]) {
+        if(places[i] === places[i + 1]) {
+          freePlaces[floor] = [places[i] + '/2']
+          i = i + 1
+        } else freePlaces[floor] = [places[i]]
+      } else if(places[i] === places[i + 1]) {
+        freePlaces[floor] = [...freePlaces[floor], places[i] + "/2"]
+        i = i + 1
+      } else {
+        freePlaces[floor] = [...freePlaces[floor], places[i]]
+      }
+    }
+    return res.status(200).json({ data: freePlaces, message: 'Данные полученны' })
   } catch (err) {
     console.log(err.message)
     return res.status(500).json({ message: 'Что-то пошло не так' })

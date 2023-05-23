@@ -29,3 +29,21 @@ export function getMonthsUntilSeptember() {
 
     return Math.abs(diffInMonths);
 }
+
+export function getDefaultPlaces() {
+    const places = []
+    const hostel = {
+        floors: 16,
+        blocks: 8,
+        rooms: 2
+    }
+    for(let f = 1; f <= hostel.floors; f++ ) {
+        for(let b = 1; b <= hostel.blocks; b++) {
+            for(let r = 1; r <= hostel.rooms; r++) {
+                places.push(`${f}-${b}-${r}`)
+                places.push(`${f}-${b}-${r}`)
+            }
+        }
+    }
+    return places
+}
