@@ -18,20 +18,29 @@ router.get('/create-chat',async (req, res) => {
 router.post('/create-chat',async (req, res) => {
   try {
     const { arrayId, name, idMentor } = req.body
+    console.log(arrayId, name, idMentor)
     const chat = await Chat.create({
       name,
       messages: [],
     })
     for (let i = 0; i < arrayId.length; i++) {
       const doc = await Student.findById(arrayId[i])
+      console.log(doc.chats)
+      if(!doc.chats) {
+        doc.chats = []
+      }
       doc.chats = [...doc.chats, chat._id]
       await doc.save();
     }
     const mentor = await Mentor.findById(idMentor)
+    if(!mentor.chats) {
+      mentor.chats = []
+    }
     mentor.chats = [...mentor.chats, chat._id]
     await mentor.save()
     return res.status(200).json({data: '', message: 'Чат создан'})
   } catch(err) {
+    console.log(err.message)
     return res.status(500).json({message: 'Что-то пошло не так - сервер'})
   }
 })

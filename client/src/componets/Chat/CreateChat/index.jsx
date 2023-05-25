@@ -69,10 +69,10 @@ export function CreateChat() {
           </tr>
           </thead>
           <tbody>
-          {res.map(({ id, firstName, middleName, secondName, numberTest}, ind) => (
+          {res.map(({ _id, firstName, middleName, secondName, numberTest}, ind) => (
             <tr key={numberTest}>
               <th scope="row">{ind + 1}</th>
-              <td><input type="checkbox" onChange={() => setUsersId([...usersId, id])}/></td>
+              <td><input type="checkbox" onChange={() => setUsersId([...usersId, _id])}/></td>
               <td>{secondName}</td>
               <td>{firstName}</td>
               <td>{middleName}</td>

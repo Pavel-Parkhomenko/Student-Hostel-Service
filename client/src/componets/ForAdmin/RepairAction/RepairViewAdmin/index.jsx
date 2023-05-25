@@ -18,8 +18,8 @@ export function RepairViewAdmin() {
   useEffect(() => {
     async function fetchRepairs() {
       const { data } = await request(SERVER + '/repair/get-repairs-all')
-      setRepairs(data)
-      setRepairsFilter(data)
+      setRepairs(data.reverse())
+      setRepairsFilter(data.reverse())
     }
     fetchRepairs()
   }, [])
@@ -29,7 +29,7 @@ export function RepairViewAdmin() {
       setRepairsFilter([...repairs])
       return
     }
-    setRepairsFilter([...repairs.filter(item => item.status === type)])
+    setRepairsFilter([...repairs.filter(item => item.status === type)].reverse())
   }
 
   if(loading) return <Loading />
