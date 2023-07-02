@@ -49,7 +49,6 @@ router.post('/create-news',async (req, res) => {
     const newNews = await news.save()
     return res.status(200).json({data: { id: newNews._id }, message: 'Новость создана'})
   } catch(err) {
-    console.log('/news/create-news ', err.message)
     return res.status(500).json({message: 'Что-то пошло не так - сервер'})
   }
 })

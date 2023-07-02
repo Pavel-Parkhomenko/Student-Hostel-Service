@@ -154,7 +154,7 @@ router.post('/add-tech', async (req, res) => {
       ]
     }
     await Student.findOneAndUpdate({numberTest: numberTest}, update)
-    return res.status(200).json({message: 'Новые данные добавлены'})
+    return res.status(200).json({message: 'Новая техника добавлена'})
   } catch (err) {
     return res.status(500).json({message: 'Что-то пошло не так'})
   }
